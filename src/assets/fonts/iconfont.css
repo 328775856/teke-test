@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'icon-yike';  /* project id 610158 */
+  src: url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.eot');
+  src: url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.svg#icon-yike') format('svg');
+}
+
+.icon-yike {
+  font-family:"icon-yike" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-rhomb:before { content: "\e62d"; }
+
+.icon-information:before { content: "\e609"; }
+
+.icon-select:before { content: "\e60a"; }
+
+.icon-clock:before { content: "\e6f2"; }
+
+.icon-gift:before { content: "\e612"; }
+
+.icon-ok:before { content: "\e60d"; }
+
+.icon-arrow-r:before { content: "\e6f5"; }
+

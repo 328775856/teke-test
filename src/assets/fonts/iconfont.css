@@ -1,10 +1,10 @@
-@font-face {
-  font-family: 'icon-yike';  /* project id 610158 */
-  src: url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.eot');
-  src: url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_610158_shtf0zzy0pwlv7vi.svg#icon-yike') format('svg');
+
+@font-face {font-family: "icon-yike";
+  src: url('iconfont.eot?t=1524467105048'); /* IE9*/
+  src: url('iconfont.eot?t=1524467105048#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('iconfont.ttf?t=1524467105048') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1524467105048#icon-yike') format('svg'); /* iOS 4.1- */
 }
 
 .icon-yike {
@@ -15,17 +15,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-rhomb:before { content: "\e62d"; }
+.icon-52:before { content: "\e640"; }
+
+.icon-ok:before { content: "\e640"; }
+
+.icon-arrow-r:before { content: "\e6f5"; }
+
+.icon-gift:before { content: "\e612"; }
+
+.icon-clock:before { content: "\e6f2"; }
 
 .icon-information:before { content: "\e609"; }
 
 .icon-select:before { content: "\e60a"; }
-
-.icon-clock:before { content: "\e6f2"; }
-
-.icon-gift:before { content: "\e612"; }
-
-.icon-ok:before { content: "\e60d"; }
-
-.icon-arrow-r:before { content: "\e6f5"; }
 

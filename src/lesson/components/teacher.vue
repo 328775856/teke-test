@@ -54,6 +54,15 @@
 `
       }
     },
+    mounted: function () {
+        let bw=document.body.scrollWidth
+        let tm=document.getElementById('teacher-msg')
+      if (bw<375) {
+        tm.style.lineHeight=bw/375*24+'px'
+      } else  {
+        tm.style.lineHeight=bw/375*29+'px'
+      }
+    },
     methods: {
       active() {
         this.isActive = !this.isActive
@@ -61,8 +70,9 @@
     },
     computed: {
       showMarkdown () {
-        this.msg = markdown.toHTML(this.msg)
-        return this.msg
+        let that=this
+        that.msg = markdown.toHTML(that.msg)
+        return that.msg
       }
     }
   }
@@ -197,9 +207,9 @@
 
   .teacher-msg {
     width:6.72rem;
-    height:5.5rem;
-    font-size:13pt;
-    line-height:0.56rem;
+    height:14rem;
+    font-size:15px;
+    line-height:30px;
     color:rgba(51,51,51,1);
     margin: 0 0.31rem;
   }
@@ -213,11 +223,12 @@
   h4:nth-child(3),h4:nth-child(5){
     width:2.9rem;
     height:0.6rem;
-    margin: 0.69rem auto 0.2rem auto;
+    margin: 0.4rem auto 0.2rem auto;
     background:rgba(47,87,218,1);
     border-radius: 0.3rem ;
     color: white;
     text-align: center;
+    line-height: 0.6rem;
   }
   li{
     margin-left: 0.31rem;

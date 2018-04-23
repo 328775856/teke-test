@@ -1,8 +1,8 @@
 'use strict'
 module.exports = {
-  host: 'localhost',
-  port: '8080',
+  host: '192.168.199.228',
+  port: '8081',
   subDir: 'static',
   assets: '/',
-  api: 'localhost:8080'
+  api: 'http://192.168.199.228:8081'
 }

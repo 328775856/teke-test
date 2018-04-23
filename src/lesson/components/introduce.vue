@@ -120,7 +120,7 @@
     left: -0.05rem;
     width: 0.8rem;
     height: 0.2rem;
-    font-size:0.2rem;
+    font-size:0.18rem;
     color:rgba(254,254,254,1);
     line-height:0.2rem;
   }
@@ -145,11 +145,10 @@
     width:0.96rem;
     height:0.23rem;
     padding-left: 2.45rem;
-    font-size: 0.24rem;
+    font-size: 0.2rem;
     color:rgba(102,102,102,1);
   }
   .frm-tips {
-    width: 7.5rem;
     height: 0.8rem;
     line-height: 0.8rem;
     padding: 0 0.3rem;

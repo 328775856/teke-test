@@ -9,7 +9,7 @@
     </div>
     <div class="frm-teacher">
       <div class="avatar">1</div>
-      <div class="teacher">
+      <div class="teacher-msg">
         <div class="name">伪90后畅唱</div>
         <div class="">简单又有思想，真诚中流露着狡猾，看…</div>
       </div>
@@ -54,15 +54,15 @@
 `
       }
     },
-    mounted: function () {
-        let bw=document.body.scrollWidth
-        let tm=document.getElementById('teacher-msg')
-      if (bw<375) {
-        tm.style.lineHeight=bw/375*24+'px'
-      } else  {
-        tm.style.lineHeight=bw/375*29+'px'
-      }
-    },
+    // mounted: function () {
+    //     let bw=document.body.scrollWidth
+    //     let tm=document.getElementById('teacher-msg')
+    //   if (bw<375) {
+    //     tm.style.lineHeight=bw/375*23+'px'
+    //   } else  {
+    //     tm.style.lineHeight=bw/375*28+'px'
+    //   }
+    // },
     methods: {
       active() {
         this.isActive = !this.isActive
@@ -82,11 +82,6 @@
   p {
     margin: 0px;
   }
-
-  .c-teacher {
-    height: 18.36rem;
-  }
-
   .tab {
     position: sticky;
     top: 0;
@@ -125,11 +120,10 @@
   }
 
   .title {
-    width: 7.5rem;
     height: 0.36rem;
     font-size: 0.32rem;
-    padding: 0.32rem 0;
-    padding-left: 0.31rem;
+    padding: 0.32rem 0.31rem;
+    font-weight: bold;
     line-height: 0.36rem;
   }
 
@@ -156,10 +150,9 @@
     height: 0.7rem;
   }
 
-  .teacher {
+  .teacher-msg {
     display: flex;
     flex-direction: column;
-    width: 4.98rem;
   }
 
   .name {
@@ -206,12 +199,11 @@
   }
 
   .teacher-msg {
-    width:6.72rem;
-    height:14rem;
     font-size:15px;
     line-height:30px;
     color:rgba(51,51,51,1);
     margin: 0 0.31rem;
+    padding-bottom: 0.3rem;
   }
 </style>
 <style>

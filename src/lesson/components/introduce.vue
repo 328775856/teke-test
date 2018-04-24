@@ -160,17 +160,15 @@
     width: 0.96rem;
     height: 0.3rem;
     font-size: 0.24rem;
-    font-family: PingFangSC-Medium;
     color: rgba(153, 153, 153, 1);
     margin-right: .2rem;
   }
 
   .frm-tips span:nth-child(4) {
-    float: right;
     width: 0.3rem;
     height: 0.3rem;
-    margin-left: 1.4rem;
-    padding-right: 0.3rem;
+    padding-left: 1.6rem;
+    margin: 0;
   }
   .icon-ok:before {
     width: 0.24rem;

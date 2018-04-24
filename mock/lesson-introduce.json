@@ -1,0 +1,13 @@
+{
+  "error": "0",
+  "message": "success",
+  "data": {
+    "teacher": {
+      "sn": "xxx",
+      "name": "fish",
+      "avatar": "xxx",
+      "info": "xxxxx",
+    },
+    "introduce": "*.md"
+  }
+}

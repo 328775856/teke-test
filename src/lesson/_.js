@@ -9,8 +9,10 @@ import axios from 'axios'
 import '@/assets/fonts/iconfont.css'
 
 import adaptor from '@/assets/js/screen-adaptor'
+
 adaptor(750, (screen) => {
-  return Math.min(screen.width, screen.height*0.8)
+  // return Math.min(screen.width, screen.height*0.8)
+  return screen.width < screen.height ? screen.width : '750'
 })
 
 Vue.config.productionTip = false

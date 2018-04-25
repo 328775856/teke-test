@@ -43,7 +43,9 @@
       return {
         isShowNotice: false,
         cover: '',
-        active: 0
+        active: 0,
+        cards: [],
+        benefits: {}
       }
     },
     // created() {

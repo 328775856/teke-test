@@ -1,12 +1,5 @@
 <template>
   <div class="c-teacher">
-    <div class="tab">
-      <div :class="{active:isActive}" @click="active">课程</div>
-      <div :class="{active:!isActive}" @click="active">目录</div>
-    </div>
-    <div class="title">
-      讲师
-    </div>
     <div class="frm-teacher">
       <div class="avatar">1</div>
       <div class="teacher-msg">
@@ -30,7 +23,7 @@
   import {markdown} from 'markdown'
 
   export default {
-    name: "teacher-introduce.vue",
+    name: "teacher",
     components: {markdown},
     data() {
       return {
@@ -82,46 +75,9 @@
   p {
     margin: 0px;
   }
-  .tab {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    width: 7.5rem;
-    height: 1rem;
-    border-bottom: 0.01rem #DDDDDD solid;
-    text-align: center;
-    -webkit-tap-highlight-color: transparent;
-    background: #fff;
-  }
-
-  .tab div {
-    position: relative;
-    flex: 1;
-    height: 1rem;
-    line-height: 1rem;
-    cursor: pointer;
-  }
-
-  .active {
-    color: #2F57DA;
-  }
-
-  .active:after {
-    content: '';
-    position: absolute;
-    left: 1.34rem;
-    top: 0.96rem;
-    width: 1rem;
-    height: 0.04rem;
-    background: #2F57DA;
-    border-radius: 0.02rem;
-  }
-
   .title {
     height: 0.36rem;
-    font-size: 0.32rem;
+    font-size: 16px;
     padding: 0.32rem 0.31rem;
     font-weight: bold;
     line-height: 0.36rem;

@@ -27,6 +27,17 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
+Vue.filter('status', function (value) {
+  if (value === 'finish') {
+    value = '可回放'
+  } else if (value === 'beginning') {
+    value = '开课中'
+  } else {
+    value = '未开课'
+  }
+  return value
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

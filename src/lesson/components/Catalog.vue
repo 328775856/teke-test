@@ -9,9 +9,10 @@
           <div class="text flex-row">
             <div class="msg">{{item.title}}</div>
             <div class="status flex-col">
-              <button :class="item.status" v-if="item.status==='finish'?status='可回放':''" :status="status">{{status}}</button>
-              <button :class="item.status" v-else-if="item.status==='beginning'?status='开课中':''" :status="status">{{status}}</button>
-              <button :class="item.status" v-else-if="item.status==='no'?status='未开课':''" :status="status">{{status}}</button>
+              <!--<button :class="item.status" v-if="item.status==='finish'?status='可回放':''" :status="status">{{status}}</button>-->
+              <!--<button :class="item.status" v-else-if="item.status==='beginning'?status='开课中':''" :status="status">{{status}}</button>-->
+              <!--<button :class="item.status" v-else-if="item.status==='no'?status='未开课':''" :status="status">{{status}}</button>-->
+              <button :class="item.status">{{item.status | status}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
@@ -34,8 +35,7 @@
     name: "Catalog",
     data() {
       return {
-        data: [],
-        status: '未开课'
+        data: []
       }
     },
     methods: {
@@ -85,9 +85,6 @@
   }
   p {
     margin: 0;
-  }
-  .flex-col{
-    align-items: right;
   }
   .finish {
     background: rgba(255, 126, 126, 1);
@@ -150,14 +147,15 @@
   }
 
   .status {
-    height: 100%;
+    height: 0.81rem;
     justify-content: space-between;
+    align-items: normal;
   }
 
   .text button {
     height: 0.36rem;
     border-radius: 0.18rem;
-    font-size: 10px;
+    font-size: 0.2rem;
     color: rgba(255, 255, 255, 1);
     line-height: 0.36rem;
     border: none;
@@ -168,10 +166,12 @@
     color: rgba(242, 63, 21, 1);
     line-height: 18px;
     text-align: right;
+    padding-right: 0.02rem;
   }
 
   .time {
     position: relative;
+    top: 0.1rem;
     justify-content: space-between;
     width: 4.19rem;
     height: 0.36rem;

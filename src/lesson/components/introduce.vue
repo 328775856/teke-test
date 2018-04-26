@@ -10,6 +10,7 @@
       <div class="enroll">{{data.enrollment}}人</div>
       <div class="frm-content">
         <div class="title">{{data.title}}</div>
+        <div class="single"></div>
         <div class="lesson-time">
           <p class="icon-yike icon-clock">周三开课 {{data.progress[0]}}/{{data.progress[1]}}节</p>
           <i class="icon-yike icon-gift"></i>
@@ -27,7 +28,7 @@
         <span class="icon-yike icon-ok"> 永久回放</span>
         <span class="icon-yike icon-ok"> 无条件退款</span>
         <span class="icon-yike icon-ok"> 图文语音</span>
-        <span class="icon-yike icon-arrow-r"></span>
+        <a class="icon-yike icon-arrow-r" href=""></a>
       </div>
     </div>
   </div>
@@ -38,7 +39,7 @@
     name: "introduce",
     data() {
       return {
-        data: []
+        data: {}
       }
     },
     created() {
@@ -51,7 +52,6 @@
         .then(res => {
           if (res.data.error === '0') {
             this.data = res.data.data
-            console.log("success")
           }
         })
     }
@@ -65,15 +65,15 @@
   /*people 图标*/
   .people{
     position: absolute;
-    top: 3.48rem;
+    top: 3.6rem;
     left: 0.32rem;
     font-size: 0.24rem;
+    line-height: 0.36rem;
     color: white;
   }
-  .people.icon-user:before {
+  .people:before {
     position: absolute;
     left: -0.1rem;
-    top: 0.15rem;
     color: #fff;
     font-size: 0.25rem;
     z-index: 2;
@@ -81,7 +81,6 @@
 
   .icon-user .icon-user:before {
     position: absolute;
-    top: 0.15rem;
     color: #ccc;
     font-size: 0.2rem;
   }
@@ -173,17 +172,24 @@
     justify-content: center;
     align-items: center;
     width: 0.8rem;
+    background: #F23F15;
     border: rgba(242, 63, 21, 1) 0.19rem solid;
-    border-right: 0.11rem solid transparent;
+  }
+  .tag:after{
+    content: '';
+    position: absolute;
+    left: 0.8rem;
+    border: rgba(242, 63, 21, 1) 0.19rem solid;
+    border-right: 0.08rem solid transparent;
   }
 
   .tag p {
     position: absolute;
     z-index: 999;
-    left: -0.05rem;
+    left: 0.06rem;
     width: 0.8rem;
     height: 0.2rem;
-    font-size: 0.18rem;
+    font-size: 0.2rem;
     color: rgba(254, 254, 254, 1);
     line-height: 0.2rem;
   }
@@ -210,7 +216,7 @@
   .o-price + div {
     width: 0.96rem;
     height: 0.23rem;
-    padding-left: 2.45rem;
+    padding: 0.13rem 0 0 2.45rem;
     font-size: 0.2rem;
     text-align: center;
     color: rgba(102, 102, 102, 1);
@@ -232,15 +238,16 @@
     margin-right: .2rem;
   }
 
-  .frm-tips span:nth-child(4) {
+  .frm-tips a {
     width: 0.3rem;
     height: 0.3rem;
-    padding-left: 1.6rem;
+    padding-left: 1.8rem;
     margin: 0;
+    color: #999999;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
   }
-
-  .icon-ok:before {
-    width: 0.24rem;
-    height: 0.24rem;
+  .icon-arrow-r:before{
+    font-weight: bolder;
   }
 </style>

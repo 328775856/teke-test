@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const Home = r => require.ensure([], () => r(require('../view/Home')), 'lesson/home')
 const Detail = r => require.ensure([], () => r(require('../view/Detail')), 'lesson/detail')
 const Series = r => require.ensure([], () => r(require('../view/Series')), 'lesson/series')
+const Single = r => require.ensure([], () => r(require('../view/Single')), 'lesson/single')
 
 Vue.use(Router)
 
@@ -28,6 +29,14 @@ export default new Router({
         title: '系列课详情'
       },
       component: Series
+    },
+    {
+      path: '/lesson/single',
+      nmae: 'Single',
+      meta: {
+        title: '单课详情'
+      },
+      component: Single
     },
     {
       path: '/lesson/home',

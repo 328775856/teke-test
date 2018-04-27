@@ -24,7 +24,9 @@
 </script>
 
 <style scoped>
-
+  .c-tabs{
+    background: white;
+  }
   .tab {
     display: flex;
     align-items: center;

@@ -69,6 +69,9 @@
 </script>
 
 <style scoped>
+  .icon-arrow-r{
+    font-size: 0.24rem;
+  }
   .c-series {
     background: #F2F2F2;
   }

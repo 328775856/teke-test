@@ -10,7 +10,7 @@
       <div class="enroll">{{data.enrollment}}人</div>
       <div class="frm-content">
         <div class="title">{{data.title}}</div>
-        <div class="single"></div>
+        <!--<div class="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>-->
         <div class="lesson-time">
           <p class="icon-yike icon-clock">周三开课 {{data.progress[0]}}/{{data.progress[1]}}节</p>
           <i class="icon-yike icon-gift"></i>
@@ -24,10 +24,12 @@
           <div>邀请有奖</div>
         </div>
       </div>
-      <div class="frm-tips">
-        <span class="icon-yike icon-ok"> 永久回放</span>
-        <span class="icon-yike icon-ok"> 无条件退款</span>
-        <span class="icon-yike icon-ok"> 图文语音</span>
+      <div class="frm-tips flex-row">
+        <div class="text">
+          <span class="icon-yike icon-ok"> 永久回放</span>
+          <span class="icon-yike icon-ok"> 无条件退款</span>
+          <span class="icon-yike icon-ok"> 图文语音</span>
+        </div>
         <a class="icon-yike icon-arrow-r" href=""></a>
       </div>
     </div>
@@ -59,11 +61,15 @@
 </script>
 
 <style scoped>
-  .container{
+  .c-introduce{
+    background: white;
+  }
+  .container {
     position: relative;
   }
+
   /*people 图标*/
-  .people{
+  .people {
     position: absolute;
     top: 3.6rem;
     left: 0.32rem;
@@ -71,6 +77,7 @@
     line-height: 0.36rem;
     color: white;
   }
+
   .people:before {
     position: absolute;
     left: -0.1rem;
@@ -126,7 +133,6 @@
 
   .frm-content {
     width: 6.9rem;
-    height: 1.9rem;
     padding: 0.3rem 0.3rem 0 0.3rem;
   }
 
@@ -163,7 +169,7 @@
   .price {
     display: flex;
     flex-flow: row nowrap;
-    height: 0.36rem;
+    padding-bottom: 0.4rem;
   }
 
   .tag {
@@ -175,7 +181,8 @@
     background: #F23F15;
     border: rgba(242, 63, 21, 1) 0.19rem solid;
   }
-  .tag:after{
+
+  .tag:after {
     content: '';
     position: absolute;
     left: 0.8rem;
@@ -223,31 +230,37 @@
   }
 
   .frm-tips {
+    justify-content: space-between;
     height: 0.8rem;
-    line-height: 0.8rem;
     padding: 0 0.3rem;
     background: rgba(255, 252, 245, 1);
     color: #999999;
   }
 
+  .text {
+    width: 80%;
+    line-height: 0.3rem ;
+  }
+
   .frm-tips span {
     width: 0.96rem;
-    height: 0.3rem;
     font-size: 0.24rem;
     color: rgba(153, 153, 153, 1);
     margin-right: .2rem;
   }
 
   .frm-tips a {
+    position: relative;
     width: 0.3rem;
     height: 0.3rem;
-    padding-left: 1.8rem;
-    margin: 0;
     color: #999999;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
   }
-  .icon-arrow-r:before{
-    font-weight: bolder;
+
+  .icon-arrow-r:before {
+    position: absolute;
+    top: 0.04rem;
+    font-size: 0.24rem;
   }
 </style>

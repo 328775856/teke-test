@@ -10,23 +10,28 @@
 <script>
   export default {
     name: "tabs",
+    props: ['catalog'],
     data() {
       return {
-        isActive: true
+        isActive: true,
+        show: this.catalog
       }
     },
     methods: {
       active() {
         this.isActive = !this.isActive
+        this.show = !this.show
+        this.$emit('catalog')
       }
     }
   }
 </script>
 
 <style scoped>
-  .c-tabs{
+  .c-tabs {
     background: white;
   }
+
   .tab {
     display: flex;
     align-items: center;

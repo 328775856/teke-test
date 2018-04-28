@@ -2,12 +2,15 @@ html {
   height: 100%;
 }
 body {
+  position: relative;
   margin: 0 auto;
   height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+button{
+  -webkit-tap-highlight-color: transparent;
+}
 .c-index {
   height: 100%;
 }
@@ -31,7 +34,7 @@ body {
   border: 0;
 }
 .c-index {
-    transform: scale(1,1);
+    /*transform: scale(1,1);*/
 }
 .btn {
   outline: none;

@@ -16,7 +16,7 @@
 
 <style scoped>
   .bottom-btn {
-    height: 1.2rem;
+    height: 1rem;
   }
 
   .button {

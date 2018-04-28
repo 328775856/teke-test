@@ -1,19 +1,19 @@
 <template>
   <div class="c-teacher">
-    <div class="frm-teacher">
+    <div class="frm-teacher flex-row">
       <div class="avatar">1</div>
-      <div class="teacher-msg">
+      <div class="teacher-msg flex-col">
         <div class="name">伪90后畅唱</div>
         <div class="">简单又有思想，真诚中流露着狡猾，看…</div>
       </div>
-      <div class="focus">
+      <div class="focus flex-col">
         <p>关注</p>
       </div>
     </div>
-    <div class="title">
-      简介
-    </div>
-    <div class="teacher-msg" id="teacher-msg" v-html="msg">
+      <div class="title">
+        简介
+      </div>
+    <div class="markdown" id="teacher-msg" v-html="msg">
       {{showMarkdown}}
     </div>
   </div>
@@ -76,6 +76,7 @@
     margin: 0px;
   }
   .title {
+    position: relative;
     height: 0.36rem;
     font-size: 16px;
     padding: 0.32rem 0.31rem;
@@ -93,34 +94,26 @@
   }
 
   .frm-teacher {
-    display: flex;
-    flex-flow: row nowrap;
-    height: 0.7rem;
+    justify-content: space-between;
     margin: 0.1rem 0.3rem;
     padding-bottom: 0.3rem;
     border-bottom: 0.01rem #DDDDDD solid;
   }
-
+  .teacher-msg {
+    align-items: left;
+  }
   .avatar {
     width: 0.72rem;
     height: 0.7rem;
   }
 
-  .teacher-msg {
-    display: flex;
-    flex-direction: column;
-  }
-
   .name {
-    width: 1.56rem;
-    height: 0.28rem;
-    font-size: 0.3rem;
+    font-size: 15px;
   }
 
   .name + div {
     width: 4.38rem;
-    height: 0.24rem;
-    font-size: 0.24rem;
+    font-size: 12px;
     margin-top: 0.15rem;
     color: rgba(128, 128, 128, 1);
     line-height: 0.36rem;
@@ -131,15 +124,13 @@
     height: 0.48rem;
     border: 1px solid rgba(42, 78, 196, 1);
     border-radius: 0.24rem;
-    font-size: 0.24rem;
   }
 
   .focus p {
     position: relative;
     width: 0.7rem;
-    height: 0.23rem;
-    padding-left: 0.52rem;
-    font-size: 0.23rem;
+    padding-left: 0.5rem;
+    font-size: 12px;
     color: rgba(42, 78, 196, 1);
     line-height: 0.48rem;
   }
@@ -154,7 +145,7 @@
     border-radius: 0.01rem;
   }
 
-  .teacher-msg {
+  .markdown {
     font-size:15px;
     line-height:30px;
     color:rgba(51,51,51,1);
@@ -174,18 +165,21 @@
     margin: 0.4rem auto 0.2rem auto;
     background:rgba(47,87,218,1);
     border-radius: 0.3rem ;
+    letter-spacing: 0.04rem;
     color: white;
     text-align: center;
     line-height: 0.6rem;
   }
   li{
+    position: relative;
     margin-left: 0.31rem;
+    letter-spacing: 0.01rem;
     list-style: none;
   }
   li:before{
     content: '●';
     position: absolute;
-    left: 0.41rem;
+    left: -0.3rem;
     font-size: 0.2rem;
     color: blue;
   }

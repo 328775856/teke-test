@@ -1,6 +1,6 @@
 <template>
   <div class="c-contents">
-    <div class="box flex-col" v-for="(item,index) in data" :key="index" ref="num">
+    <div class="box flex-col" v-for="(item,index) in catalogData" :key="index" ref="num">
       <div class="frm-content flex-row">
         <div class="img">
           <img class="img" :src="item.cover">
@@ -33,26 +33,26 @@
 <script>
   export default {
     name: "Catalog",
+    props: ['catalogData'],
     data() {
       return {
-        data: []
       }
     },
     methods: {
     },
     created() {
-      this.axios
-        .get('/api/series-catalog', {
-          params: {
-            sn: this.$route.query.sn
-          }
-        })
-        .then(res => {
-            if (res.data.error === '0') {
-              this.data = res.data.data
-            }
-          }
-        )
+      // this.axios
+      //   .get('/api/series-catalog', {
+      //     params: {
+      //       sn: this.$route.query.sn
+      //     }
+      //   })
+      //   .then(res => {
+      //       if (res.data.error === '0') {
+      //         this.data = res.data.data
+      //       }
+      //     }
+      //   )
     }
   }
 </script>
@@ -153,9 +153,10 @@
   }
 
   .text button {
+    width: 1.1rem;
     height: 0.36rem;
     border-radius: 0.18rem;
-    font-size: 0.2rem;
+    font-size: 10px;
     color: rgba(255, 255, 255, 1);
     line-height: 0.36rem;
     border: none;

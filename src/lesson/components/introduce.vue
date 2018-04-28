@@ -1,25 +1,25 @@
 <template>
   <div class="c-introduce">
     <div class="container">
-      <a class="" :href="data.target">
-        <img class="frm-img" :src="data.cover">
+      <a class="" :href="introData.target">
+        <img class="frm-img" :src="introData.cover">
       </a>
       <div class="icon-yike icon-user people">
         <div class="icon-yike icon-user"></div>
       </div>
-      <div class="enroll">{{data.enrollment}}人</div>
+      <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
-        <div class="title">{{data.title}}</div>
+        <div class="title">{{introData.title}}</div>
         <!--<div class="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>-->
         <div class="lesson-time">
-          <p class="icon-yike icon-clock">周三开课 {{data.progress[0]}}/{{data.progress[1]}}节</p>
+          <p class="icon-yike icon-clock">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</p>
           <i class="icon-yike icon-gift"></i>
         </div>
         <div class="price">
           <div class="tag">
             <p>特价特惠</p>
           </div>
-          <div class="n-price">￥{{data.price}}</div>
+          <div class="n-price">￥{{introData.price}}</div>
           <div class="o-price">￥300</div>
           <div>邀请有奖</div>
         </div>
@@ -39,23 +39,23 @@
 <script>
   export default {
     name: "introduce",
+    props: ['introData'],
     data() {
       return {
-        data: {}
       }
     },
     created() {
-      this.axios
-        .get('/api/lesson-overview.json', {
-          params: {
-            sn: this.$route.query.sn
-          }
-        })
-        .then(res => {
-          if (res.data.error === '0') {
-            this.data = res.data.data
-          }
-        })
+      // this.axios
+      //   .get('/api/lesson-overview.json', {
+      //     params: {
+      //       sn: this.$route.query.sn
+      //     }
+      //   })
+      //   .then(res => {
+      //     if (res.data.error === '0') {
+      //       this.data = res.data.data
+      //     }
+      //   })
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-modal-notice flex-col" v-if="isShow">
+  <div class="c-modal-notice flex-col" v-if="isShow" :style="{width:width+'px'}">
     <div class="mask" @click="close"></div>
     <div class="frm-modal">
       <div class="head flex-col">
@@ -26,7 +26,7 @@
 <script>
   export default {
     name: 'modal-notice',
-    props: ['title', 'confirm', 'isShow'],
+    props: ['title', 'confirm', 'isShow', 'width'],
     methods: {
       close: function () {
         this.$emit('close')
@@ -37,11 +37,10 @@
 
 <style scoped>
   .c-modal-notice {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
   }
 
   .frm-modal {

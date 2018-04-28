@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <modal-notice title="Hello" confirm="确认" :isShow="isShowNotice" v-on:close="showNotice(false)">
+    <modal-notice title="Hello" confirm="确认" :isShow="isShowNotice" v-on:close="showNotice(false)" :width="width">
       <li>foo</li>
       <li>bar</li>
     </modal-notice>
@@ -45,7 +45,8 @@
         cover: '',
         active: 0,
         cards: [],
-        benefits: {}
+        benefits: {},
+        width: ''
       }
     },
     // created() {
@@ -74,6 +75,7 @@
         })
     },
     mounted() {
+      this.width=document.body.clientWidth
       this.drawCard(0);
       window.onresize = this.canvasResize
     },

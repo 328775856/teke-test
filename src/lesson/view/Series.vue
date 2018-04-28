@@ -1,12 +1,12 @@
 <template>
   <div class="c-series">
     <div class="introduce">
-      <introduce></introduce>
+      <introduce :introData="introData"></introduce>
     </div>
     <div class="tabs">
-      <Tabs></Tabs>
+      <Tabs :catalog="catalog" @catalog="catalogShow"></Tabs>
     </div>
-    <div class="teacher">
+    <div class="teacher" v-if="catalog">
       <div class="title">
         讲师
       </div>
@@ -14,7 +14,7 @@
     </div>
     <div class="title">目录</div>
     <div class="contents">
-      <catalog></catalog>
+      <catalog :catalogData="catalogData"></catalog>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon">
@@ -24,12 +24,8 @@
         <span class="icon-yike icon-arrow-r"></span>
       </div>
     </div>
-    <div class="frm-qrcode flex-row">
-      <div class="text">如果对课程内容及产品使用上有任何建议和疑惑，请通过添加右侧二维码与我们进行联系沟通。</div>
-      <div class="">
-        <div></div>
-        <div></div>
-      </div>
+    <div class="qrcode">
+      <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
       <bottom-btn></bottom-btn>
@@ -43,35 +39,65 @@
   import Catalog from '../components/Catalog.vue'
   import BottomBtn from '../components/bottom-btn.vue'
   import Tabs from '../components/tabs.vue'
+  import Qrcode from '../components/qrcode.vue'
 
   export default {
     name: 'series',
-    components: {Introduce, Teacher, Catalog, BottomBtn, Tabs},
+    components: {Introduce, Teacher, Catalog, BottomBtn, Tabs, Qrcode},
     data() {
       return {
-        data: []
+        introData: [],
+        catalogData: [],
+        catalog: true
       }
     },
     created() {
-      this.axios
-        .get('/api/series-catalog', {
-          params: {
-            sn: this.$route.query.sn
-          }
-        })
-        .then(res => {
-          if (res.data.error === '0') {
-            this.data = res.data.data
-          }
-        })
+      this.fetchCatalog()
+      this.fetchIntroduce()
+    },
+    methods: {
+      fetchCatalog() {
+        this.axios
+          .get('/api/series-catalog', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.catalogData = res.data.data
+            }
+          })
+      },
+      fetchIntroduce() {
+        this.axios
+          .get('/api/lesson-overview', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.introData = res.data.data
+            }
+          })
+      },
+      fetchTeacher() {
+        this.axios
+          .get('api-lesson-')
+      },
+      catalogShow() {
+        this.catalog = !this.catalog
+      }
     }
   }
 </script>
 
 <style scoped>
-  .icon-arrow-r{
+  .icon-arrow-r {
     font-size: 0.24rem;
   }
+
   .c-series {
     background: #F2F2F2;
   }
@@ -82,6 +108,7 @@
   }
 
   .title {
+    position: relative;
     height: 0.36rem;
     font-size: 16px;
     padding: 0.32rem 0.31rem;
@@ -123,26 +150,7 @@
     padding-top: 0.1rem;
   }
 
-  .frm-qrcode {
-    justify-content: space-between;
-    background: white;
-    padding: 0.71rem 0.3rem 0.49rem 0.3rem;
-  }
-
-  .text {
-    width: 3rem;
-    padding-right: 0.3rem;
-    border-right: 1px solid #ccc;
-    font-size: 14px;
-    color: rgba(102, 102, 102, 1);
-    line-height: 24px;
-
-  }
-
-  .text + div {
-    width: 3rem;
-  }
-  .tabs{
+  .tabs {
     width: 100%;
     height: 1rem;
     position: sticky;
@@ -150,16 +158,20 @@
     top: 0;
     background: #fff;
   }
-  .bottom-btn {
-    position: sticky;
-    bottom: 0;
-    z-index: 3;
+  .qrcode{
   }
+
 </style>
 <style>
   .tab {
     position: sticky;
     top: 0;
+  }
+  .bottom-btn {
+    position: fixed;
+    width: 7.5rem;
+    bottom: 0;
+    z-index: 3;
   }
   .contents div:first-child .box .frm-content {
     border-top: 0;

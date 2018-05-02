@@ -1,9 +1,12 @@
 <template>
   <div class="c-evaluate">
     <div class="flex-col">
-      <div class="flex-row">
-        <div class="nickname">Akiko</div>
-        <div class="star"></div>
+      <div class="flex-row nickname">
+        <div class="flex-row">
+          <div class="pie-b"></div>
+          <div>Akiko</div>
+        </div>
+        <div class="star">12345</div>
       </div>
       <div class="time">2018-04-15</div>
       <div class="text">这次的课程真的特别好，收获很大！</div>
@@ -19,17 +22,25 @@
 
 <style scoped>
   .c-evaluate{
-    padding:0  0.3rem;
+    padding:0.1rem 0.3rem 0.5rem  0.3rem;
     background: white;
   }
-  .flex-col {
-    padding: 0 0.3rem;
+  .c-evaluate .flex-col{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
   }
-
-  .flex-row {
+  .nickname{
+    justify-content: space-between;
     width: 100%;
     height: 0.6rem;
     line-height: 0.6rem;
+  }
+  .pie-b{
+    border-width: 0.3rem;
+    border-radius: 0.3rem;
+  }
+  .pie-b+div{
+    padding-left: 0.32rem;
   }
   .time{
     width: 100%;

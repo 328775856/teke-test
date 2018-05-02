@@ -1,7 +1,7 @@
 <template>
   <div class="c-introduce">
-    <div class="container">
-      <a class="" :href="introData.target">
+    <div class="container"  v-if="introData && introData.progress">
+      <a class="" :href="introData.target" >
         <img class="frm-img" :src="introData.cover">
       </a>
       <div class="icon-yike icon-user people">
@@ -10,12 +10,22 @@
       <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
         <div class="title">{{introData.title}}</div>
-        <!--<div class="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>-->
-        <div class="lesson-time">
-          <p class="icon-yike icon-clock">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</p>
+        <!--单课内容-->
+        <div class="single" v-if="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>
+        <!--单课内容结束-->
+        <div class="lesson-time flex-row" v-if="!single">
+          <p class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</p>
           <i class="icon-yike icon-gift"></i>
         </div>
-        <div class="price">
+        <!--单课内容-->
+        <div class="lesson-time flex-row" v-if="single">
+          <p class="icon-yike icon-clock flex-row">2018-04-20 20:00
+            <button :class="introData.status">{{introData.status | status}}</button>
+          </p>
+          <i class="icon-yike icon-gift"></i>
+        </div>
+        <!--单课内容结束-->
+        <div class="price" v-if="!single">
           <div class="tag">
             <p>特价特惠</p>
           </div>
@@ -23,6 +33,12 @@
           <div class="o-price">￥300</div>
           <div>邀请有奖</div>
         </div>
+        <!--单课内容-->
+        <div class="flex-row single-price" v-if="single">
+          <div class="s-price">￥90</div>
+          <div>邀请有奖</div>
+        </div>
+        <!--单课内容结束-->
       </div>
       <div class="frm-tips flex-row">
         <div class="text">
@@ -39,7 +55,7 @@
 <script>
   export default {
     name: "introduce",
-    props: ['introData'],
+    props: ['introData', 'single'],
     data() {
       return {
       }
@@ -145,25 +161,33 @@
   }
 
   .lesson-time {
-    position: relative;
+    justify-content: space-between;
+    width: 100%;
     height: 0.8rem;
     line-height: 0.8rem;
   }
 
   .lesson-time p {
-    display: flex;
-    flex-flow: row;
-    width: 2.21rem;
-    height: 0.23rem;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
     font-size: 0.24rem;
     color: rgba(128, 128, 128, 1);
   }
+  .lesson-time button{
+    width: 1.1rem;
+    height: 0.36rem;
+    margin-left: 0.21rem;
+    border-radius: 0.18rem;
+    font-size: 0.2rem;
+    color: #fff;
+    border: none;
+  }
 
   .icon-gift:before {
-    position: absolute;
-    right: 0.2rem;
     font-size: 0.5rem;
     color: #2F57DA;
+    padding-right: 0.14rem;
   }
 
   .price {
@@ -206,7 +230,7 @@
     height: 0.32rem;
     padding-left: 0.31rem;
     font-size: 0.42rem;
-    color: rgba(242, 63, 21, 1);
+    color:#F23F15;
     line-height: 0.32rem;
   }
 
@@ -225,10 +249,30 @@
     height: 0.23rem;
     padding: 0.13rem 0 0 2.45rem;
     font-size: 0.2rem;
-    text-align: center;
-    color: rgba(102, 102, 102, 1);
+    text-align: right;
+    color: #666666;
   }
-
+  .single{
+    padding-top: 0.3rem;
+    font-size:0.24rem;
+  }
+  .single-price{
+    justify-content: space-between;
+    padding-bottom: 0.3rem;
+  }
+  .s-price{
+    color:#F23F15;
+    font-size: 0.42rem;
+    text-indent:-0.1rem
+  }
+  .s-price+div{
+    width: 0.96rem;
+    height: 0.23rem;
+    padding: 0.13rem 0 0 2.45rem;
+    font-size: 0.2rem;
+    text-align: right;
+    color: #666666;
+  }
   .frm-tips {
     justify-content: space-between;
     height: 0.8rem;
@@ -261,6 +305,9 @@
   .icon-arrow-r:before {
     position: absolute;
     top: 0.04rem;
+    width: 0.3rem;
+    height: 0.3rem;
     font-size: 0.24rem;
+    text-align: right;
   }
 </style>

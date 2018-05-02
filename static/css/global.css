@@ -51,3 +51,31 @@ button{
   background: rgba(0,0,0,0.5);
   z-index: 99;
 }
+.pie-r{
+  border-style:solid;
+  border-color: #FCAEAE #F7E1BB #CF5544 #FCAEAE;
+  overflow:hidden;
+}
+.pie-b{
+  border-style:solid;
+  border-color: #9892D5 #AEF7FC #9892D5 #9892D5;
+  overflow:hidden;
+}
+.pie-y{
+  border-style:solid;
+  border-color: #F7E1BB #3E4AB8 #3E4AB8 #F7E1BB;
+  overflow:hidden;
+}
+
+
+.finish {
+  background: rgba(255, 126, 126, 1);
+}
+
+.beginning {
+  background: rgba(93, 201, 106, 1);
+}
+
+.no {
+  background: rgba(216, 193, 153, 1);
+}

@@ -3,6 +3,9 @@
     <div class="bottom-btn flex-row">
       <div class="home button flex-col flex-item icon-yike icon-home">首页</div>
       <div class="like button flex-col flex-item  icon-yike icon-like">收藏</div>
+      <!--单课内容-->
+      <div class="like button flex-col flex-item  icon-yike icon-like" v-if="single">交流</div>
+      <!--单课内容结束-->
       <button class="enroll button">报名系列课</button>
     </div>
   </div>
@@ -10,7 +13,8 @@
 
 <script>
   export default {
-    name: "bottom-btn"
+    name: "bottom-btn",
+    props: ['single']
   }
 </script>
 

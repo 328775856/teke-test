@@ -1,20 +1,20 @@
 <template>
-  <div class="c-teacher">
+  <div class="c-teacher" v-if="teacherData && teacherData.teacher">
     <div class="frm-teacher flex-row">
-      <div class="avatar">1</div>
+      <div class="avatar">{{teacherData.teacher.avatar}}</div>
       <div class="teacher-msg flex-col">
-        <div class="name">伪90后畅唱</div>
-        <div class="">简单又有思想，真诚中流露着狡猾，看…</div>
+        <div class="name">{{teacherData.teacher.name}}</div>
+        <div class="">{{teacherData.teacher.info}}</div>
       </div>
       <div class="focus flex-col">
         <p>关注</p>
       </div>
     </div>
-      <div class="title">
-        简介
-      </div>
-    <div class="markdown" id="teacher-msg" v-html="msg">
-      {{showMarkdown}}
+    <div class="title">
+      简介
+    </div>
+    <div class="markdown" id="teacher-msg">
+      {{teacherData.teacher.introduce}}
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@
 
   export default {
     name: "teacher",
+    props: ['teacherData'],
     components: {markdown},
     data() {
       return {
@@ -62,8 +63,8 @@
       }
     },
     computed: {
-      showMarkdown () {
-        let that=this
+      showMarkdown() {
+        let that = this
         that.msg = markdown.toHTML(that.msg)
         return that.msg
       }
@@ -75,6 +76,7 @@
   p {
     margin: 0px;
   }
+
   .title {
     position: relative;
     height: 0.36rem;
@@ -99,15 +101,18 @@
     padding-bottom: 0.3rem;
     border-bottom: 0.01rem #DDDDDD solid;
   }
+
   .teacher-msg {
     align-items: left;
   }
+
   .avatar {
     width: 0.72rem;
     height: 0.7rem;
   }
 
   .name {
+    width: 100%;
     font-size: 15px;
   }
 
@@ -146,47 +151,51 @@
   }
 
   .markdown {
-    font-size:15px;
-    line-height:30px;
-    color:rgba(51,51,51,1);
+    font-size: 15px;
+    line-height: 30px;
+    color: rgba(51, 51, 51, 1);
     margin: 0 0.31rem;
     padding-bottom: 0.3rem;
   }
 </style>
 <style>
-  h1,h2,h3,h4,h5,ul,li{
+  h1, h2, h3, h4, h5, ul, li {
     margin: 0;
     padding: 0;
   }
 
-  h4:nth-child(3),h4:nth-child(5){
-    width:2.9rem;
-    height:0.6rem;
+  h4:nth-child(3), h4:nth-child(5) {
+    width: 2.9rem;
+    height: 0.6rem;
     margin: 0.4rem auto 0.2rem auto;
-    background:rgba(47,87,218,1);
-    border-radius: 0.3rem ;
+    background: rgba(47, 87, 218, 1);
+    border-radius: 0.3rem;
     letter-spacing: 0.04rem;
     color: white;
     text-align: center;
     line-height: 0.6rem;
   }
-  li{
+
+  li {
     position: relative;
     margin-left: 0.31rem;
     letter-spacing: 0.01rem;
     list-style: none;
   }
-  li:before{
+
+  li:before {
     content: '●';
     position: absolute;
     left: -0.3rem;
     font-size: 0.2rem;
     color: blue;
   }
-  ul:nth-child(2) li:first-child, ul:nth-child(2) li:last-child{
+
+  ul:nth-child(2) li:first-child, ul:nth-child(2) li:last-child {
     margin: 0;
   }
-  ul:nth-child(2) li:first-child:before, ul:nth-child(2) li:last-child:before{
+
+  ul:nth-child(2) li:first-child:before, ul:nth-child(2) li:last-child:before {
     content: '';
   }
 </style>

@@ -2,7 +2,7 @@
   <div class="c-tabs">
     <div class="tab">
       <div :class="{active:isActive}" @click="active">课程</div>
-      <div :class="{active:!isActive}" @click="active">目录</div>
+      <div :class="{active:!isActive}" @click="active">{{title}}</div>
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
   export default {
     name: "tabs",
-    props: ['catalog'],
+    props: ['catalog', 'title'],
     data() {
       return {
         isActive: true,

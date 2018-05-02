@@ -1,6 +1,6 @@
 <template>
   <div class="c-contents">
-    <div class="box flex-col" v-for="(item,index) in catalogData" :key="index" ref="num">
+    <div class="box flex-col" v-for="(item,index) in relativeData" :key="index" ref="num">
       <div class="frm-content flex-row">
         <div class="img">
           <img class="img" :src="item.cover">
@@ -32,8 +32,8 @@
 
 <script>
   export default {
-    name: "Catalog",
-    props: ['catalogData'],
+    name: "relative",
+    props: ['relativeData'],
     data() {
       return {
       }

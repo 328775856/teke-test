@@ -1,26 +1,26 @@
 <template>
   <div class="c-series">
     <div class="introduce">
-      <introduce :introData="introData"></introduce>
+      <introduce :introData="introData" :single="single"></introduce>
     </div>
     <div class="tabs">
-      <Tabs :catalog="catalog" @catalog="catalogShow"></Tabs>
+      <Tabs :catalog="catalog" @catalog="catalogShow" :title="title"></Tabs>
     </div>
     <div class="teacher" v-if="catalog">
       <div class="title">
         讲师
       </div>
-      <teacher></teacher>
+      <teacher :teacherData="teacherData"></teacher>
     </div>
     <div class="title">目录</div>
     <div class="contents">
       <catalog :catalogData="catalogData"></catalog>
     </div>
     <div class="title invite flex-row">邀请达人榜
-      <div class="icon">
-        <span>123</span>
-        <span>123</span>
-        <span>123</span>
+      <div class="icon flex-row">
+        <span class="pie-r"></span>
+        <span class="pie-b"></span>
+        <span class="pie-y"></span>
         <span class="icon-yike icon-arrow-r"></span>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <bottom-btn></bottom-btn>
+      <bottom-btn :single="single"></bottom-btn>
     </div>
   </div>
 </template>
@@ -48,12 +48,16 @@
       return {
         introData: [],
         catalogData: [],
-        catalog: true
+        teacherData: [],
+        single: false,
+        catalog: true,
+        title: '目录'
       }
     },
     created() {
       this.fetchCatalog()
       this.fetchIntroduce()
+      this.fetchTeacher()
     },
     methods: {
       fetchCatalog() {
@@ -84,7 +88,16 @@
       },
       fetchTeacher() {
         this.axios
-          .get('api-lesson-')
+          .get('/api/lesson-introduce', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.teacherData = res.data.data
+            }
+          })
       },
       catalogShow() {
         this.catalog = !this.catalog
@@ -131,19 +144,20 @@
     justify-content: space-between;
   }
 
-  .invite > div span {
-    width: 0.6rem;
-    height: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 0.4rem;
-    color: white;
-  }
+  /*.invite > div span {*/
+  /*border: 1px solid #ccc;*/
+  /*border-radius: 0.4rem;*/
+  /*color: white;*/
+  /*}*/
 
   .invite > div span:last-child {
-    padding: 0;
-    border: 0;
     color: #808080;
     font-weight: bold;
+    margin-left: 0.06rem;
+    text-align: right;
+  }
+
+  .invite .icon-arrow-r:before {
   }
 
   .contents div:first-child {
@@ -154,25 +168,30 @@
     width: 100%;
     height: 1rem;
     position: sticky;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     background: #fff;
   }
-  .qrcode{
+
+  .qrcode {
   }
 
-</style>
-<style>
-  .tab {
-    position: sticky;
-    top: 0;
+  .invite .pie-r, .invite .pie-b, .invite .pie-y {
+    display: block;
+    border-radius: 0.3rem;
+    border-width: 0.3rem;
+    margin-left: 0.1rem;
   }
+
   .bottom-btn {
     position: fixed;
     width: 7.5rem;
     bottom: 0;
     z-index: 3;
   }
+</style>
+<style>
+
   .contents div:first-child .box .frm-content {
     border-top: 0;
   }

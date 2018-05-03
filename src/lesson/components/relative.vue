@@ -9,17 +9,14 @@
           <div class="text flex-row">
             <div class="msg">{{item.title}}</div>
             <div class="status flex-col">
-              <!--<button :class="item.status" v-if="item.status==='finish'?status='可回放':''" :status="status">{{status}}</button>-->
-              <!--<button :class="item.status" v-else-if="item.status==='beginning'?status='开课中':''" :status="status">{{status}}</button>-->
-              <!--<button :class="item.status" v-else-if="item.status==='no'?status='未开课':''" :status="status">{{status}}</button>-->
               <button :class="item.status">{{item.status | status}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
           <div class="time flex-row">
 
-            <div class="icon-yike icon-user people">
-              <div class="icon-yike icon-user"></div>
+            <div class="icon-yike icon-my-selected people">
+              <div class="icon-yike icon-my-selected"></div>
             </div>
             <div class="enroll">{{item.enrollment}}人</div>
             <span>{{item.start_time}}</span>
@@ -63,7 +60,7 @@
     position: relative;
     font-size: 0.24rem;
   }
-  .people.icon-user:before {
+  .people.icon-my-selected:before {
     position: absolute;
     top: -0.17rem;
     left:  -0.1rem;
@@ -72,7 +69,7 @@
     z-index: 2;
   }
 
-  .icon-user .icon-user:before {
+  .icon-my-selected .icon-my-selected:before {
     position: absolute;
     top: -0.17rem;
     color: #CCCCCC;
@@ -100,7 +97,7 @@
     justify-content: flex-start;
     width: 100%;
     padding: 0.3rem 0;
-    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
   }
 
   .img {

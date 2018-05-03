@@ -4,9 +4,9 @@
       <introduce :introData="introData" :single="single"></introduce>
     </div>
     <div class="tabs">
-      <Tabs :catalog="catalog" @catalog="catalogShow" :title="title"></Tabs>
+      <Tabs :show="isShow" @catalog="catalogShow" :title="title"></Tabs>
     </div>
-    <div class="teacher" v-if="catalog">
+    <div class="teacher" v-if="isShow">
       <div class="title">
         讲师
       </div>
@@ -50,7 +50,7 @@
         catalogData: [],
         teacherData: [],
         single: false,
-        catalog: true,
+        isShow: true,
         title: '目录'
       }
     },
@@ -100,7 +100,7 @@
           })
       },
       catalogShow() {
-        this.catalog = !this.catalog
+        this.isShow = !this.isShow
       }
     }
   }
@@ -191,8 +191,7 @@
   }
 </style>
 <style>
-
-  .contents div:first-child .box .frm-content {
-    border-top: 0;
+  .box:last-child .frm-content{
+    border-bottom: 0;
   }
 </style>

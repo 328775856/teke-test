@@ -1,20 +1,20 @@
 <template>
   <div class="c-single">
-    <div class="bottom">
+    <div class="introduce">
       <introduce :introData="introData" :single="single"></introduce>
     </div>
     <div class="tabs">
-      <tabs :catalog="catalog" @catalog="catalogShow" :title="title"></tabs>
+      <tabs :show="isShow" @relative="relativeShow" :title="title"></tabs>
     </div>
-    <div>
-      <div class="teacher" v-if="catalog">
-        <div class="title">
-          讲师
+    <div v-if="isShow">
+      <div>
+        <div class="teacher">
+          <div class="title">
+            讲师
+          </div>
+          <teacher :teacherData="teacherData"></teacher>
         </div>
-        <teacher :teacherData="teacherData" v-if="teacherData"></teacher>
       </div>
-    </div>
-    <div>
       <div class="title">
         <div class="flex-row">相关系列课
           <div class="flex-row">查看完整课程
@@ -22,8 +22,8 @@
           </div>
         </div>
       </div>
-      <div>
-        <relative  v-if="relativeData" :relativeData="relativeData"></relative>
+      <div class="relative">
+        <relative :relative="relativeShow" :relativeData="relativeData"></relative>
       </div>
     </div>
     <div>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div>
-      <evaluate></evaluate>
+      <evaluate :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">
@@ -70,8 +70,9 @@
         introData: [],
         relativeData: [],
         teacherData: [],
-        catalog: true,
+        ratingData: [],
         single: true,
+        isShow: true,
         title: '评价'
       }
     },
@@ -79,6 +80,7 @@
       this.fetchRelative()
       this.fetchIntroduce()
       this.fetchTeacher()
+      this.fetchRating()
     },
     methods: {
       fetchRelative() {
@@ -120,9 +122,22 @@
             }
           })
       },
-
-      catalogShow() {
-        this.catalog = !this.catalog
+      fetchRating() {
+        this.axios
+          .get('/api/lesson-rating', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.ratingData = res.data.data
+              console.log('success')
+            }
+          })
+      },
+      relativeShow() {
+        this.isShow = !this.isShow
       }
     }
   }
@@ -133,11 +148,7 @@
     background: #F2F2F2;
   }
 
-  .bottom {
-    margin-bottom: 0.3rem;
-  }
-
-  .introduce, .teacher {
+  .introduce, .teacher, .relative, .bottom {
     margin-bottom: 0.2rem;
     background: #fff;
   }
@@ -230,6 +241,7 @@
     border-width: 0.3rem;
     margin-left: 0.1rem;
   }
+
   .bottom-btn {
     position: fixed;
     width: 7.5rem;
@@ -238,4 +250,7 @@
   }
 </style>
 <style>
+  .box:last-child .frm-content {
+    border: 0;
+  }
 </style>

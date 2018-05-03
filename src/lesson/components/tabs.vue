@@ -10,11 +10,11 @@
 <script>
   export default {
     name: "tabs",
-    props: ['catalog', 'title'],
+    props: ['isShow', 'title'],
     data() {
       return {
         isActive: true,
-        show: this.catalog
+        show: this.isShow
       }
     },
     methods: {
@@ -22,6 +22,7 @@
         this.isActive = !this.isActive
         this.show = !this.show
         this.$emit('catalog')
+        this.$emit('relative')
       }
     }
   }

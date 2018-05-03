@@ -1,11 +1,11 @@
 <template>
   <div class="c-introduce">
-    <div class="container"  v-if="introData && introData.progress">
-      <a class="" :href="introData.target" >
+    <div class="container">
+      <a  :href="introData.target" >
         <img class="frm-img" :src="introData.cover">
       </a>
-      <div class="icon-yike icon-user people">
-        <div class="icon-yike icon-user"></div>
+      <div class="icon-yike icon-my-selected people">
+        <div class="icon-yike icon-my-selected"></div>
       </div>
       <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
@@ -15,14 +15,14 @@
         <!--单课内容结束-->
         <div class="lesson-time flex-row" v-if="!single">
           <p class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</p>
-          <i class="icon-yike icon-gift"></i>
+          <i class="icon-yike icon-share"></i>
         </div>
         <!--单课内容-->
         <div class="lesson-time flex-row" v-if="single">
           <p class="icon-yike icon-clock flex-row">2018-04-20 20:00
             <button :class="introData.status">{{introData.status | status}}</button>
           </p>
-          <i class="icon-yike icon-gift"></i>
+          <i class="icon-yike icon-share"></i>
         </div>
         <!--单课内容结束-->
         <div class="price" v-if="!single">
@@ -42,9 +42,9 @@
       </div>
       <div class="frm-tips flex-row">
         <div class="text">
-          <span class="icon-yike icon-ok"> 永久回放</span>
-          <span class="icon-yike icon-ok"> 无条件退款</span>
-          <span class="icon-yike icon-ok"> 图文语音</span>
+          <span class="icon-yike icon-select"> 永久回放</span>
+          <span class="icon-yike icon-select"> 无条件退款</span>
+          <span class="icon-yike icon-select"> 图文语音</span>
         </div>
         <a class="icon-yike icon-arrow-r" href=""></a>
       </div>
@@ -102,7 +102,7 @@
     z-index: 2;
   }
 
-  .icon-user .icon-user:before {
+  .icon-my-selected .icon-my-selected:before {
     position: absolute;
     color: #ccc;
     font-size: 0.2rem;
@@ -114,14 +114,6 @@
 
   p {
     margin: 0px;
-  }
-
-  .icon-clock:before {
-    display: inline-block;
-    position: relative;
-    left: -0.1rem;
-    font-size: 0.5rem;
-    color: rgba(47, 87, 218, 1);
   }
 
   .icon-information:before {
@@ -174,6 +166,12 @@
     font-size: 0.24rem;
     color: rgba(128, 128, 128, 1);
   }
+
+  .icon-clock:before {
+    padding-right: 0.13rem;
+    font-size: 0.33rem;
+    color: rgba(47, 87, 218, 1);
+  }
   .lesson-time button{
     width: 1.1rem;
     height: 0.36rem;
@@ -183,11 +181,15 @@
     color: #fff;
     border: none;
   }
-
-  .icon-gift:before {
+  .icon-share{
+    justify-content: flex-end;
+    height: 0.8rem;
+    padding:0.4rem 0.14rem 0 0;
+  }
+  .icon-share:before {
+    height: 0.8rem;
     font-size: 0.5rem;
     color: #2F57DA;
-    padding-right: 0.14rem;
   }
 
   .price {

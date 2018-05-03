@@ -1,22 +1,23 @@
 <template>
   <div class="c-evaluate">
-    <div class="flex-col">
+    <div class="frm" v-for="item in ratingData.list" :key="item.nickname">
       <div class="flex-row nickname">
         <div class="flex-row">
-          <div class="pie-b"></div>
-          <div>Akiko</div>
+            <img class="avatar" :src="item.user.avatar">
+          <span>{{item.user.name}}</span>
         </div>
-        <div class="star">12345</div>
+        <div class="star">{{item.score}}</div>
       </div>
-      <div class="time">2018-04-15</div>
-      <div class="text">这次的课程真的特别好，收获很大！</div>
+      <div class="time">{{item.tms}}</div>
+      <div class="text">{{item.remark}}</div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "evaluate"
+    name: "evaluate",
+    props: ['ratingData']
   }
 </script>
 
@@ -25,9 +26,9 @@
     padding:0.1rem 0.3rem 0.5rem  0.3rem;
     background: white;
   }
-  .c-evaluate .flex-col{
+  .frm{
     border-bottom: 1px solid #ccc;
-    padding-bottom: 0.3rem;
+    padding: 0.3rem 0;
   }
   .nickname{
     justify-content: space-between;
@@ -35,11 +36,12 @@
     height: 0.6rem;
     line-height: 0.6rem;
   }
-  .pie-b{
-    border-width: 0.3rem;
+  .avatar{
+    width:0.6rem;
+    height:0.6rem;
     border-radius: 0.3rem;
   }
-  .pie-b+div{
+  .avatar+span{
     padding-left: 0.32rem;
   }
   .time{

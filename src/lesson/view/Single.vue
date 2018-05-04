@@ -1,20 +1,34 @@
 <template>
   <div class="c-single">
-    <div class="bottom">
-      <introduce :introData="introData" :single="single"></introduce>
-    </div>
-    <div class="tabs">
-      <tabs :catalog="catalog" @catalog="catalogShow" :title="title"></tabs>
-    </div>
-    <div>
-      <div class="teacher" v-if="catalog">
-        <div class="title">
-          讲师
-        </div>
-        <teacher :teacherData="teacherData" v-if="teacherData"></teacher>
+    <div class="introduce">
+      <div class="i-header">
+        <introduce :introData="introData"></introduce>
+      </div>
+      <div class="i-content">
+        <single-intro :introData="introData"></single-intro>
+      </div>
+      <div class="i-bottom">
+        <intro-bottom></intro-bottom>
       </div>
     </div>
-    <div>
+    <div class="tabs flex-row">
+      <tabs @click.native="active(index)"
+            :tabs="tabs"
+            :idx="index"
+            v-for="(item,index) in tabs"
+            :key="index"
+            :class="{active:isActive===index}">
+      </tabs>
+    </div>
+    <div v-if="isActive===0">
+      <div>
+        <div class="teacher">
+          <div class="title">
+            讲师
+          </div>
+          <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+        </div>
+      </div>
       <div class="title">
         <div class="flex-row">相关系列课
           <div class="flex-row">查看完整课程
@@ -22,19 +36,19 @@
           </div>
         </div>
       </div>
-      <div>
-        <relative  v-if="relativeData" :relativeData="relativeData"></relative>
+      <div class="relative">
+        <relative :relativeData="relativeData"></relative>
       </div>
     </div>
     <div>
-      <div class="title flex-row">评分(5.0)
-        <div class="flex-row people">已有25人评价
+      <div class="title flex-row">评分({{ratingData.total.score}})
+        <div class="flex-row people">已有{{ratingData.total.turnout}}人评价
           <div class="icon-yike icon-arrow-r"></div>
         </div>
       </div>
     </div>
     <div>
-      <evaluate></evaluate>
+      <evaluate :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">
@@ -48,37 +62,40 @@
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <bottom-btn :single="single"></bottom-btn>
+      <single-btn></single-btn>
     </div>
   </div>
 </template>
 
 <script>
   import Introduce from '../components/introduce.vue'
+  import SingleIntro from '../components/singleIntro.vue'
+  import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
   import Relative from '../components/relative.vue'
-  import BottomBtn from '../components/bottom-btn.vue'
   import Tabs from '../components/tabs.vue'
   import Evaluate from '../components/evaluate.vue'
   import Qrcode from '../components/qrcode.vue'
+  import SingleBtn from '../components/single-btn.vue'
 
   export default {
     name: "single",
-    components: {Introduce, Teacher, BottomBtn, Tabs, Evaluate, Qrcode, Relative},
+    components: {Introduce, Teacher, SingleBtn, Tabs, Evaluate, Qrcode, Relative, SingleIntro, IntroBottom},
     data() {
       return {
         introData: [],
         relativeData: [],
         teacherData: [],
-        catalog: true,
-        single: true,
-        title: '评价'
+        ratingData: [],
+        tabs: ['课程', '评价'],
+        isActive: 0
       }
     },
     created() {
       this.fetchRelative()
       this.fetchIntroduce()
       this.fetchTeacher()
+      this.fetchRating()
     },
     methods: {
       fetchRelative() {
@@ -120,9 +137,22 @@
             }
           })
       },
-
-      catalogShow() {
-        this.catalog = !this.catalog
+      fetchRating() {
+        this.axios
+          .get('/api/lesson-rating', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.ratingData = res.data.data
+              console.log('success')
+            }
+          })
+      },
+      active(index) {
+        this.isActive=index
       }
     }
   }
@@ -133,11 +163,7 @@
     background: #F2F2F2;
   }
 
-  .bottom {
-    margin-bottom: 0.3rem;
-  }
-
-  .introduce, .teacher {
+  .introduce, .teacher, .relative, .bottom {
     margin-bottom: 0.2rem;
     background: #fff;
   }
@@ -192,12 +218,6 @@
     justify-content: space-between;
   }
 
-  /*.invite > div span {*/
-  /*border: 1px solid #ccc;*/
-  /*border-radius: 0.4rem;*/
-  /*color: white;*/
-  /*}*/
-
   .invite > div span:last-child {
     color: #808080;
     font-weight: bold;
@@ -213,23 +233,22 @@
   }
 
   .tabs {
-    width: 100%;
-    height: 1rem;
     position: sticky;
     z-index: 3;
     top: 0;
+    width: 100%;
+    height: 1rem;
+    border-bottom: 0.01rem #DDDDDD solid;
     background: #fff;
+    -webkit-tap-highlight-color: transparent;
   }
-
-  .qrcode {
-  }
-
   .invite .pie-r, .invite .pie-b, .invite .pie-y {
     display: block;
     border-radius: 0.3rem;
     border-width: 0.3rem;
     margin-left: 0.1rem;
   }
+
   .bottom-btn {
     position: fixed;
     width: 7.5rem;
@@ -238,4 +257,7 @@
   }
 </style>
 <style>
+  .box:last-child .frm-content {
+    border: 0;
+  }
 </style>

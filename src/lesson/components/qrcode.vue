@@ -1,10 +1,28 @@
 <template>
     <div class="c-qrcode">
       <div class="frm-qrcode flex-row">
-        <div class="text">如果对课程内容及产品使用上有任何建议和疑惑，请通过添加右侧二维码与我们进行联系沟通。</div>
-        <div class="">
-          <div></div>
-          <div></div>
+        <div class="text flex-row">如果对课程内容及产品使用上有任何建议和疑惑，请通过添加右侧二维码与我们进行联系沟通。</div>
+        <div class="img flex-row">
+          <div>
+            <div class="container flex-col">
+              <div>
+                <img src="">
+              </div>
+            </div>
+            <div class="msg flex-row">
+              <div  class="wx icon-yike icon-wxtb  flex-row"></div>易课小助手
+            </div>
+          </div>
+          <div>
+            <div  class="container  flex-col">
+              <div>
+                <img src="">
+              </div>
+            </div>
+            <div class="msg flex-row">
+              <div class="wx icon-yike icon-wxtb flex-row"></div>易课公众号
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -17,32 +35,64 @@
 </script>
 
 <style scoped>
-
+  .c-qrcode{
+  }
   .frm-qrcode {
     justify-content: space-between;
-    background: white;
+    height: 100%;
     padding: 0.71rem 0.3rem 1.49rem 0.3rem;
+    background: white;
   }
 
   .text {
-    width: 3rem;
-    padding-right: 0.3rem;
+    width: 3.2rem;
+    height: 1.77rem;
+    padding-right: 0.2rem;
     border-right: 1px solid #ccc;
     font-size: 14px;
     color: rgba(102, 102, 102, 1);
     line-height: 24px;
-
   }
-
-  .text + div {
-    width: 3rem;
-  }
-</style>
-<style>
-  .frm-qrcode {
+  .img{
+    width: 3.18rem;
     justify-content: space-between;
-    background: white;
-    padding: 0.71rem 0.3rem 1.49rem 0.3rem;
-    padding-bottom: 2rem;
+  }
+  .img>div{
+    width: 1.44rem;
+  }
+  .container{
+    width:1.44rem;
+    height:1.45rem;
+    background: #F7E1BB;
+    border-radius: 10px
+  }
+  .container div{
+    width:1.1rem;
+    height:1.1rem;
+    padding: 0.05rem;
+    background:#fff;
+  }
+  .msg{
+    justify-content: space-between;
+    width: 1.44rem;
+    padding-top: 0.08rem;
+    font-size: 0.21rem;
+    letter-spacing: 1px;
+  }
+  .wx{
+    width:0.24rem;
+    height:0.24rem;
+  }
+  .icon-wxtb:before{
+    color:#29BC60;
+    font-size: 0.25rem;
   }
 </style>
+<!--<style>-->
+  <!--.frm-qrcode {-->
+    <!--justify-content: space-between;-->
+    <!--background: white;-->
+    <!--padding: 0.71rem 0.3rem 1.49rem 0.3rem;-->
+    <!--padding-bottom: 2rem;-->
+  <!--}-->
+<!--</style>-->

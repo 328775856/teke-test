@@ -1,5 +1,5 @@
 <template>
-  <div class="c-teacher" v-if="teacherData && teacherData.teacher">
+  <div class="c-teacher">
     <div class="frm-teacher flex-row">
       <div class="avatar">{{teacherData.teacher.avatar}}</div>
       <div class="teacher-msg flex-col">
@@ -13,8 +13,8 @@
     <div class="title">
       简介
     </div>
-    <div class="markdown" id="teacher-msg">
-      {{teacherData.teacher.introduce}}
+    <div class="markdown" id="teacher-msg" v-html="teacherData.introduce">
+      {{showMarkdown}}
     </div>
   </div>
 </template>
@@ -65,8 +65,8 @@
     computed: {
       showMarkdown() {
         let that = this
-        that.msg = markdown.toHTML(that.msg)
-        return that.msg
+        that.teacherData.introduce = markdown.toHTML(that.teacherData.introduce)
+        return that.teacherData.introduce
       }
     }
   }

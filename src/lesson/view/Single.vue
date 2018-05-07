@@ -1,18 +1,32 @@
 <template>
   <div class="c-single">
     <div class="introduce">
-      <introduce :introData="introData" :single="single"></introduce>
+      <div class="i-header">
+        <introduce :introData="introData"></introduce>
+      </div>
+      <div class="i-content">
+        <single-intro :introData="introData"></single-intro>
+      </div>
+      <div class="i-bottom">
+        <intro-bottom></intro-bottom>
+      </div>
     </div>
-    <div class="tabs">
-      <tabs :show="isShow" @relative="relativeShow" :title="title"></tabs>
+    <div class="tabs flex-row">
+      <tabs @click.native="active(index)"
+            :tabs="tabs"
+            :idx="index"
+            v-for="(item,index) in tabs"
+            :key="index"
+            :class="{active:isActive===index}">
+      </tabs>
     </div>
-    <div v-if="isShow">
+    <div v-if="isActive===0">
       <div>
         <div class="teacher">
           <div class="title">
             讲师
           </div>
-          <teacher :teacherData="teacherData"></teacher>
+          <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
         </div>
       </div>
       <div class="title">
@@ -23,18 +37,18 @@
         </div>
       </div>
       <div class="relative">
-        <relative :relative="relativeShow" :relativeData="relativeData"></relative>
+        <relative :relativeData="relativeData"></relative>
       </div>
     </div>
     <div>
-      <div class="title flex-row">评分(5.0)
-        <div class="flex-row people">已有25人评价
+      <div class="title flex-row"  v-if="ratingData && ratingData.total">评分({{ratingData.total.score}})
+        <div class="flex-row people">已有{{ratingData.total.turnout}}人评价
           <div class="icon-yike icon-arrow-r"></div>
         </div>
       </div>
     </div>
     <div>
-      <evaluate :ratingData="ratingData"></evaluate>
+      <evaluate   v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">
@@ -48,32 +62,33 @@
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <bottom-btn :single="single"></bottom-btn>
+      <single-btn></single-btn>
     </div>
   </div>
 </template>
 
 <script>
   import Introduce from '../components/introduce.vue'
+  import SingleIntro from '../components/singleIntro.vue'
+  import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
   import Relative from '../components/relative.vue'
-  import BottomBtn from '../components/bottom-btn.vue'
   import Tabs from '../components/tabs.vue'
   import Evaluate from '../components/evaluate.vue'
   import Qrcode from '../components/qrcode.vue'
+  import SingleBtn from '../components/single-btn.vue'
 
   export default {
     name: "single",
-    components: {Introduce, Teacher, BottomBtn, Tabs, Evaluate, Qrcode, Relative},
+    components: {Introduce, Teacher, SingleBtn, Tabs, Evaluate, Qrcode, Relative, SingleIntro, IntroBottom},
     data() {
       return {
         introData: [],
         relativeData: [],
         teacherData: [],
         ratingData: [],
-        single: true,
-        isShow: true,
-        title: '评价'
+        tabs: ['课程', '评价'],
+        isActive: 0
       }
     },
     created() {
@@ -136,8 +151,8 @@
             }
           })
       },
-      relativeShow() {
-        this.isShow = !this.isShow
+      active(index) {
+        this.isActive=index
       }
     }
   }
@@ -203,12 +218,6 @@
     justify-content: space-between;
   }
 
-  /*.invite > div span {*/
-  /*border: 1px solid #ccc;*/
-  /*border-radius: 0.4rem;*/
-  /*color: white;*/
-  /*}*/
-
   .invite > div span:last-child {
     color: #808080;
     font-weight: bold;
@@ -224,17 +233,15 @@
   }
 
   .tabs {
-    width: 100%;
-    height: 1rem;
     position: sticky;
     z-index: 3;
     top: 0;
+    width: 100%;
+    height: 1rem;
+    border-bottom: 0.01rem #DDDDDD solid;
     background: #fff;
+    -webkit-tap-highlight-color: transparent;
   }
-
-  .qrcode {
-  }
-
   .invite .pie-r, .invite .pie-b, .invite .pie-y {
     display: block;
     border-radius: 0.3rem;

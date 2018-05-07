@@ -1,57 +1,75 @@
 <template>
   <div class="c-series">
     <div class="introduce">
-      <introduce :introData="introData" :single="single"></introduce>
-    </div>
-    <div class="tabs">
-      <Tabs :show="isShow" @catalog="catalogShow" :title="title"></Tabs>
-    </div>
-    <div class="teacher" v-if="isShow">
-      <div class="title">
-        讲师
+      <div class="i-header">
+        <introduce :introData="introData"></introduce>
       </div>
-      <teacher :teacherData="teacherData"></teacher>
-    </div>
-    <div class="title">目录</div>
-    <div class="contents">
-      <catalog :catalogData="catalogData"></catalog>
-    </div>
-    <div class="title invite flex-row">邀请达人榜
-      <div class="icon flex-row">
-        <span class="pie-r"></span>
-        <span class="pie-b"></span>
-        <span class="pie-y"></span>
-        <span class="icon-yike icon-arrow-r"></span>
+      <div class="i-content">
+        <series-intro v-if="introData && introData.progress" :introData="introData"></series-intro>
+      </div>
+      <div class="i-bottom">
+        <intro-bottom></intro-bottom>
       </div>
     </div>
-    <div class="qrcode">
-      <qrcode></qrcode>
+    <div class="tabs flex-row">
+      <tabs @click.native="active(index)"
+            :tabs="tabs"
+            :idx="index"
+            v-for="(item,index) in tabs"
+            :key="index"
+            :class="{active:isActive===index}">
+      </tabs>
     </div>
+    <div v-if="isActive===0">
+      <div class="teacher">
+        <div class="title">
+          讲师
+        </div>
+        <teacher  v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+      </div>
+    </div>
+      <div class="title">目录</div>
+      <div class="contents">
+        <catalog :catalogData="catalogData"></catalog>
+      </div>
+      <div class="title invite flex-row">邀请达人榜
+        <div class="icon flex-row">
+          <span class="pie-r"></span>
+          <span class="pie-b"></span>
+          <span class="pie-y"></span>
+          <span class="icon-yike icon-arrow-r"></span>
+        </div>
+      </div>
+      <div class="qrcode">
+        <qrcode></qrcode>
+      </div>
     <div class="bottom-btn">
-      <bottom-btn :single="single"></bottom-btn>
+      <series-btn></series-btn>
     </div>
   </div>
 </template>
 
 <script>
   import Introduce from '../components/introduce.vue'
+  import SeriesIntro from '../components/seriesintro.vue'
+  import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
   import Catalog from '../components/Catalog.vue'
-  import BottomBtn from '../components/bottom-btn.vue'
+  import SeriesBtn from '../components/series-btn.vue'
   import Tabs from '../components/tabs.vue'
   import Qrcode from '../components/qrcode.vue'
 
   export default {
     name: 'series',
-    components: {Introduce, Teacher, Catalog, BottomBtn, Tabs, Qrcode},
+    components: {Introduce, Teacher, Catalog, SeriesBtn, Tabs, Qrcode, SeriesIntro, IntroBottom},
     data() {
       return {
         introData: [],
         catalogData: [],
         teacherData: [],
-        single: false,
-        isShow: true,
-        title: '目录'
+        tabs: ['课程', '目录'],
+        isActive: 0,
+        idx: ''
       }
     },
     created() {
@@ -99,8 +117,8 @@
             }
           })
       },
-      catalogShow() {
-        this.isShow = !this.isShow
+      active(index) {
+        this.isActive=index
       }
     }
   }
@@ -165,12 +183,14 @@
   }
 
   .tabs {
-    width: 100%;
-    height: 1rem;
     position: sticky;
     z-index: 3;
     top: 0;
+    width: 100%;
+    height: 1rem;
+    border-bottom: 0.01rem #DDDDDD solid;
     background: #fff;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .qrcode {
@@ -191,7 +211,7 @@
   }
 </style>
 <style>
-  .box:last-child .frm-content{
+  .box:last-child .frm-content {
     border-bottom: 0;
   }
 </style>

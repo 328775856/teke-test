@@ -38,18 +38,6 @@
     methods: {
     },
     created() {
-      // this.axios
-      //   .get('/api/series-catalog', {
-      //     params: {
-      //       sn: this.$route.query.sn
-      //     }
-      //   })
-      //   .then(res => {
-      //       if (res.data.error === '0') {
-      //         this.data = res.data.data
-      //       }
-      //     }
-      //   )
     }
   }
 </script>

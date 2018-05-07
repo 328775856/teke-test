@@ -93,7 +93,10 @@
   .tag p {
     position: absolute;
     z-index: 999;
+<<<<<<< HEAD
     top: -0.28rem;
+=======
+>>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
     left: 0.06rem;
     width: 0.8rem;
     height: 0.2rem;

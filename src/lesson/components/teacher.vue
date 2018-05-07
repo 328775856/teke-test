@@ -13,7 +13,12 @@
     <div class="title">
       简介
     </div>
+<<<<<<< HEAD
     <div class="markdown" v-html="showMarkdown">
+=======
+    <div class="markdown" id="teacher-msg" v-html="teacherData.introduce">
+      {{showMarkdown}}
+>>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
     </div>
   </div>
 </template>
@@ -64,7 +69,12 @@
     computed: {
       showMarkdown() {
         let that = this
+<<<<<<< HEAD
         return markdown.toHTML(that.teacherData.introduce)
+=======
+        that.teacherData.introduce = markdown.toHTML(that.teacherData.introduce)
+        return that.teacherData.introduce
+>>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
       }
     }
   }

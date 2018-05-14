@@ -41,22 +41,14 @@
       </div>
     </div>
     <div>
-<<<<<<< HEAD
       <div class="title flex-row"  v-if="ratingData && ratingData.total">评分({{ratingData.total.score}})
-=======
-      <div class="title flex-row">评分({{ratingData.total.score}})
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
         <div class="flex-row people">已有{{ratingData.total.turnout}}人评价
           <div class="icon-yike icon-arrow-r"></div>
         </div>
       </div>
     </div>
     <div>
-<<<<<<< HEAD
       <evaluate   v-if="ratingData" :ratingData="ratingData"></evaluate>
-=======
-      <evaluate :ratingData="ratingData"></evaluate>
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">

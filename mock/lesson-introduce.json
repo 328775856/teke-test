@@ -8,10 +8,6 @@
       "avatar": "xxx",
       "info": "xxxxx"
     },
-<<<<<<< HEAD
-    "introduce": "#  asd"
-=======
-    "introduce": "# asdasd"
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
+    "introduce": "*.md"
   }
 }

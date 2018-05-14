@@ -50,7 +50,7 @@
 
   .enroll {
     flex: 5.5;
-    background: rgba(47, 87, 218, 1);
+    background: #2F57DA;
     color: white;
     font-size: 0.32rem;
     letter-spacing: 0.02rem;

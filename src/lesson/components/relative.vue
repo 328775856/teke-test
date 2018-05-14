@@ -15,9 +15,9 @@
           </div>
           <div class="time flex-row">
 
-            <div class="icon-yike icon-my-selected people">
-              <div class="icon-yike icon-my-selected"></div>
-            </div>
+            <i class="icon-yike icon-my-selected people">
+              <i class="icon-yike icon-my-selected"></i>
+            </i>
             <div class="enroll">{{item.enrollment}}人</div>
             <span>{{item.start_time}}</span>
           </div>
@@ -86,7 +86,7 @@
 
   .c-contents {
     width: 100%;
-    background: rgba(255, 255, 255, 1);
+    background: #fff;
   }
 
   .box {
@@ -123,7 +123,7 @@
 
   .text div:first-child {
     font-size: 13.5px;
-    color: rgba(13, 13, 13, 1);
+    color: #0D0D0D;
     line-height: 21px;
   }
 
@@ -143,14 +143,14 @@
     height: 0.36rem;
     border-radius: 0.18rem;
     font-size: 10px;
-    color: rgba(255, 255, 255, 1);
+    color: #fff;
     line-height: 0.36rem;
     border: none;
   }
 
   .price {
     font-size: 15px;
-    color: rgba(242, 63, 21, 1);
+    color: #F23F15);
     line-height: 18px;
     text-align: right;
     padding-right: 0.02rem;
@@ -165,7 +165,7 @@
     margin-top: 0.08rem;
     font-size: 12px;
     line-height: 0.36rem;
-    color: rgba(128, 128, 128, 1);
+    color: #808080;
   }
 
   .time .icon-information:before {

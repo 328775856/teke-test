@@ -4,9 +4,9 @@
       <a  :href="introData.target" >
         <img class="frm-img" :src="introData.cover">
       </a>
-      <div class="icon-yike icon-my-selected people">
-        <div class="icon-yike icon-my-selected"></div>
-      </div>
+      <i class="icon-yike icon-my-selected people">
+        <i class="icon-yike icon-my-selected"></i>
+      </i>
       <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
         <div class="title">{{introData.title}}</div>
@@ -100,7 +100,7 @@
     width: 5.85rem;
     height: 0.38rem;
     font-size: 0.36rem;
-    color: rgba(13, 13, 13, 1);
+    color: #0D0D0D;
     line-height: 0.38rem;
   }
 </style>

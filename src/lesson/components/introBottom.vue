@@ -2,9 +2,9 @@
     <div class="c-introBottom">
       <div class="frm-tips flex-row">
         <div class="text">
-          <span class="icon-yike icon-select"> 永久回放</span>
-          <span class="icon-yike icon-select"> 无条件退款</span>
-          <span class="icon-yike icon-select"> 图文语音</span>
+          <i class="icon-yike icon-select"> 永久回放</i>
+          <i class="icon-yike icon-select"> 无条件退款</i>
+          <i class="icon-yike icon-select"> 图文语音</i>
         </div>
         <a class="icon-yike icon-arrow-r" href=""></a>
       </div>
@@ -25,8 +25,7 @@
     background: #FFFCF5;
     color: #999999;
   }
-  .frm-tips span {
-    width: 0.96rem;
+  .frm-tips i {
     font-size: 0.24rem;
     margin-right: .2rem;
   }

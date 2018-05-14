@@ -1,11 +1,11 @@
 <template>
     <div class="series-introduce">
       <div class="lesson-time flex-row">
-      <p class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</p>
+      <i class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</i>
       <i class="icon-yike icon-share"></i>
       </div>
       <div class="price">
-      <div class="tag">
+      <div class="tag flex-row">
       <p>特价特惠</p>
       </div>
       <div class="n-price">￥{{introData.price}}</div>
@@ -33,18 +33,18 @@
     line-height: 0.8rem;
   }
 
-  .lesson-time p {
+  .lesson-time i:first-child {
     justify-content: flex-start;
     align-items: center;
     width: 80%;
     font-size: 0.24rem;
-    color: rgba(128, 128, 128, 1);
+    color: #0D0D0D;
   }
 
   .icon-clock:before {
     padding-right: 0.13rem;
     font-size: 0.33rem;
-    color: rgba(47, 87, 218, 1);
+    color: #2F57DA;
   }
   .lesson-time button{
     width: 1.1rem;
@@ -73,35 +73,28 @@
   }
 
   .tag {
+    justify-content: flex-end;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 0.8rem;
     background: #F23F15;
-    border: rgba(242, 63, 21, 1) 0.19rem solid;
+    border: #F23F15 0.1rem solid;
   }
 
   .tag:after {
     content: '';
     position: absolute;
     left: 0.8rem;
-    border: rgba(242, 63, 21, 1) 0.19rem solid;
-    border-right: 0.08rem solid transparent;
+    border: #F23F15 0.2rem solid;
+    border-right: 0.1rem solid transparent;
   }
 
   .tag p {
-    position: absolute;
-    z-index: 999;
-<<<<<<< HEAD
-    top: -0.28rem;
-=======
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
-    left: 0.06rem;
-    width: 0.8rem;
+    z-index: 99;
     height: 0.2rem;
+    margin: 0;
+    padding-left: 0.05rem;
     font-size: 0.2rem;
-    color: rgba(254, 254, 254, 1);
+    color: #FEFEFE;
+    text-align: right;
     line-height: 0.2rem;
   }
 
@@ -120,7 +113,7 @@
     font-size: 0.27rem;
     padding-left: 0.2rem;
     text-decoration: line-through;
-    color: rgba(128, 128, 128, 1);
+    color: #808080;
     line-height: 0.36rem;
   }
 

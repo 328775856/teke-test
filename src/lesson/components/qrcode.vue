@@ -10,7 +10,8 @@
               </div>
             </div>
             <div class="msg flex-row">
-              <div  class="wx icon-yike icon-wxtb  flex-row"></div>易课小助手
+              <i  class="wx icon-yike icon-wxtb  flex-row"></i>
+              <span>易课小助手</span>
             </div>
           </div>
           <div>
@@ -20,7 +21,8 @@
               </div>
             </div>
             <div class="msg flex-row">
-              <div class="wx icon-yike icon-wxtb flex-row"></div>易课公众号
+              <i class="wx icon-yike icon-wxtb flex-row"></i>
+              <span>易课公众号</span>
             </div>
           </div>
         </div>
@@ -50,7 +52,7 @@
     padding-right: 0.2rem;
     border-right: 1px solid #ccc;
     font-size: 14px;
-    color: rgba(102, 102, 102, 1);
+    color: #666666;
     line-height: 24px;
   }
   .img{
@@ -88,11 +90,3 @@
     font-size: 0.25rem;
   }
 </style>
-<!--<style>-->
-  <!--.frm-qrcode {-->
-    <!--justify-content: space-between;-->
-    <!--background: white;-->
-    <!--padding: 0.71rem 0.3rem 1.49rem 0.3rem;-->
-    <!--padding-bottom: 2rem;-->
-  <!--}-->
-<!--</style>-->

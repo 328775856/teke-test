@@ -5,6 +5,7 @@ body {
   position: relative;
   margin: 0 auto;
   height: 100%;
+  background: #f0eff5;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -69,13 +70,13 @@ button{
 
 
 .finish {
-  background: rgba(255, 126, 126, 1);
+  background: #FF7E7E;
 }
 
 .beginning {
-  background: rgba(93, 201, 106, 1);
+  background: #5DC96A;
 }
 
-.no {
-  background: rgba(216, 193, 153, 1);
+.begin {
+  background: #D8C199;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-series">
+  <div class="c-series" :class="{isShow:isShow}">
     <div class="introduce">
       <div class="i-header">
         <introduce :introData="introData"></introduce>
@@ -17,7 +17,7 @@
             :idx="index"
             v-for="(item,index) in tabs"
             :key="index"
-            :class="{active:isActive===index}">
+            :class="{ active:isActive===index}">
       </tabs>
     </div>
     <div v-if="isActive===0">
@@ -25,27 +25,28 @@
         <div class="title">
           讲师
         </div>
-        <teacher  v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+        <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
       </div>
     </div>
-      <div class="title">目录</div>
-      <div class="contents">
-        <catalog :catalogData="catalogData"></catalog>
+    <div class="title">目录</div>
+    <div class="contents">
+      <catalog :catalogData="catalogData"></catalog>
+    </div>
+    <div class="title invite flex-row">邀请达人榜
+      <div class="icon flex-row">
+        <span class="pie-r"></span>
+        <span class="pie-b"></span>
+        <span class="pie-y"></span>
+        <span class="icon-yike icon-arrow-r"></span>
       </div>
-      <div class="title invite flex-row">邀请达人榜
-        <div class="icon flex-row">
-          <span class="pie-r"></span>
-          <span class="pie-b"></span>
-          <span class="pie-y"></span>
-          <span class="icon-yike icon-arrow-r"></span>
-        </div>
-      </div>
-      <div class="qrcode">
-        <qrcode></qrcode>
-      </div>
+    </div>
+    <div class="qrcode">
+      <qrcode></qrcode>
+    </div>
     <div class="bottom-btn">
-      <series-btn></series-btn>
+      <series-btn @show="show" :isShow="isShow"></series-btn>
     </div>
+    <pay :width="width" :isShow="isShow" @show="show"></pay>
   </div>
 </template>
 
@@ -58,10 +59,11 @@
   import SeriesBtn from '../components/series-btn.vue'
   import Tabs from '../components/tabs.vue'
   import Qrcode from '../components/qrcode.vue'
+  import Pay from '../components/pay.vue'
 
   export default {
     name: 'series',
-    components: {Introduce, Teacher, Catalog, SeriesBtn, Tabs, Qrcode, SeriesIntro, IntroBottom},
+    components: {Introduce, Teacher, Catalog, SeriesBtn, Tabs, Qrcode, SeriesIntro, IntroBottom, Pay},
     data() {
       return {
         introData: [],
@@ -69,13 +71,18 @@
         teacherData: [],
         tabs: ['课程', '目录'],
         isActive: 0,
-        idx: ''
+        idx: '',
+        width: '',
+        isShow: false
       }
     },
     created() {
-      this.fetchCatalog()
-      this.fetchIntroduce()
+      this.fetchCatalog();
+      this.fetchIntroduce();
       this.fetchTeacher()
+    },
+    mounted() {
+      this.width = document.body.clientWidth
     },
     methods: {
       fetchCatalog() {
@@ -118,19 +125,21 @@
           })
       },
       active(index) {
-        this.isActive=index
+        this.isActive = index
+      },
+      show() {
+        this.isShow = !this.isShow
       }
     }
   }
 </script>
 
 <style scoped>
+  .c-series{
+    height: 100%;
+  }
   .icon-arrow-r {
     font-size: 0.24rem;
-  }
-
-  .c-series {
-    background: #F2F2F2;
   }
 
   .introduce, .teacher {
@@ -209,6 +218,9 @@
     bottom: 0;
     z-index: 3;
   }
+   .isShow{
+     overflow-y: hidden;
+   }
 </style>
 <style>
   .box:last-child .frm-content {

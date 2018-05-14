@@ -4,9 +4,9 @@
       <div class="frm-content">
         <div class="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>
         <div class="lesson-time flex-row">
-          <p class="icon-yike icon-clock flex-row">2018-04-20 20:00
+          <i class="icon-yike icon-clock flex-row">2018-04-20 20:00
             <button :class="introData.status">{{introData.status | status}}</button>
-          </p>
+          </i>
           <i class="icon-yike icon-share"></i>
         </div>
         <div class="flex-row single-price">
@@ -45,18 +45,18 @@
     line-height: 0.8rem;
   }
 
-  .lesson-time p {
+  .lesson-time i:first-child {
     justify-content: flex-start;
     align-items: center;
     width: 80%;
     font-size: 0.24rem;
-    color: rgba(128, 128, 128, 1);
+    color: #808080;
   }
 
   .icon-clock:before {
     padding-right: 0.13rem;
     font-size: 0.33rem;
-    color: rgba(47, 87, 218, 1);
+    color: #2F57DA;
   }
   .lesson-time button{
     width: 1.1rem;

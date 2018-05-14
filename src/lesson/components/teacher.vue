@@ -13,12 +13,7 @@
     <div class="title">
       简介
     </div>
-<<<<<<< HEAD
     <div class="markdown" v-html="showMarkdown">
-=======
-    <div class="markdown" id="teacher-msg" v-html="teacherData.introduce">
-      {{showMarkdown}}
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
     </div>
   </div>
 </template>
@@ -52,15 +47,6 @@
 `
       }
     },
-    // mounted: function () {
-    //     let bw=document.body.scrollWidth
-    //     let tm=document.getElementById('teacher-msg')
-    //   if (bw<375) {
-    //     tm.style.lineHeight=bw/375*23+'px'
-    //   } else  {
-    //     tm.style.lineHeight=bw/375*28+'px'
-    //   }
-    // },
     methods: {
       active() {
         this.isActive = !this.isActive
@@ -69,12 +55,7 @@
     computed: {
       showMarkdown() {
         let that = this
-<<<<<<< HEAD
         return markdown.toHTML(that.teacherData.introduce)
-=======
-        that.teacherData.introduce = markdown.toHTML(that.teacherData.introduce)
-        return that.teacherData.introduce
->>>>>>> 642bd711f4cad78487a41f554965200c415f3a6a
       }
     }
   }
@@ -82,7 +63,7 @@
 
 <style scoped>
   p {
-    margin: 0px;
+    margin: 0;
   }
 
   .title {
@@ -128,14 +109,14 @@
     width: 4.38rem;
     font-size: 12px;
     margin-top: 0.15rem;
-    color: rgba(128, 128, 128, 1);
+    color: #808080;
     line-height: 0.36rem;
   }
 
   .focus {
     width: 1.2rem;
     height: 0.48rem;
-    border: 1px solid rgba(42, 78, 196, 1);
+    border: 1px solid #2A4EC4;
     border-radius: 0.24rem;
   }
 
@@ -144,7 +125,7 @@
     width: 0.7rem;
     padding-left: 0.5rem;
     font-size: 12px;
-    color: rgba(42, 78, 196, 1);
+    color: #2A4EC4;
     line-height: 0.48rem;
   }
 
@@ -154,14 +135,14 @@
     left: 0.22rem;
     width: 0.18rem;
     height: 0.18rem;
-    color: rgba(42, 78, 196, 1);
+    color: #2A4EC4;
     border-radius: 0.01rem;
   }
 
   .markdown {
     font-size: 15px;
     line-height: 30px;
-    color: rgba(51, 51, 51, 1);
+    color: #333333;
     margin: 0 0.31rem;
     padding-bottom: 0.3rem;
   }
@@ -176,7 +157,7 @@
     width: 2.9rem;
     height: 0.6rem;
     margin: 0.4rem auto 0.2rem auto;
-    background: rgba(47, 87, 218, 1);
+    background: #2F57DA;
     border-radius: 0.3rem;
     letter-spacing: 0.04rem;
     color: white;

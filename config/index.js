@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const local = require('./local-default')
+const local = require('./local')
 
 function argv(name) {
   let pattern = new RegExp(`${name}=(\\S+)`)

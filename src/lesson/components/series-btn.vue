@@ -9,16 +9,21 @@
         <i class="icon-yike icon-favorite"></i>
         <span>收藏</span>
       </div>
-      <button class="enroll button">报名系列课</button>
+      <button class="enroll button" @click="purchase">报名系列课</button>
     </div>
   </div>
 </template>
 
 <script>
+
   export default {
     name: "bottom-btn",
     data() {
-      return {
+      return {}
+    },
+    methods: {
+      purchase() {
+        this.$emit('show')
       }
     }
   }
@@ -37,7 +42,7 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .home, .favorite, .chat {
+  .home, .favorite {
     font-size: 0.2rem;
     color: #666666;
     background: white;
@@ -50,7 +55,7 @@
 
   .enroll {
     flex: 5.5;
-    background: rgba(47, 87, 218, 1);
+    background: #2F57DA;
     color: white;
     font-size: 0.32rem;
     letter-spacing: 0.02rem;

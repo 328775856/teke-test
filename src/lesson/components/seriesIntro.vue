@@ -1,31 +1,41 @@
 <template>
-    <div class="series-introduce">
+  <div class="series-introduce flex-row">
+    <div class="time flex-col">
       <div class="lesson-time flex-row">
-      <i class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</i>
-      <i class="icon-yike icon-share"></i>
+        <i class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[0]}}/{{introData.progress[1]}}节</i>
       </div>
       <div class="price">
-      <div class="tag flex-row">
-      <p>特价特惠</p>
-      </div>
-      <div class="n-price">￥{{introData.price}}</div>
-      <div class="o-price">￥300</div>
-      <div>邀请有奖</div>
+        <div class="tag flex-row">
+          <p>特价特惠</p>
+        </div>
+        <div class="n-price">￥{{introData.price}}</div>
+        <div class="o-price">￥300</div>
       </div>
     </div>
+    <div class="share flex-col">
+      <i class="icon-yike icon-share flex-col"></i>
+      <div>邀请有奖</div>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "series",
-      props: ['introData']
-    }
+  export default {
+    name: "series",
+    props: ['introData']
+  }
 </script>
 
 <style scoped>
-  .series-introduce{
+  .series-introduce {
+    justify-content: space-between;
     padding: 0 0.3rem;
   }
+
+  .time {
+    width: 80%;
+  }
+
   .lesson-time {
     justify-content: space-between;
     width: 100%;
@@ -33,12 +43,9 @@
     line-height: 0.8rem;
   }
 
-  .lesson-time i:first-child {
-    justify-content: flex-start;
-    align-items: center;
-    width: 80%;
+  .icon-clock {
     font-size: 0.24rem;
-    color: #0D0D0D;
+    color: #808080;
   }
 
   .icon-clock:before {
@@ -46,7 +53,8 @@
     font-size: 0.33rem;
     color: #2F57DA;
   }
-  .lesson-time button{
+
+  .lesson-time button {
     width: 1.1rem;
     height: 0.36rem;
     margin-left: 0.21rem;
@@ -55,13 +63,28 @@
     color: #fff;
     border: none;
   }
-  .icon-share{
-    justify-content: flex-end;
-    height: 0.8rem;
-    padding:0.4rem 0.14rem 0 0;
+
+  .share {
+    justify-content: center;
+    align-items: flex-end;
+    width: 0.96rem;
+    color: #666666;
   }
+
+  .icon-share {
+    width: 100%;
+    justify-content: flex-end;
+    text-align: center;
+  }
+
+  .icon-share + div {
+    line-height: 0.46rem;
+    font-size: 0.24rem;
+    text-align: right;
+  }
+
   .icon-share:before {
-    height: 0.8rem;
+    width: 100%;
     font-size: 0.5rem;
     color: #2F57DA;
   }
@@ -69,29 +92,31 @@
   .price {
     display: flex;
     flex-flow: row nowrap;
+    width: 100%;
     padding-bottom: 0.4rem;
   }
 
   .tag {
     justify-content: flex-end;
     position: relative;
+    height: 0;
+    text-align: center;
     background: #F23F15;
-    border: #F23F15 0.1rem solid;
+    border: #F23F15 0.2rem solid;
+    border-right: 0.1rem solid transparent;
   }
 
   .tag:after {
     content: '';
     position: absolute;
     left: 0.8rem;
+    padding: 0;
     border: #F23F15 0.2rem solid;
     border-right: 0.1rem solid transparent;
   }
 
   .tag p {
     z-index: 99;
-    height: 0.2rem;
-    margin: 0;
-    padding-left: 0.05rem;
     font-size: 0.2rem;
     color: #FEFEFE;
     text-align: right;
@@ -100,21 +125,18 @@
 
   .n-price {
     width: 1.1rem;
-    height: 0.32rem;
     padding-left: 0.31rem;
     font-size: 0.42rem;
-    color:#F23F15;
+    color: #F23F15;
     line-height: 0.32rem;
   }
 
   .o-price {
     width: 0.79rem;
-    height: 0.21rem;
     font-size: 0.27rem;
     padding-left: 0.2rem;
     text-decoration: line-through;
     color: #808080;
-    line-height: 0.36rem;
   }
 
   .o-price + div {

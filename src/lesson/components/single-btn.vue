@@ -5,10 +5,10 @@
           <i class="icon-yike icon-home"></i>
           <span>首页</span>
         </div>
-        <div class="favorite button flex-col flex-item ">
-          <i class="icon-yike icon-favorite"></i>
-          <span>收藏</span>
-        </div>
+        <!--<div class="favorite button flex-col flex-item ">-->
+          <!--<i class="icon-yike icon-favorite"></i>-->
+          <!--<span>收藏</span>-->
+        <!--</div>-->
         <div class="chat button flex-col flex-item ">
           <i class="icon-yike icon-chat"></i>
           <span>交流</span>

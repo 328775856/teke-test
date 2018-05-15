@@ -1,11 +1,11 @@
 <template>
-  <div class="c-series" :class="{isShow:isShow||pay}">
+  <div class="c-single" :class="{isShow:isShow||pay}">
     <div class="introduce">
       <div class="i-header">
         <introduce :introData="introData"></introduce>
       </div>
       <div class="i-content">
-        <series-intro v-if="introData && introData.progress" :introData="introData"></series-intro>
+        <single-intro :introData="introData"></single-intro>
       </div>
       <div class="i-bottom">
         <intro-bottom @show="show"></intro-bottom>
@@ -17,20 +17,38 @@
             :idx="index"
             v-for="(item,index) in tabs"
             :key="index"
-            :class="{ active:isActive===index}">
+            :class="{active:isActive===index}">
       </tabs>
     </div>
     <div v-if="isActive===0">
-      <div class="teacher">
-        <div class="title">
-          讲师
+      <div>
+        <div class="teacher">
+          <div class="title">
+            讲师
+          </div>
+          <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
         </div>
-        <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+      </div>
+      <div class="title">
+        <div class="flex-row">相关系列课
+          <div class="flex-row">查看完整课程
+            <div class="icon-yike icon-arrow-r"></div>
+          </div>
+        </div>
+      </div>
+      <div class="relative">
+        <relative :relativeData="relativeData"></relative>
       </div>
     </div>
-    <div class="title">目录</div>
-    <div class="contents">
-      <catalog :catalogData="catalogData"></catalog>
+    <div>
+      <div class="title flex-row" v-if="ratingData && ratingData.total">评分({{ratingData.total.score}})
+        <div class="flex-row people">已有{{ratingData.total.turnout}}人评价
+          <div class="icon-yike icon-arrow-r"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <evaluate v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">
@@ -44,60 +62,70 @@
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <series-btn @payShow="payShow" :isShow="isShow"></series-btn>
+      <single-btn></single-btn>
     </div>
-    <pay :width="width" :pay="pay" @payShow="payShow"></pay>
     <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
   </div>
 </template>
 
 <script>
   import Introduce from '../components/introduce.vue'
-  import SeriesIntro from '../components/seriesintro.vue'
+  import SingleIntro from '../components/singleIntro.vue'
   import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
-  import Catalog from '../components/Catalog.vue'
-  import SeriesBtn from '../components/series-btn.vue'
+  import Relative from '../components/relative.vue'
   import Tabs from '../components/tabs.vue'
+  import Evaluate from '../components/evaluate.vue'
   import Qrcode from '../components/qrcode.vue'
-  import Pay from '../components/pay.vue'
+  import SingleBtn from '../components/single-btn.vue'
   import courseRules from '../components/course-rules.vue'
 
   export default {
-    name: 'series',
-    components: {Introduce, Teacher, Catalog, SeriesBtn, Tabs, Qrcode, SeriesIntro, IntroBottom, Pay, courseRules},
+    name: "single-course",
+    components: {
+      Introduce,
+      Teacher,
+      SingleBtn,
+      Tabs,
+      Evaluate,
+      Qrcode,
+      Relative,
+      SingleIntro,
+      IntroBottom,
+      courseRules
+    },
     data() {
       return {
         introData: [],
-        catalogData: [],
+        relativeData: [],
         teacherData: [],
-        tabs: ['课程', '目录'],
+        ratingData: [],
+        tabs: ['课程', '评价'],
         isActive: 0,
-        idx: '',
         width: '',
-        isShow: false,
-        pay: false
+        isShow: false
       }
     },
     created() {
-      this.fetchCatalog();
-      this.fetchIntroduce();
+      this.fetchRelative()
+      this.fetchIntroduce()
       this.fetchTeacher()
+      this.fetchRating()
     },
     mounted() {
       this.width = document.body.clientWidth
     },
     methods: {
-      fetchCatalog() {
+      fetchRelative() {
         this.axios
-          .get('/api/series-catalog', {
+          .get('/api/lesson-relative', {
             params: {
               sn: this.$route.query.sn
             }
           })
           .then(res => {
             if (res.data.error === '0') {
-              this.catalogData = res.data.data
+              this.relativeData = res.data.data
             }
           })
       },
@@ -127,35 +155,42 @@
             }
           })
       },
+      fetchRating() {
+        this.axios
+          .get('/api/lesson-rating', {
+            params: {
+              sn: this.$route.query.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.ratingData = res.data.data
+              console.log('success')
+            }
+          })
+      },
       active(index) {
         this.isActive = index
       },
       show() {
         this.isShow = !this.isShow
-      },
-      payShow() {
-        this.pay = !this.pay
       }
     }
   }
 </script>
 
 <style scoped>
-  .c-series {
+  .c-single{
     height: 100%;
   }
-
-  .icon-arrow-r {
-    font-size: 0.24rem;
-  }
-
-  .introduce, .teacher {
+  .introduce, .teacher, .relative, .bottom {
     margin-bottom: 0.2rem;
     background: #fff;
   }
 
   .title {
     position: relative;
+    justify-content: space-between;
     height: 0.36rem;
     font-size: 16px;
     padding: 0.32rem 0.31rem;
@@ -173,16 +208,36 @@
     background: #2F57DA
   }
 
+  .title .flex-row {
+    justify-content: space-between;
+    font-size: 16px;
+  }
+
+  .title .flex-row div {
+    color: #808080;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .title .people {
+    color: #808080;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .icon-arrow-r {
+    padding-left: 0.19rem;
+  }
+
+  .single {
+    height: 0.25rem;
+    padding: 0 0.2rem;
+  }
+
   .invite {
     margin: 0.2rem 0;
     justify-content: space-between;
   }
-
-  /*.invite > div span {*/
-  /*border: 1px solid #ccc;*/
-  /*border-radius: 0.4rem;*/
-  /*color: white;*/
-  /*}*/
 
   .invite > div span:last-child {
     color: #808080;
@@ -205,9 +260,6 @@
     border-bottom: 0.01rem #DDDDDD solid;
     background: #fff;
     -webkit-tap-highlight-color: transparent;
-  }
-
-  .qrcode {
   }
 
   .invite .pie-r, .invite .pie-b, .invite .pie-y {

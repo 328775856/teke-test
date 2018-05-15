@@ -165,14 +165,14 @@
     line-height: 0.6rem;
   }
 
-  li {
+  .c-teacher li {
     position: relative;
     margin-left: 0.31rem;
     letter-spacing: 0.01rem;
     list-style: none;
   }
 
-  li:before {
+  .c-teacher li:before {
     content: '●';
     position: absolute;
     left: -0.3rem;

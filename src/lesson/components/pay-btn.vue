@@ -21,7 +21,7 @@
     },
     methods: {
       cancel() {
-        this.$emit('show')
+        this.$emit('payShow')
       }
     }
   }

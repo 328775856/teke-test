@@ -1,5 +1,5 @@
 <template>
-  <div class="c-pay" v-if="isShow">
+  <div class="c-pay" v-if="pay">
     <div class="mask  flex-col">
       <div :style="{width:width+'px'}">
         <div class="container">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="btn">
-        <paybtn :width="width" @show="show"></paybtn>
+        <paybtn :width="width" @payShow="show"></paybtn>
       </div>
     </div>
   </div>
@@ -37,14 +37,14 @@
 
   export default {
     name: "pay",
-    props: ['width', 'isShow'],
+    props: ['width', 'pay'],
     components: {Paybtn},
     data() {
       return {}
     },
     methods: {
       show() {
-        this.$emit('show')
+        this.$emit('payShow')
       }
     }
   }

@@ -70,7 +70,6 @@
   }
 
   .time {
-    width: 90%;
     height: 0.6rem;
     margin: 0 auto;
     line-height: 0.6rem;
@@ -80,7 +79,6 @@
   }
 
   .text {
-    width: 90%;
     margin: 0 auto;
     padding-bottom: 0.3rem;
     font-size: 15px;

@@ -3,15 +3,19 @@
     <div class="container">
       <div class="frm-content">
         <div class="single">所属系列 · 从零到一起飞 Shopify × Facebook</div>
-        <div class="lesson-time flex-row">
-          <i class="icon-yike icon-clock flex-row">2018-04-20 20:00
-            <button :class="introData.status">{{introData.status | status}}</button>
-          </i>
-          <i class="icon-yike icon-share"></i>
-        </div>
-        <div class="flex-row single-price">
-          <div class="s-price">￥90</div>
-          <div>邀请有奖</div>
+        <div class="flex-row">
+          <div class="time">
+            <div class="lesson-time flex-row">
+              <i class="icon-yike icon-clock flex-row">2018-04-20 20:00
+                <button :class="introData.status">{{introData.status | status}}</button>
+              </i>
+            </div>
+            <div class="s-price">￥90</div>
+          </div>
+          <div class="share flex-col">
+            <i class="icon-yike icon-share flex-col"></i>
+            <div>邀请有奖</div>
+          </div>
         </div>
       </div>
     </div>
@@ -23,8 +27,7 @@
     name: "introduce",
     props: ['introData'],
     data() {
-      return {
-      }
+      return {}
     },
     created() {
     }
@@ -37,10 +40,16 @@
     width: 6.9rem;
     padding: 0 0.3rem 0 0.3rem;
   }
+  .single+.flex-row{
+    justify-content: space-between;
+  }
+  .time {
+    width: 80%;
+    padding-bottom: 0.4rem;
+  }
 
   .lesson-time {
     justify-content: space-between;
-    width: 100%;
     height: 0.8rem;
     line-height: 0.8rem;
   }
@@ -58,7 +67,8 @@
     font-size: 0.33rem;
     color: #2F57DA;
   }
-  .lesson-time button{
+
+  .lesson-time button {
     width: 1.1rem;
     height: 0.36rem;
     margin-left: 0.21rem;
@@ -67,30 +77,46 @@
     color: #fff;
     border: none;
   }
+
+  .share {
+    justify-content: center;
+    align-items: flex-end;
+    width: 0.96rem;
+    color: #666666;
+  }
   .icon-share{
+    width: 100%;
     justify-content: flex-end;
-    height: 0.8rem;
-    padding:0.4rem 0.14rem 0 0;
+    text-align: center;
+  }
+  .icon-share+div{
+    line-height: 0.46rem;
+    font-size: 0.24rem;
+    text-align: right;
   }
   .icon-share:before {
-    height: 0.8rem;
+    width: 100%;
     font-size: 0.5rem;
     color: #2F57DA;
   }
-  .single{
+
+  .single {
     padding-top: 0.3rem;
-    font-size:0.24rem;
+    font-size: 0.24rem;
   }
-  .single-price{
+
+  .single-price {
     justify-content: space-between;
     padding-bottom: 0.3rem;
   }
-  .s-price{
-    color:#F23F15;
+
+  .s-price {
+    color: #F23F15;
     font-size: 0.42rem;
-    text-indent:-0.1rem
+    text-indent: -0.1rem
   }
-  .s-price+div{
+
+  .s-price + div {
     width: 0.96rem;
     height: 0.23rem;
     padding: 0.13rem 0 0 2.45rem;

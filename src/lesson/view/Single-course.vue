@@ -1,5 +1,5 @@
 <template>
-  <div class="c-single" :class="{isShow:isShow||pay}">
+  <div class="c-single" :class="{isShow:isShow}">
     <div class="introduce">
       <div class="i-header">
         <introduce :introData="introData"></introduce>
@@ -29,15 +29,15 @@
           <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
         </div>
       </div>
-      <div class="title">
+      <div class="title" v-if="!relativeData">
         <div class="flex-row">相关系列课
           <div class="flex-row">查看完整课程
             <div class="icon-yike icon-arrow-r"></div>
           </div>
         </div>
       </div>
-      <div class="relative">
-        <relative :relativeData="relativeData"></relative>
+      <div class="relative" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <relative @fresh="fresh"></relative>
       </div>
     </div>
     <div>
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="!ratingData">
       <evaluate v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
@@ -103,24 +103,28 @@
         tabs: ['课程', '评价'],
         isActive: 0,
         width: '',
-        isShow: false
+        isShow: false,
+        sn: 'L5a7406f7caa14'
       }
     },
     created() {
-      this.fetchRelative()
       this.fetchIntroduce()
       this.fetchTeacher()
       this.fetchRating()
+      this.fetchRelative()
     },
     mounted() {
       this.width = document.body.clientWidth
     },
     methods: {
+      fresh() {
+        this.fetchRelative()
+      },
       fetchRelative() {
         this.axios
           .get('/api/lesson-relative', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -131,9 +135,9 @@
       },
       fetchIntroduce() {
         this.axios
-          .get('/api/lesson-overview', {
+          .get('/api/lesson-profile', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -146,7 +150,7 @@
         this.axios
           .get('/api/lesson-introduce', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -157,15 +161,14 @@
       },
       fetchRating() {
         this.axios
-          .get('/api/lesson-rating', {
+          .get('/api/lesson-rating-list', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
             if (res.data.error === '0') {
               this.ratingData = res.data.data
-              console.log('success')
             }
           })
       },
@@ -180,9 +183,9 @@
 </script>
 
 <style scoped>
-  .c-single{
-    height: 100%;
+  .c-single {
   }
+
   .introduce, .teacher, .relative, .bottom {
     margin-bottom: 0.2rem;
     background: #fff;
@@ -278,5 +281,6 @@
 
   .isShow {
     overflow-y: hidden;
+    height: 100%;
   }
 </style>

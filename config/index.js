@@ -23,8 +23,8 @@ module.exports = {
     assetsSubDirectory: local.subDir || 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: local.api || 'localhost:8080',
+      '/api':{
+        target: local.api || 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite: {
           '\\?': '.json?',
@@ -70,9 +70,9 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: local.subDir || 'static',
+    assetsSubDirectory: local.subDir ||'static',
     // assetsPublicPath: utils.parseCommandArgv('assets') || '/',
-    assetsPublicPath: argv('assets') || local.assets || '/',
+    assetsPublicPath:  argv('assets') || local.assets || '/',
 
     /**
      * Source Maps

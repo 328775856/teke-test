@@ -14,9 +14,11 @@
         </div>
       </div>
       <div class="time">{{item.tms}}</div>
-      <div class="text">{{item.remark}}qw</div>
-      <div class="time">{{item.tms_reply}}</div>
-      <div class="text"><span>[回复]：</span>{{item.reply}}qw</div>
+      <div class="text">{{item.remark}}</div>
+      <div v-if="item.reply">
+        <div class="time">{{item.tms_reply}}</div>
+        <div class="text"><span>[回复]：</span>{{item.reply}}qw</div>
+      </div>
     </div>
   </div>
 </template>

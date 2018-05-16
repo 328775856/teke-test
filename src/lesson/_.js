@@ -30,12 +30,14 @@ router.beforeEach((to, from, next) => {
 Vue.filter('status', function (value) {
   if (value === 'finish') {
     value = '可回放'
-  } else if (value === 'beginning') {
+  }
+  if (value === 'onlive') {
     value = '开课中'
-  } else {
+  }
+  if (value === 'repose') {
     value = '未开课'
   }
-  return value
+return value
 })
 
 /* eslint-disable no-new */

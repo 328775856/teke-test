@@ -1,5 +1,5 @@
 <template>
-  <div class="c-contents">
+  <div class="c-contents" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1">
     <div class="box flex-col" v-for="(item,index) in catalogData" :key="index" ref="num">
       <div class="frm-content flex-row">
         <div class="img">
@@ -23,18 +23,39 @@
         </div>
       </div>
     </div>
+    <div v-show="loadingShow" class="loadingShow">正在加载中...</div>
   </div>
 </template>
 
 <script>
+  import infiniteScroll from 'vue-infinite-scroll';
   export default {
     name: "Catalog",
     props: ['catalogData'],
+    directives: {infiniteScroll},
     data() {
       return {
+        loadingShow: false,
+        busy: false
       }
     },
     methods: {
+      // loadMore() {
+      //   this.busy = true;
+      //   this.loadingShow = true;
+      //   setTimeout(() => {
+      //     for (let i = 0, j = 1; i < j; i++) {
+      //       let len = document.getElementsByClassName('box').length;
+      //       if (len < 10) {
+      //         this.catalogData.push(this.catalogData[0]);
+      //         this.loadingShow = false;
+      //       } else {
+      //         document.getElementsByClassName('loadingShow')[0].innerHTML = '没有更多了';
+      //       }
+      //     }
+      //     this.busy = false;
+      //   }, 100)
+      // }
     },
     created() {
     }
@@ -65,7 +86,7 @@
   .enroll {
     position: absolute;
     left: 0.23rem;
-    font-size: 12px;
+    font-size: 0.24rem;
   }
   p {
     margin: 0;
@@ -108,13 +129,13 @@
   }
 
   .text div:first-child {
-    font-size: 13.5px;
     color: #0D0D0D;
     line-height: 21px;
   }
 
   .msg {
     min-height: 0.81rem;
+    font-size: 0.27rem;
     font-weight: bold;
   }
 
@@ -128,14 +149,14 @@
     width: 1.1rem;
     height: 0.36rem;
     border-radius: 0.18rem;
-    font-size: 10px;
+    font-size: 0.2rem;
     color: #fff;
     line-height: 0.36rem;
     border: none;
   }
 
   .price {
-    font-size: 15px;
+    font-size: 0.3rem;
     color: #F23F15;
     line-height: 18px;
     text-align: right;
@@ -149,7 +170,7 @@
     width: 4.19rem;
     height: 0.36rem;
     margin-top: 0.08rem;
-    font-size: 12px;
+    font-size: 0.24rem;
     line-height: 0.36rem;
     color: #0D0D0D;
   }

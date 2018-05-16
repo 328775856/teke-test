@@ -76,7 +76,8 @@
         idx: '',
         width: '',
         isShow: false,
-        pay: false
+        pay: false,
+        sn: 'S5af647783aed1'
       }
     },
     created() {
@@ -92,7 +93,7 @@
         this.axios
           .get('/api/series-catalog', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -105,7 +106,7 @@
         this.axios
           .get('/api/lesson-overview', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -118,7 +119,7 @@
         this.axios
           .get('/api/lesson-introduce', {
             params: {
-              sn: this.$route.query.sn
+              sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {
@@ -142,7 +143,6 @@
 
 <style scoped>
   .c-series {
-    height: 100%;
   }
 
   .icon-arrow-r {
@@ -226,5 +226,6 @@
 
   .isShow {
     overflow-y: hidden;
+    height: 100%;
   }
 </style>

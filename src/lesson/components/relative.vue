@@ -1,5 +1,5 @@
 <template>
-  <div class="c-contents">
+  <div class="c-contents" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1000">
     <div class="box flex-col" v-for="(item,index) in relativeData" :key="index" ref="num">
       <div class="frm-content flex-row">
         <div class="img">
@@ -7,14 +7,13 @@
         </div>
         <div class="content flex-col">
           <div class="text flex-row">
-            <div class="msg">{{item.title}}</div>
+            <div class="msg flex-col">{{item.title}}</div>
             <div class="status flex-col">
               <button :class="item.status">{{item.status | status}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
           <div class="time flex-row">
-
             <i class="icon-yike icon-my-selected people">
               <i class="icon-yike icon-my-selected"></i>
             </i>
@@ -28,42 +27,53 @@
 </template>
 
 <script>
+  import infiniteScroll from 'vue-infinite-scroll';
+
   export default {
     name: "relative",
     props: ['relativeData'],
+    directives: {infiniteScroll},
     data() {
       return {
+        loadingShow: false,
+        busy: false
       }
     },
     methods: {
+      loadMore() {
+        this.busy = true;
+        this.loadingShow = true;
+        setTimeout(() => {
+          for (let i = 0, j = 10; i < j; i++) {
+            let len = document.getElementsByClassName('box').length;
+            if (len < 10) {
+              // this.relativeData.push(this.relativeData[0]);
+              this.loadingShow = false;
+            } else {
+              document.getElementsByClassName('loadingShow')[0].innerHTML = '没有更多了';
+            }
+          }
+          this.busy = false;
+        }, 100)
+      }
     },
     created() {
-      // this.axios
-      //   .get('/api/series-catalog', {
-      //     params: {
-      //       sn: this.$route.query.sn
-      //     }
-      //   })
-      //   .then(res => {
-      //       if (res.data.error === '0') {
-      //         this.data = res.data.data
-      //       }
-      //     }
-      //   )
+
     }
   }
 </script>
 
 <style scoped>
   /*people 图标*/
-  .people{
+  .people {
     position: relative;
     font-size: 0.24rem;
   }
+
   .people.icon-my-selected:before {
     position: absolute;
     top: -0.17rem;
-    left:  -0.1rem;
+    left: -0.1rem;
     color: #999999;
     font-size: 0.25rem;
     z-index: 2;
@@ -75,17 +85,21 @@
     color: #CCCCCC;
     font-size: 0.2rem;
   }
+
   .enroll {
     position: absolute;
     left: 0.23rem;
-    font-size: 12px;
+    font-size: 0.24rem;
   }
+
   p {
     margin: 0;
   }
 
   .c-contents {
     width: 100%;
+    height: auto;
+    overflow: hidden;
     background: #fff;
   }
 
@@ -122,14 +136,14 @@
   }
 
   .text div:first-child {
-    font-size: 13.5px;
     color: #0D0D0D;
-    line-height: 21px;
   }
 
   .msg {
+    justify-content: space-between;
     min-height: 0.81rem;
     font-weight: bold;
+    font-size: 0.27rem;
   }
 
   .status {
@@ -142,15 +156,15 @@
     width: 1.1rem;
     height: 0.36rem;
     border-radius: 0.18rem;
-    font-size: 10px;
+    font-size: 0.2rem;
     color: #fff;
     line-height: 0.36rem;
     border: none;
   }
 
   .price {
-    font-size: 15px;
-    color: #F23F15);
+    font-size: 0.3rem;
+    color: #F23F15;
     line-height: 18px;
     text-align: right;
     padding-right: 0.02rem;
@@ -172,4 +186,12 @@
     padding-ritgh: 0.21rem;
   }
 
+  .enroll + span {
+    font-size: 0.24rem;
+  }
+</style>
+<style>
+  .c-contents .box:last-child .frm-content{
+    border-bottom: 0;
+  }
 </style>

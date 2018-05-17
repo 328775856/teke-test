@@ -7,6 +7,8 @@ import router from './router'
 import axios from 'axios'
 
 import '@/assets/fonts/iconfont.css'
+import api from '@/assets/js/api'
+import wxa from '@/assets/js/wxa'
 
 import adaptor from '@/assets/js/screen-adaptor'
 
@@ -39,6 +41,8 @@ Vue.filter('status', function (value) {
   }
 return value
 })
+Vue.prototype.api = api
+Vue.prototype.wxa = wxa
 
 /* eslint-disable no-new */
 new Vue({

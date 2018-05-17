@@ -12,7 +12,11 @@
       "status": "finish",
       "enrollment": 1232,
       "price": 200,
-      "start_time": "2018-04-01 20:00"
+      "plan": {
+        "dtm_start": "2018-04-01 20:00"
+        "dtm_now": "2018-05-12 12:20:00",
+        "countdown": 123121
+      }
     },
     {
       "title": "Facebook Advertise",
@@ -24,7 +28,11 @@
       "status": "finish",
       "enrollment": 1232,
       "price": 200,
-      "start_time": "2018-04-01 20:00"
+      "plan": {
+        "dtm_start": "2018-04-01 20:00"
+        "dtm_now": "2018-05-12 12:20:00",
+        "countdown": 123121
+      }
     }
   ]
 }

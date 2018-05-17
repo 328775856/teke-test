@@ -1,7 +1,7 @@
 <template>
   <div class="rules flex-row">
     <div class="mask flex-col" v-show="isShow">
-      <div class="frm"  :style="{width:width+'px'}">
+      <div class="frm flex-col"  :style="{width:width+'px'}">
         <div class="container">
           <div class="title">课程须知</div>
           <div class="content">
@@ -60,14 +60,16 @@
   }
 
   .frm {
+    justify-content: flex-end;
     width: 100%;
+    height: 80%;
   }
 
   .container {
     width: 100%;
+    height: 100%;
     background: #fff;
     border-radius: 0.2rem 0.2rem 0 0;
-    overflow: hidden;
   }
 
   .title {
@@ -81,12 +83,12 @@
 
   .content {
     width: 6.7rem;
+    height: 100%;
     margin: 0 auto;
-    overflow-y: hidden;
+    margin-top: 0.3rem;
   }
   ul{
-    max-height: 6rem;
-    margin-bottom: 0.5rem;
+    height: 78%;
     overflow-y: scroll;
     color: #9f9c9c;
     -webkit-overflow-scrolling: touch;
@@ -105,6 +107,7 @@
 
   li span {
     padding: 0.2rem 0.4rem 0.2rem 0.6rem;
+    line-height: 0.4rem;
     font-size: 11.5px;
     text-align: justify;
   }

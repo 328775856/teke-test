@@ -2,7 +2,7 @@
   "error": "0",
   "message": "success",
   "data": {
-    "total": {
+    "stats": {
       "score": 4.6,
       "turnout": 14
     },

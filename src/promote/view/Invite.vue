@@ -46,37 +46,28 @@
         active: 0,
         cards: [],
         benefits: {},
-        width: ''
+        width: '',
+        sn: 'L5a24befc9cc21'
       }
     },
-    // created() {
-    //   this.axios
-    //     .get('/api/promote-invite')
-    //     .then(res => {
-    //       console.log(res)
-    //       if (res.data.error === '0') {
-    //         this.data.cards = res.data.data
-    //       }
-    //     })
-    // },
+    computed: {
+      studentDomain: () => {
+        return `${window.location.protocol}//student.${window.location.host}`
+      }
+    },
     created() {
-      this.axios
-        .get('/api/promote-invitation', {
-          params: {
-            sn: this.$route.query.sn
-          }
-        })
+    },
+    mounted() {
+      this.api.get('/api/promote-invitation', {
+        sn: this.$route.query.sn || this.sn
+      })
         .then(res => {
           if (res.data.error === '0') {
             this.cards = res.data.data.cards
             this.benefits = res.data.data.benefits
             this.drawCard(0);
           }
-        })
-    },
-    mounted() {
-      this.width=document.body.clientWidth
-      this.drawCard(0);
+        }, this.api.onErrorSign)
       window.onresize = this.canvasResize
     },
     methods: {

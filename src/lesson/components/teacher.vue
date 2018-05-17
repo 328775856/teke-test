@@ -44,7 +44,6 @@
       }
     },
     created() {
-      console.log(this.teacherData.teacher.sn)
     }
   }
 </script>

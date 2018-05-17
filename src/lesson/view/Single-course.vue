@@ -37,17 +37,17 @@
         </div>
       </div>
       <div class="relative" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-        <relative @fresh="fresh"></relative>
+        <relative></relative>
       </div>
     </div>
     <div>
-      <div class="title flex-row" v-if="ratingData && ratingData.total">评分({{ratingData.total.score}})
-        <div class="flex-row people">已有{{ratingData.total.turnout}}人评价
+      <div class="title flex-row" v-if="ratingData && ratingData.stats">评分({{ratingData.stats.score}})
+        <div class="flex-row people">已有{{ratingData.stats.turnout}}人评价
           <div class="icon-yike icon-arrow-r"></div>
         </div>
       </div>
     </div>
-    <div v-if="!ratingData">
+    <div v-if="ratingData">
       <evaluate v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
     <div class="title invite flex-row">邀请达人榜
@@ -70,14 +70,14 @@
 
 <script>
   import Introduce from '../components/introduce.vue'
-  import SingleIntro from '../components/singleIntro.vue'
+  import SingleIntro from '../components/single-course/singleIntro.vue'
   import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
-  import Relative from '../components/relative.vue'
+  import Relative from '../components/single-course/relative.vue'
   import Tabs from '../components/tabs.vue'
-  import Evaluate from '../components/evaluate.vue'
+  import Evaluate from '../components/single-course/evaluate.vue'
   import Qrcode from '../components/qrcode.vue'
-  import SingleBtn from '../components/single-btn.vue'
+  import SingleBtn from '../components/single-course/single-btn.vue'
   import courseRules from '../components/course-rules.vue'
 
   export default {
@@ -104,7 +104,8 @@
         isActive: 0,
         width: '',
         isShow: false,
-        sn: 'L5a7406f7caa14'
+        // sn: 'L596f26c00ec46'
+        sn: 'L5ae148a3d73fe'
       }
     },
     created() {
@@ -117,9 +118,6 @@
       this.width = document.body.clientWidth
     },
     methods: {
-      fresh() {
-        this.fetchRelative()
-      },
       fetchRelative() {
         this.axios
           .get('/api/lesson-relative', {

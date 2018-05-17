@@ -53,19 +53,30 @@
 
 <script>
   import Introduce from '../components/introduce.vue'
-  import SeriesIntro from '../components/seriesintro.vue'
+  import SeriesIntro from '../components/series/seriesintro.vue'
   import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
-  import Catalog from '../components/Catalog.vue'
-  import SeriesBtn from '../components/series-btn.vue'
+  import Catalog from '../components/series/Catalog.vue'
+  import SeriesBtn from '../components/series/series-btn.vue'
   import Tabs from '../components/tabs.vue'
   import Qrcode from '../components/qrcode.vue'
-  import Pay from '../components/pay.vue'
+  import Pay from '../components/series/pay.vue'
   import courseRules from '../components/course-rules.vue'
 
   export default {
     name: 'series',
-    components: {Introduce, Teacher, Catalog, SeriesBtn, Tabs, Qrcode, SeriesIntro, IntroBottom, Pay, courseRules},
+    components: {
+      Introduce,
+      Teacher,
+      Catalog,
+      SeriesBtn,
+      Tabs,
+      Qrcode,
+      SeriesIntro,
+      IntroBottom,
+      Pay,
+      courseRules
+    },
     data() {
       return {
         introData: [],
@@ -77,13 +88,15 @@
         width: '',
         isShow: false,
         pay: false,
-        sn: 'S5af647783aed1'
+        sn: 'S59f1ae4d89ee8',
+        priceUrl: '/api/order-inquiry.api?sn=UO5af64f555ccb4'
       }
     },
     created() {
       this.fetchCatalog();
       this.fetchIntroduce();
-      this.fetchTeacher()
+      this.fetchTeacher();
+      this.fetchPriceList()
     },
     mounted() {
       this.width = document.body.clientWidth
@@ -91,7 +104,7 @@
     methods: {
       fetchCatalog() {
         this.axios
-          .get('/api/series-catalog', {
+          .get('/api/series-relative', {
             params: {
               sn: this.$route.query.sn || this.sn
             }
@@ -104,7 +117,7 @@
       },
       fetchIntroduce() {
         this.axios
-          .get('/api/lesson-overview', {
+          .get('/api/series-profile', {
             params: {
               sn: this.$route.query.sn || this.sn
             }
@@ -117,9 +130,22 @@
       },
       fetchTeacher() {
         this.axios
-          .get('/api/lesson-introduce', {
+          .get('/api/series-introduce', {
             params: {
               sn: this.$route.query.sn || this.sn
+            }
+          })
+          .then(res => {
+            if (res.data.error === '0') {
+              this.teacherData = res.data.data
+            }
+          })
+      },
+      fetchPriceList() {
+        this.axios
+          .get(this.priceUrl, {
+            params: {
+             // sn: this.$route.query.sn || this.sn
             }
           })
           .then(res => {

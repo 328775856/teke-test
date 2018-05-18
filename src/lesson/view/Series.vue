@@ -46,7 +46,7 @@
     <div class="bottom-btn">
       <series-btn @payShow="payShow" :isShow="isShow"></series-btn>
     </div>
-    <pay :width="width" :pay="pay" @payShow="payShow"></pay>
+    <pay :width="width" :pay="pay" @payShow="payShow" :payData="payData"></pay>
     <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
   </div>
 </template>
@@ -82,6 +82,7 @@
         introData: [],
         catalogData: [],
         teacherData: [],
+        payData: [],
         tabs: ['课程', '目录'],
         isActive: 0,
         idx: '',
@@ -89,7 +90,7 @@
         isShow: false,
         pay: false,
         sn: 'S59f1ae4d89ee8',
-        priceUrl: '/api/order-inquiry.api?sn=UO5af64f555ccb4'
+        priceUrl: '/api/order-inquiry?sn=UO5af64f555ccb4'
       }
     },
     created() {
@@ -150,7 +151,7 @@
           })
           .then(res => {
             if (res.data.error === '0') {
-              this.teacherData = res.data.data
+              this.payData = res.data.data
             }
           })
       },

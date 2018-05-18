@@ -3,7 +3,7 @@
     <div class="frm-btn flex-row">
       <div class="flex-row">
         <a href="javascript:" class="cancel" @click="cancel">取消</a>
-        <span class="surplus">应付：￥</span>
+        <span class="surplus">应付：￥{{payData.surplus/100}}.00</span>
       </div>
       <button class="comfirm button">确认支付</button>
     </div>
@@ -13,7 +13,7 @@
 <script>
   export default {
     name: "pay-btn",
-    props: ['width'],
+    props: ['width', 'payData'],
     data() {
       return {
         isShow: false
@@ -47,18 +47,16 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .surplus, .cancel {
-    text-decoration: none;
-    color: #666666;
-  }
-
   .cancel {
     padding-left: 0.3rem;
+    color: #999999;
+    text-decoration: none;
     -webkit-tap-highlight-color: transparent;
   }
 
   .surplus {
     padding-right: 0.4rem;
+    color: #F23F15;
   }
 
   .comfirm {

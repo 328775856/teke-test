@@ -18,7 +18,7 @@
               <i class="icon-yike icon-my-selected"></i>
             </i>
             <div class="enroll">{{item.enrollment}}人</div>
-            <span>{{item.start_time}}</span>
+            <span>{{item.plan.dtm_start}}</span>
           </div>
         </div>
       </div>
@@ -65,7 +65,11 @@
   .enroll {
     position: absolute;
     left: 0.23rem;
+    color: #808080;
     font-size: 0.24rem;
+  }
+  .enroll+span{
+    color: #808080;
   }
   p {
     margin: 0;

@@ -1,18 +1,21 @@
 <template>
   <div class="c-pay" v-if="pay">
     <div class="mask  flex-col">
-      <div :style="{width:width+'px'}">
+      <div class="frm" :style="{width:width+'px'}">
         <div class="container">
           <div class="text flex-col">付款详情</div>
-          <div>
-            <div class="title">从小白变身Excel达人</div>
-            <div class="detail"></div>
+          <div class="title">{{payData.title}}</div>
+          <div class="block">
+            <div class="detail flex-row" v-for="item in payData.list" :key="item.id">
+              <div>{{item.title}}</div>
+              <div>￥{{item.price/100}}</div>
+            </div>
           </div>
           <div class="price">
             <span>小计</span>
-            <div>
-              <span></span>
-              <span></span>
+            <div class="flex-row">
+              <span class="prime">￥{{payData.order_total/100}}</span>
+              <span class="real-price">￥{{payData.order_amount/100}}</span>
             </div>
           </div>
           <div class="price">
@@ -21,12 +24,12 @@
           </div>
           <div class="price">
             <span>余额抵扣</span>
-            <span></span>
+            <span>{{payData.charge/100}}</span>
           </div>
         </div>
       </div>
       <div class="btn">
-        <paybtn :width="width" @payShow="show"></paybtn>
+        <paybtn :width="width" @payShow="show" :payData="payData"></paybtn>
       </div>
     </div>
   </div>
@@ -37,7 +40,7 @@
 
   export default {
     name: "pay",
-    props: ['width', 'pay'],
+    props: ['width', 'pay', 'payData'],
     components: {Paybtn},
     data() {
       return {}
@@ -55,40 +58,71 @@
     justify-content: flex-end;
   }
 
+  .frm {
+    height: 65%;
+  }
+
   .container {
-    padding: 0 0.3rem 0.4rem 0.3rem;
+    height: 100%;
+    padding: 0 0.3rem;
     background: #fff;
-    border-radius: 0.2rem 0.2rem 0 0
+    border-radius: 0.2rem 0.2rem 0 0;
+    overflow-y: hidden;
   }
 
   .text {
     justify-content: center;
-    height: 1.4rem;
+    height: 15%;
     color: #0D0D0D;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 0.32rem;
+  }
+
+  .block {
+    height: 40%;
+    overflow-y: scroll;
+    color: #999999;
+    -webkit-overflow-scrolling: touch;
   }
 
   .title {
-    height: 0.71rem;
+    height: 7%;
     color: #0D0D0D;
-    font-size: 15px;
+    font-size: 0.30rem;
     font-weight: bold;
   }
 
   .detail {
-    padding: 0.4rem;
+    justify-content: space-between;
+    padding: 0.2rem 0;
   }
 
   .price {
-    height: 1rem;
-    line-height: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 12%;
     border-top: 1px solid #E6E6E6;
   }
 
   .price > span {
     color: #0D0D0D;
-    font-size: 13px;
+    font-size: 0.27rem;
     font-weight: bold;
+  }
+.price span:nth-child(2){
+  color: #F23F15;
+}
+  .prime {
+    text-decoration: line-through;
+    padding-right: 0.3rem;
+    color: #999999;
+    font-size: 0.24rem;
+  }
+
+  .real-price {
+    color: #F23F15;
+    font-size: 0.27rem;
   }
 </style>

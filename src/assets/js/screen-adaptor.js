@@ -9,7 +9,7 @@ module.exports = function (designWidth, fit) {
     let s = b.style;
     s.maxWidth = fit ? fit(window.screen) +'px' : w + 'px';
     s.fontSize = getComputedStyle(b)['font-size'];
-    d.documentElement.style.fontSize = (b.scrollWidth * 100 / w) + 'px';
+    d.documentElement.style.fontSize = (b.offsetWidth * 100 / w) + 'px';
   }
   f(designWidth, fit);
   window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', f, false);

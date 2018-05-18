@@ -56,15 +56,16 @@
       }
     },
     created() {
+      console.log(navigator.userAgent)
     },
     mounted() {
       this.api.get('/api/promote-invitation', {
-        sn: this.$route.query.sn || this.sn
+         sn: this.$route.query.sn || this.sn
       })
         .then(res => {
-          if (res.data.error === '0') {
-            this.cards = res.data.data.cards
-            this.benefits = res.data.data.benefits
+          if (res.error === '0') {
+            this.cards = res.data.cards
+            this.benefits = res.data.benefits
             this.drawCard(0);
           }
         }, this.api.onErrorSign)
@@ -87,6 +88,37 @@
         img.onload = function () {
           // base
           context.drawImage(img, 0, 0, card.base.size[0], card.base.size[1]);
+
+          // desc
+          let desc = card.desc || []
+          desc.forEach((v) => {
+            context.font = v.font || '10px sans-serif'
+            context.fillStyle = v.style || '#000'
+            context.textAlign = v.align || 'start'
+            context.textBaseline = v.bsline || 'alphabetic'
+            console.log('rotate', v.rotate)
+            if (v.rotate) {
+              context.rotate(parseFloat(v.rotate))
+              context.fillText(v.text, v.offset[0], v.offset[1])
+              context.rotate(-parseFloat(v.rotate))
+            } else {
+              context.fillText(v.text, v.offset[0], v.offset[1])
+            }
+          })
+          // avatar
+          if (card.avatar) {
+            let avatar = card.avatar
+            avatar.img = new Image();
+            avatar.img.crossOrigin = "Anonymous";
+            avatar.img.src = avatar.src
+            avatar.round = avatar.round || (avatar.size[0]+avatar.size[1])/4 // 默认圆角
+            avatar.img.onload = () => {
+                context.arc(avatar.offset[0]+avatar.size[0]/2, avatar.offset[1]+avatar.size[1]/2, avatar.round, 0, 2*Math.PI)
+                context.clip()
+                context.drawImage(avatar.img, avatar.offset[0], avatar.offset[1], avatar.size[0], avatar.size[1])
+                context.restore()
+            }
+          }
           // qrcode
           let qrcode = card.qrcode
           qrcode.img = new Image();

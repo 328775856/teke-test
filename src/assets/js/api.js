@@ -35,6 +35,7 @@ let api = {
   },
   onErrorSign: function(res) {
     if (res.error === '0.1') {
+      alert(res.message)
       app.signIn()
     } else {
       api.onErrorBase(res)

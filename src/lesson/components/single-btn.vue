@@ -5,10 +5,10 @@
           <i class="icon-yike icon-home"></i>
           <span>首页</span>
         </div>
-        <!--<div class="favorite button flex-col flex-item ">-->
-          <!--<i class="icon-yike icon-favorite"></i>-->
-          <!--<span>收藏</span>-->
-        <!--</div>-->
+        <div class="favorite button flex-col flex-item ">
+          <i class="icon-yike icon-favorite"></i>
+          <span>收藏</span>
+        </div>
         <div class="chat button flex-col flex-item ">
           <i class="icon-yike icon-chat"></i>
           <span>交流</span>
@@ -50,7 +50,7 @@
 
   .enroll {
     flex: 5.5;
-    background: #2F57DA;
+    background: rgba(47, 87, 218, 1);
     color: white;
     font-size: 0.32rem;
     letter-spacing: 0.02rem;

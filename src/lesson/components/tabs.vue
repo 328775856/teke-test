@@ -16,6 +16,10 @@
       }
     },
     methods: {
+      active() {
+        this.isActive=this.idx
+        alert(this.isActive===this.idx)
+      }
     }
   }
 </script>

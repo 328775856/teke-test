@@ -9,21 +9,16 @@
         <i class="icon-yike icon-favorite"></i>
         <span>收藏</span>
       </div>
-      <button class="enroll button" @click="purchase">报名系列课</button>
+      <button class="enroll button">报名系列课</button>
     </div>
   </div>
 </template>
 
 <script>
-
   export default {
     name: "bottom-btn",
     data() {
-      return {}
-    },
-    methods: {
-      purchase() {
-        this.$emit('payShow')
+      return {
       }
     }
   }

@@ -27,13 +27,12 @@ let htmlWebpackPlugins = [
   new HtmlIncludeAssetsPlugin({
     assets: [
       'static/css/global.css',
-      'static/fonts/iconfont.css'
     ],
     append: false,
     hash: true
   })
 ]
-utils.globNames(`./page/${APP_PAGE}.html`).forEach((page)=>{
+utils.globNames(`./page/${APP_PAGE}.html`).forEach((page) => {
   //page entry
   entry[page] = `./src/${page}/_.js`
   //url rewrites
@@ -54,7 +53,7 @@ utils.globNames(`./page/${APP_PAGE}.html`).forEach((page)=>{
 const devWebpackConfig = merge(baseWebpackConfig, {
   entry: entry,
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+    rules: utils.styleLoaders({sourceMap: config.dev.cssSourceMap, usePostCSS: true})
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
@@ -72,7 +71,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
     overlay: config.dev.errorOverlay
-      ? { warnings: false, errors: true }
+      ? {warnings: false, errors: true}
       : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,
@@ -127,8 +126,8 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors
-        ? utils.createNotifierCallback()
-        : undefined
+          ? utils.createNotifierCallback()
+          : undefined
       }))
 
       resolve(devWebpackConfig)

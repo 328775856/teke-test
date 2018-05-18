@@ -1,12 +1,10 @@
 <template>
   <div class="c-teacher">
     <div class="frm-teacher flex-row">
-      <div class="avatar">
-        <img :src="teacherData.teacher.avatar">
-      </div>
+      <div class="avatar">{{teacherData.teacher.avatar}}</div>
       <div class="teacher-msg flex-col">
         <div class="name">{{teacherData.teacher.name}}</div>
-        <div class="">{{teacherData.teacher.about}}</div>
+        <div class="">{{teacherData.teacher.info}}</div>
       </div>
       <div class="focus flex-col">
         <p>关注</p>
@@ -29,9 +27,35 @@
     components: {markdown},
     data() {
       return {
-        isActive: true
+        isActive: true,
+        msg:
+          `####  在Shopify+facebook这个领域
+* 我见过，有很多深谙流量获取之道的大牛，想要寻找利润突破口
+* 我知道，有很多电商平台卖家，苦于政策变动， 产品专利等问题，被搞得七荤八素；
+* 我明白，有很多人跃跃欲试自主创业，或是兼职做点属于自己的自由项目；
+* 我听说，有很多人准备涉足Shopify领域，但是担心踩坑，赔钱；
+* 我理解，以上所有
+####  本课适宜人群
+* 有独立学习能力且想要低成本创业的人；
+* 对 Shopify+facebook 感兴趣的人；
+* 对独立站选品及 Facebook 投放有疑惑的人；
+####  报名须知
+* 课程实践需要自备梯子；
+* 如果有良好的英语水平会让沟通成本降低；
+* 如果想听完课直接就能赚钱，还请不要报名，课程旨在引路及思路传递；
+* 课程采用图文及语音的形式直播，点击开课时的链接即可进入课堂，课程内容可永久回听；
+`
       }
     },
+    // mounted: function () {
+    //     let bw=document.body.scrollWidth
+    //     let tm=document.getElementById('teacher-msg')
+    //   if (bw<375) {
+    //     tm.style.lineHeight=bw/375*23+'px'
+    //   } else  {
+    //     tm.style.lineHeight=bw/375*28+'px'
+    //   }
+    // },
     methods: {
       active() {
         this.isActive = !this.isActive
@@ -42,8 +66,6 @@
         let that = this
         return markdown.toHTML(that.teacherData.introduce)
       }
-    },
-    created() {
     }
   }
 </script>
@@ -82,20 +104,19 @@
     align-items: left;
   }
 
-  .avatar img{
+  .avatar {
     width: 0.72rem;
-    height: 0.72rem;
-    border-radius: 0.72rem;
+    height: 0.7rem;
   }
 
   .name {
     width: 100%;
-    font-size: 0.3rem;
+    font-size: 15px;
   }
 
   .name + div {
     width: 4.38rem;
-    font-size: 0.24rem;
+    font-size: 12px;
     margin-top: 0.15rem;
     color: #808080;
     line-height: 0.36rem;
@@ -112,7 +133,7 @@
     position: relative;
     width: 0.7rem;
     padding-left: 0.5rem;
-    font-size: 0.24rem;
+    font-size: 12px;
     color: #2A4EC4;
     line-height: 0.48rem;
   }
@@ -153,14 +174,14 @@
     line-height: 0.6rem;
   }
 
-  .c-teacher li {
+  li {
     position: relative;
     margin-left: 0.31rem;
     letter-spacing: 0.01rem;
     list-style: none;
   }
 
-  .c-teacher li:before {
+  li:before {
     content: '●';
     position: absolute;
     left: -0.3rem;

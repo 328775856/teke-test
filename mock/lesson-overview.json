@@ -5,10 +5,7 @@
     "title": "Facebook Advertise",
     "cover": "http://storage.yike.fm/lesson/cover/5a98b4e0437ab",
     "target": "/lesson/detail?sn=xxx",
-    "series": {
-      "sn": "xxx",
-      "name": "xx"
-    },
+    "series": "Facebook",
     "teacher": "fish",
     "progress": [4, 4],
     "status": "finish",

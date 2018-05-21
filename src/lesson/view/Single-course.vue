@@ -2,10 +2,10 @@
   <div class="c-single" :class="{isShow:isShow}">
     <div class="introduce">
       <div class="i-header">
-        <introduce :introData="introData"></introduce>
+        <introduce v-if="introData && introData.plan" :introData="introData"></introduce>
       </div>
       <div class="i-content">
-        <single-intro :introData="introData"></single-intro>
+        <single-intro v-if="introData && introData.plan" :introData="introData"></single-intro>
       </div>
       <div class="i-bottom">
         <intro-bottom @show="show"></intro-bottom>
@@ -26,17 +26,17 @@
           <div class="title">
             讲师
           </div>
-          <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+          <teacher v-if="teacherData" :teacherData="teacherData"></teacher>
         </div>
       </div>
-      <div class="title" v-if="!relativeData">
+      <div class="title" v-if="JSON.stringify(relativeData) !== '[]'">
         <div class="flex-row">相关系列课
           <div class="flex-row">查看完整课程
             <div class="icon-yike icon-arrow-r"></div>
           </div>
         </div>
       </div>
-      <div class="relative" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <div class="relative">
         <relative></relative>
       </div>
     </div>
@@ -119,54 +119,43 @@
     },
     methods: {
       fetchRelative() {
-        this.axios
-          .get('/api/lesson-relative', {
-            params: {
+        this.api.get('/api/lesson-relative', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.relativeData = res.data.data
+            if (res.error === '0') {
+              this.relativeData = res.data
             }
           })
       },
       fetchIntroduce() {
-        this.axios
-          .get('/api/lesson-profile', {
-            params: {
+        this.api.get('/api/lesson-profile', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.introData = res.data.data
+            if (res.error === '0') {
+              this.introData = res.data
             }
           })
       },
       fetchTeacher() {
-        this.axios
-          .get('/api/lesson-introduce', {
-            params: {
+        this.api.get('/api/lesson-introduce', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.teacherData = res.data.data
+            console.log(res)
+            if (res.error === '0') {
+              this.teacherData = res.data
             }
           })
       },
       fetchRating() {
-        this.axios
-          .get('/api/lesson-rating-list', {
-            params: {
+        this.api.get('/api/lesson-rating-list', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.ratingData = res.data.data
+            if (res.error === '0') {
+              this.ratingData = res.data
             }
           })
       },

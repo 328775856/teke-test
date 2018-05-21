@@ -2,11 +2,11 @@
   <div class="c-teacher">
     <div class="frm-teacher flex-row">
       <div class="avatar">
-        <img :src="teacherData.teacher.avatar">
+        <!--<img :src="teacherData.teacher.avator">-->
       </div>
       <div class="teacher-msg flex-col">
-        <div class="name">{{teacherData.teacher.name}}</div>
-        <div class="">{{teacherData.teacher.about}}</div>
+        <div class="name">{{teacherData.teacher}}</div>
+        <div class="">{{teacherData.content}}</div>
       </div>
       <div class="focus flex-col">
         <p>关注</p>
@@ -15,8 +15,8 @@
     <div class="title">
       简介
     </div>
-    <div class="markdown" v-html="showMarkdown">
-    </div>
+    <!--<div class="markdown" v-html="showMarkdown">-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -40,7 +40,7 @@
     computed: {
       showMarkdown() {
         let that = this
-        return markdown.toHTML(that.teacherData.introduce)
+        return markdown.toHTML(that.teacherData.content)
       }
     },
     created() {

@@ -7,6 +7,6 @@ let app = {
   signIn: () => {
     window.location.href = '/sign-in?callbackURI=' + encodeURIComponent(window.location.href)
   }
-}
+};
 
 export default app

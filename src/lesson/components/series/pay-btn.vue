@@ -3,7 +3,7 @@
     <div class="frm-btn flex-row">
       <div class="flex-row">
         <a href="javascript:" class="cancel" @click="cancel">取消</a>
-        <span class="surplus">应付：￥{{payData.surplus/100}}.00</span>
+        <span class="surplus">应付：￥{{payData.surplus}}.00</span>
       </div>
       <button class="comfirm button">确认支付</button>
     </div>

@@ -25,12 +25,12 @@
         <div class="title">
           讲师
         </div>
-        <teacher v-if="teacherData && teacherData.teacher" :teacherData="teacherData"></teacher>
+        <teacher v-if="teacherData" :teacherData="teacherData"></teacher>
       </div>
     </div>
     <div class="title">目录</div>
     <div class="contents">
-      <catalog :catalogData="catalogData"></catalog>
+      <catalog v-if="catalogData" :catalogData="catalogData"></catalog>
     </div>
     <div class="title invite flex-row">邀请达人榜
       <div class="icon flex-row">
@@ -90,13 +90,13 @@
         isShow: false,
         pay: false,
         sn: 'S59f1ae4d89ee8',
-        priceUrl: '/api/order-inquiry?sn=UO5af64f555ccb4'
+        orderSn: 'UO5af64f555ccb4'
       }
     },
     created() {
-      this.fetchCatalog();
-      this.fetchIntroduce();
-      this.fetchTeacher();
+      this.fetchCatalog()
+      this.fetchIntroduce()
+      this.fetchTeacher()
       this.fetchPriceList()
     },
     mounted() {
@@ -104,54 +104,43 @@
     },
     methods: {
       fetchCatalog() {
-        this.axios
-          .get('/api/series-relative', {
-            params: {
+        this.api.get('/api/series-relative', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.catalogData = res.data.data
+            if (res.error === '0') {
+              this.catalogData = res.data
             }
           })
       },
       fetchIntroduce() {
-        this.axios
-          .get('/api/series-profile', {
-            params: {
+        this.api.get('/api/series-profile', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.introData = res.data.data
+            if (res.error === '0') {
+              this.introData = res.data
             }
           })
       },
       fetchTeacher() {
-        this.axios
-          .get('/api/series-introduce', {
-            params: {
+        this.api.get('/api/series-introduce', {
               sn: this.$route.query.sn || this.sn
-            }
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.teacherData = res.data.data
+            if (res.error === '0') {
+              this.teacherData = res.data
+              console.log(this.teacherData)
             }
           })
       },
       fetchPriceList() {
-        this.axios
-          .get(this.priceUrl, {
-            params: {
-             // sn: this.$route.query.sn || this.sn
-            }
+        this.api.get('/api/order-inquiry', {
+               sn: this.$route.query.sn || this.orderSn
           })
           .then(res => {
-            if (res.data.error === '0') {
-              this.payData = res.data.data
+            if (res.error === '0') {
+              this.payData = res.data
             }
           })
       },

@@ -26,7 +26,7 @@
           <div class="title">
             讲师
           </div>
-          <teacher v-if="teacherData" :teacherData="teacherData"></teacher>
+          <teacher v-if="teacherData && introData.teacher" :teacherData="teacherData" :introData="introData"></teacher>
         </div>
       </div>
       <div class="title" v-if="JSON.stringify(relativeData) !== '[]'">
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+  import {markdown} from 'markdown'
   import Introduce from '../components/introduce.vue'
   import SingleIntro from '../components/single-course/singleIntro.vue'
   import IntroBottom from '../components/introBottom.vue'
@@ -83,6 +84,7 @@
   export default {
     name: "single-course",
     components: {
+      markdown,
       Introduce,
       Teacher,
       SingleBtn,
@@ -143,9 +145,9 @@
               sn: this.$route.query.sn || this.sn
           })
           .then(res => {
-            console.log(res)
             if (res.error === '0') {
               this.teacherData = res.data
+              this.teacherData.content = markdown.toHTML(this.teacherData.content)
             }
           })
       },

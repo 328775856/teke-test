@@ -2,11 +2,11 @@
   <div class="c-teacher">
     <div class="frm-teacher flex-row">
       <div class="avatar">
-        <!--<img :src="teacherData.teacher.avator">-->
+        <img :src="introData.teacher.avatar">
       </div>
       <div class="teacher-msg flex-col">
-        <div class="name">{{teacherData.teacher}}</div>
-        <div class="">{{teacherData.content}}</div>
+        <div class="name">{{introData.teacher.name}}</div>
+        <div class="">{{teacherData.teacher}}</div>
       </div>
       <div class="focus flex-col">
         <p>关注</p>
@@ -15,18 +15,15 @@
     <div class="title">
       简介
     </div>
-    <!--<div class="markdown" v-html="showMarkdown">-->
-    <!--</div>-->
+    <div class="intro" v-html="teacherData.content"></div>
   </div>
 </template>
 
 <script>
-  import {markdown} from 'markdown'
 
   export default {
     name: "teacher",
-    props: ['teacherData'],
-    components: {markdown},
+    props: ['teacherData', 'introData'],
     data() {
       return {
         isActive: true
@@ -38,10 +35,6 @@
       }
     },
     computed: {
-      showMarkdown() {
-        let that = this
-        return markdown.toHTML(that.teacherData.content)
-      }
     },
     created() {
     }
@@ -127,7 +120,7 @@
     border-radius: 0.01rem;
   }
 
-  .markdown {
+  .intro {
     font-size: 15px;
     line-height: 30px;
     color: #333333;

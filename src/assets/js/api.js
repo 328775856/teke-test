@@ -15,6 +15,7 @@ let api = {
 
     return new Promise((resolve, reject) => {
       axios.request(options).then( (response) => {
+        console.log(options)
         if (response.data.error === '0') {
           resolve(response.data)
         } else {

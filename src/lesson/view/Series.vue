@@ -25,7 +25,7 @@
         <div class="title">
           讲师
         </div>
-        <teacher v-if="teacherData" :teacherData="teacherData"></teacher>
+        <teacher v-if="teacherData && introData.teacher" :teacherData="teacherData" :introData="introData"></teacher>
       </div>
     </div>
     <div class="title">目录</div>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+  import {markdown} from 'markdown'
+  import qs from 'qs'
   import Introduce from '../components/introduce.vue'
   import SeriesIntro from '../components/series/seriesintro.vue'
   import IntroBottom from '../components/introBottom.vue'
@@ -66,6 +68,7 @@
   export default {
     name: 'series',
     components: {
+      markdown,
       Introduce,
       Teacher,
       Catalog,
@@ -91,13 +94,13 @@
         pay: false,
         sn: 'S59f1ae4d89ee8',
         orderSn: 'UO5af64f555ccb4'
+        //   orderSn: 'S5af647783aed1'
       }
     },
     created() {
       this.fetchCatalog()
       this.fetchIntroduce()
       this.fetchTeacher()
-      this.fetchPriceList()
     },
     mounted() {
       this.width = document.body.clientWidth
@@ -105,8 +108,8 @@
     methods: {
       fetchCatalog() {
         this.api.get('/api/series-relative', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.catalogData = res.data
@@ -115,8 +118,8 @@
       },
       fetchIntroduce() {
         this.api.get('/api/series-profile', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.introData = res.data
@@ -125,19 +128,19 @@
       },
       fetchTeacher() {
         this.api.get('/api/series-introduce', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.teacherData = res.data
-              console.log(this.teacherData)
+              this.teacherData.content = markdown.toHTML(this.teacherData.content)
             }
           })
       },
       fetchPriceList() {
         this.api.get('/api/order-inquiry', {
-               sn: this.$route.query.sn || this.orderSn
-          })
+          sn: this.$route.query.sn || this.orderSn
+        })
           .then(res => {
             if (res.error === '0') {
               this.payData = res.data
@@ -152,6 +155,14 @@
       },
       payShow() {
         this.pay = !this.pay
+        this.api.post('/api/order-book', qs.stringify({
+          sn: this.$route.query.sn || this.orderSn
+        }))
+          .then(res => {
+            if (res.error === '0') {
+              this.fetchPriceList()
+            }
+          })
       }
     }
   }

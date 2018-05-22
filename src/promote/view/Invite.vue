@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <modal-notice width="5.1rem" title="佣金规则" confirm="知道了" :isShow="isShowNotice" v-on:close="showNotice(false)">
+    <modal-notice :width="width" title="佣金规则" confirm="知道了" :isShow="isShowNotice" v-on:close="showNotice(false)">
       <li>每成功邀请1名好友报名并听课，可获得￥{{benefits.commission}}佣金</li>
       <li>佣金将在好友听课（未退款）72小时后结算，可通过【账户资金】提现至微信零钱</li>
     </modal-notice>
@@ -45,7 +45,9 @@
         cards: [],
         benefits: {},
         active: 0,
-        cover: ''
+        cover: '',
+        width: '',
+        sn: 'S59f1ae4d89ee8'
       }
     },
     computed: {
@@ -56,8 +58,9 @@
     created() {
     },
     mounted() {
+      this.width = document.body.clientWidth
       this.api.get('/api/promote-invitation', {
-        sn: this.$route.query.sn
+        sn: this.$route.query.sn || this.sn
       })
         .then(res => {
           if (res.error === '0') {
@@ -109,9 +112,9 @@
             avatar.img = new Image();
             avatar.img.crossOrigin = "Anonymous";
             avatar.img.src = avatar.src
-            avatar.round = avatar.round || (avatar.size[0]+avatar.size[1])/4 // 默认圆角
+            avatar.round = avatar.round || (avatar.size[0] + avatar.size[1]) / 4 // 默认圆角
             avatar.img.onload = () => {
-              context.arc(avatar.offset[0]+avatar.size[0]/2, avatar.offset[1]+avatar.size[1]/2, avatar.round, 0, 2*Math.PI)
+              context.arc(avatar.offset[0] + avatar.size[0] / 2, avatar.offset[1] + avatar.size[1] / 2, avatar.round, 0, 2 * Math.PI)
               context.clip()
               context.drawImage(avatar.img, avatar.offset[0], avatar.offset[1], avatar.size[0], avatar.size[1])
               context.restore()
@@ -138,7 +141,7 @@
         let ph = cas.style.height
         if (frm.clientWidth / cas.clientWidth < frm.clientHeight / cas.clientHeight) {
           cas.style.width = frm.clientWidth * 0.8 + 'px'
-          cover.style.width = frm.clientWidth * 0.8 +  'px'
+          cover.style.width = frm.clientWidth * 0.8 + 'px'
         } else {
           cas.style.height = frm.clientHeight * 0.9 + 'px';
           cover.style.height = frm.clientHeight * 0.9 + 'px'
@@ -169,18 +172,21 @@
     position: relative;
     flex-grow: 1;
     width: 100%;
-    top:.5rem;
+    top: .5rem;
     overflow: hidden;
     border-radius: .12rem;
   }
+
   #canvas {
     border-radius: .12rem;
   }
-  #cover{
+
+  #cover {
     position: absolute;
     z-index: 0;
     border-radius: .12rem;
   }
+
   #tips {
     display: flex;
     align-items: center;

@@ -57,8 +57,9 @@
 
 <script>
   import {markdown} from 'markdown'
-  import Bus from '@/assets/js/bus'
   import qs from 'qs'
+  import Bus from '@/assets/js/bus'
+  import courseStatus from '@/assets/js/courseStatus'
   import Introduce from '../components/introduce.vue'
   import SeriesIntro from '../components/series/seriesintro.vue'
   import IntroBottom from '../components/introBottom.vue'
@@ -74,6 +75,7 @@
     name: 'series',
     components: {
       Bus,
+      courseStatus,
       markdown,
       Introduce,
       Teacher,
@@ -118,6 +120,7 @@
       this.fetchCatalog()
       this.fetchIntroduce()
       this.fetchTeacher()
+      courseStatus.f()
     },
     mounted() {
       this.width = document.body.clientWidth

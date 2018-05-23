@@ -70,6 +70,8 @@
 
 <script>
   import {markdown} from 'markdown'
+  import qs from 'qs'
+  import Bus from '@/assets/js/bus'
   import Introduce from '../components/introduce.vue'
   import SingleIntro from '../components/single-course/singleIntro.vue'
   import IntroBottom from '../components/introBottom.vue'
@@ -111,6 +113,19 @@
       }
     },
     created() {
+      Bus.$on('payShow', () => {
+        this.pay = !this.pay
+        if (this.pay === true) {
+          this.api.post('/api/order-book-series', qs.stringify({
+            sn: this.$route.query.sn || this.sn
+          }))
+            .then(res => {
+              if (res.error === '0') {
+                this.fetchPriceList()
+              }
+            })
+        }
+      })
       this.fetchIntroduce()
       this.fetchTeacher()
       this.fetchRating()

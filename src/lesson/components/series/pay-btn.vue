@@ -11,17 +11,21 @@
 </template>
 
 <script>
+  import Bus from '@/assets/js/bus'
+
   export default {
     name: "pay-btn",
     props: ['width', 'payData'],
+    components: {Bus},
     data() {
       return {
-        isShow: false
       }
+    },
+    created() {
     },
     methods: {
       cancel() {
-        this.$emit('payShow')
+        Bus.$emit('payShow')
       }
     }
   }

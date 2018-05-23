@@ -2,7 +2,7 @@
   <div class="c-invite">
     <div class="content flex-col">
       <div class="frm-canvas flex-col" id="frm-canvas">
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" v-show="!cover"></canvas>
         <img :src="cover" id="cover" v-show="cover">
         <div id="tips" @click="showNotice">
           <i class="icon-yike icon-information"></i>
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <modal-notice :width="width" title="佣金规则" confirm="知道了" :isShow="isShowNotice" v-on:close="showNotice(false)">
+    <modal-notice width="5.1rem" title="佣金规则" confirm="知道了" :isShow="isShowNotice" v-on:close="showNotice(false)">
       <li>每成功邀请1名好友报名并听课，可获得￥{{benefits.commission}}佣金</li>
       <li>佣金将在好友听课（未退款）72小时后结算，可通过【账户资金】提现至微信零钱</li>
     </modal-notice>
@@ -45,9 +45,7 @@
         cards: [],
         benefits: {},
         active: 0,
-        cover: '',
-        width: '',
-        sn: 'S59f1ae4d89ee8'
+        cover: ''
       }
     },
     computed: {
@@ -58,9 +56,9 @@
     created() {
     },
     mounted() {
-      this.width = document.body.clientWidth
       this.api.get('/api/promote-invitation', {
-        sn: this.$route.query.sn || this.sn
+        // 本地环境
+         sn: this.$route.query.sn || 'S5aa0d6362ab78'
       })
         .then(res => {
           if (res.error === '0') {
@@ -97,7 +95,6 @@
             context.fillStyle = v.style || '#000'
             context.textAlign = v.align || 'start'
             context.textBaseline = v.bsline || 'alphabetic'
-            console.log('rotate', v.rotate)
             if (v.rotate) {
               context.rotate(parseFloat(v.rotate))
               context.fillText(v.text, v.offset[0], v.offset[1])
@@ -182,8 +179,6 @@
   }
 
   #cover {
-    position: absolute;
-    z-index: 0;
     border-radius: .12rem;
   }
 

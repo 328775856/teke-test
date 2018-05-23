@@ -7,7 +7,7 @@
           <div class="time">
             <div class="lesson-time flex-row">
               <i class="icon-yike icon-clock flex-row">{{introData.plan.dtm_start}}
-                <button :class="introData.status">{{introData.status | status}}</button>
+                <button :class="introData.status">{{introData.status | courseStatus}}</button>
               </i>
             </div>
             <div class="s-price">￥{{introData.price}}</div>

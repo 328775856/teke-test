@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="btn">
-        <paybtn :width="width" @payShow="show" :payData="payData"></paybtn>
+        <paybtn :width="width"  :payData="payData"></paybtn>
       </div>
     </div>
   </div>
@@ -46,9 +46,7 @@
       return {}
     },
     methods: {
-      show() {
-        this.$emit('payShow')
-      }
+
     }
   }
 </script>
@@ -111,9 +109,11 @@
     font-size: 0.27rem;
     font-weight: bold;
   }
-.price span:nth-child(2){
-  color: #F23F15;
-}
+
+  .price span:nth-child(2) {
+    color: #F23F15;
+  }
+
   .prime {
     text-decoration: line-through;
     padding-right: 0.3rem;

@@ -15,15 +15,17 @@
 </template>
 
 <script>
+  import Bus from '@/assets/js/bus'
 
   export default {
     name: "bottom-btn",
+    components: {Bus},
     data() {
       return {}
     },
     methods: {
       purchase() {
-        this.$emit('payShow')
+        Bus.$emit('payShow')
       }
     }
   }

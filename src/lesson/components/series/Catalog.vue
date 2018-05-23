@@ -9,7 +9,7 @@
           <div class="text flex-row">
             <div class="msg">{{item.title}}</div>
             <div class="status flex-col">
-              <button :class="item.status">{{item.status | status}}</button>
+              <button :class="item.status">{{item.status | courseStatus}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>

@@ -44,15 +44,20 @@
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <series-btn @payShow="payShow" :isShow="isShow"></series-btn>
+      <series-btn  :isShow="isShow"></series-btn>
     </div>
-    <pay :width="width" :pay="pay" @payShow="payShow" :payData="payData"></pay>
-    <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
+    <div>
+      <pay :width="width" :pay="pay"  :payData="payData"></pay>
+    </div>
+    <div>
+      <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
+    </div>
   </div>
 </template>
 
 <script>
   import {markdown} from 'markdown'
+  import Bus from '@/assets/js/bus'
   import qs from 'qs'
   import Introduce from '../components/introduce.vue'
   import SeriesIntro from '../components/series/seriesintro.vue'
@@ -68,6 +73,7 @@
   export default {
     name: 'series',
     components: {
+      Bus,
       markdown,
       Introduce,
       Teacher,
@@ -92,12 +98,23 @@
         width: '',
         isShow: false,
         pay: false,
-        sn: 'S59f1ae4d89ee8',
-        orderSn: 'UO5af64f555ccb4'
-        //   orderSn: 'S5af647783aed1'
+        sn: 'S59f1ae4d89ee8'
       }
     },
     created() {
+      Bus.$on('payShow', () => {
+        this.pay = !this.pay
+        if (this.pay === true) {
+          this.api.post('/api/order-book-series', qs.stringify({
+            sn: this.$route.query.sn || this.sn
+          }))
+            .then(res => {
+              if (res.error === '0') {
+                this.fetchPriceList(res.data.sn)
+              }
+            })
+        }
+      })
       this.fetchCatalog()
       this.fetchIntroduce()
       this.fetchTeacher()
@@ -137,9 +154,9 @@
             }
           })
       },
-      fetchPriceList() {
+      fetchPriceList(orderSn) {
         this.api.get('/api/order-inquiry', {
-          sn: this.$route.query.sn || this.orderSn
+          sn: this.$route.query.sn || orderSn
         })
           .then(res => {
             if (res.error === '0') {
@@ -152,17 +169,6 @@
       },
       show() {
         this.isShow = !this.isShow
-      },
-      payShow() {
-        this.pay = !this.pay
-        this.api.post('/api/order-book', qs.stringify({
-          sn: this.$route.query.sn || this.orderSn
-        }))
-          .then(res => {
-            if (res.error === '0') {
-              this.fetchPriceList()
-            }
-          })
       }
     }
   }

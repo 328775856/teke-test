@@ -1,7 +1,7 @@
 <template>
-  <div class="c-modal-notice flex-col" v-if="isShow" :style="{width:width+'px'}">
+  <div class="c-modal-notice flex-col" v-if="isShow">
     <div class="mask" @click="close"></div>
-    <div class="frm-modal">
+    <div class="frm-modal" :style="{width: width}">
       <div class="head flex-col">
         <slot name="title" class="title">{{title}}</slot>
       </div>
@@ -9,7 +9,7 @@
         <div class="frm-notice">
           <div class="box-notice">
             <ul class="modal-list">
-              <slot ></slot>
+              <slot></slot>
             </ul>
           </div>
         </div>
@@ -26,7 +26,7 @@
 <script>
   export default {
     name: 'modal-notice',
-    props: ['title', 'confirm', 'isShow', 'width'],
+    props: ['width', 'title', 'confirm', 'isShow'],
     methods: {
       close: function () {
         this.$emit('close')
@@ -37,16 +37,16 @@
 
 <style scoped>
   .c-modal-notice {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
+    width: 100%;
   }
 
   .frm-modal {
     z-index: 999;
-    width: 68%;
-    border-radius: .12rem;
+    width: 70%;
   }
 
   .frm-button {
@@ -56,30 +56,34 @@
     height: 1rem;
     color: #222;
     font-size: .3rem;
+    font-weight: bold;
+    letter-spacing: .05rem;
     background: #e9edff;
+    border-radius: .12rem .12rem 0 0;
   }
 
   .body {
     flex-grow: 1;
     background: #fff;
+    color: #666;
+    font-size: .24rem;
+    border-radius: 0 0 .12rem .12rem;
   }
 
   ul.modal-list {
     margin: 0;
     list-style-type: none;
-    padding: .1rem .2rem;
+    padding: .1rem .3rem;
   }
 
   .modal-list > li {
     display: flex;
-    align-items: center;
+    margin: .21rem 0;
   }
 
   .modal-list > li:before {
-    padding: .1rem;
-    font-family: icon-yike;
-    content: "\e62d";
-    font-size: .1rem;
+    padding: 0 .1rem;
+    content: "◆";
     color: #5774ed;
   }
 
@@ -91,7 +95,7 @@
     height: .6rem;
     padding: 0 .3rem 0 .4rem;
     border-radius: .3rem;
-    letter-spacing: .1rem;
+    letter-spacing: .03rem;
     font-size: .3rem;
     text-align: center;
     color: #fff;

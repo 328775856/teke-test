@@ -9,7 +9,7 @@
           <div class="text flex-row">
             <div class="msg">{{item.title}}</div>
             <div class="status flex-col">
-              <button :class="item.status">{{item.status | status}}</button>
+              <button :class="item.status" :courseStatus="courseStatus">{{courseStatus[item.status]}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
@@ -27,30 +27,35 @@
 </template>
 
 <script>
+  import courseStatus from '@/assets/js/courseStatus'
+
   export default {
     name: "Catalog",
     props: ['catalogData'],
+    components: {courseStatus},
     data() {
       return {
+        courseStatus: {}
       }
     },
-    methods: {
-    },
+    methods: {},
     created() {
+      this.courseStatus = courseStatus
     }
   }
 </script>
 
 <style scoped>
   /*people 图标*/
-  .people{
+  .people {
     position: relative;
     font-size: 0.24rem;
   }
+
   .people.icon-my-selected:before {
     position: absolute;
     top: -0.17rem;
-    left:  -0.1rem;
+    left: -0.1rem;
     color: #999999;
     font-size: 0.25rem;
     z-index: 2;
@@ -62,15 +67,18 @@
     color: #CCCCCC;
     font-size: 0.2rem;
   }
+
   .enroll {
     position: absolute;
     left: 0.23rem;
     color: #808080;
     font-size: 0.24rem;
   }
-  .enroll+span{
+
+  .enroll + span {
     color: #808080;
   }
+
   p {
     margin: 0;
   }
@@ -90,6 +98,7 @@
     padding: 0.3rem 0;
     border-bottom: 1px solid #DDDDDD;
   }
+
   .img {
     width: 2.4rem;
     height: 1.28rem;

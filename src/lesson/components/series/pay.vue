@@ -8,14 +8,14 @@
           <div class="block">
             <div class="detail flex-row" v-for="item in payData.list" :key="item.id">
               <div>{{item.title}}</div>
-              <div>￥{{item.price/100}}</div>
+              <div>￥{{item.price}}</div>
             </div>
           </div>
           <div class="price">
             <span>小计</span>
             <div class="flex-row">
-              <span class="prime">￥{{payData.order_total/100}}</span>
-              <span class="real-price">￥{{payData.order_amount/100}}</span>
+              <span class="prime">￥{{payData.order_total}}</span>
+              <span class="real-price">￥{{payData.order_amount}}</span>
             </div>
           </div>
           <div class="price">
@@ -24,12 +24,12 @@
           </div>
           <div class="price">
             <span>余额抵扣</span>
-            <span>{{payData.charge/100}}</span>
+            <span>{{payData.charge}}</span>
           </div>
         </div>
       </div>
       <div class="btn">
-        <paybtn :width="width" @payShow="show" :payData="payData"></paybtn>
+        <paybtn :width="width"  :payData="payData"></paybtn>
       </div>
     </div>
   </div>
@@ -46,9 +46,7 @@
       return {}
     },
     methods: {
-      show() {
-        this.$emit('payShow')
-      }
+
     }
   }
 </script>
@@ -111,9 +109,11 @@
     font-size: 0.27rem;
     font-weight: bold;
   }
-.price span:nth-child(2){
-  color: #F23F15;
-}
+
+  .price span:nth-child(2) {
+    color: #F23F15;
+  }
+
   .prime {
     text-decoration: line-through;
     padding-right: 0.3rem;

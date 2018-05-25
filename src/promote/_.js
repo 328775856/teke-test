@@ -6,6 +6,8 @@ import Index from './index'
 import router from './router'
 import axios from 'axios'
 import '@/assets/fonts/iconfont.css'
+import api from '@/assets/js/api'
+import wx from 'weixin-js-sdk'
 
 // import '@/assets/css/font.css'
 import adaptor from '@/assets/js/screen-adaptor'
@@ -17,6 +19,12 @@ adaptor(750, (screen) => {
 Vue.config.productionTip = false
 
 Vue.use(router);
+
+Vue.use(Vuex)
+Vue.prototype.axios = axios
+Vue.prototype.api = api
+Vue.prototype.wx = wx
+
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
   if (to.meta.title) {

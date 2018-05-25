@@ -7,7 +7,7 @@
           <div class="time">
             <div class="lesson-time flex-row">
               <i class="icon-yike icon-clock flex-row">{{introData.plan.dtm_start}}
-                <button :class="introData.status">{{introData.status | status}}</button>
+                <button :class="introData.status" :courseStatus="courseStatus">{{courseStatus[introData.status]}}</button>
               </i>
             </div>
             <div class="s-price">￥{{introData.price}}</div>
@@ -23,13 +23,19 @@
 </template>
 
 <script>
+  import courseStatus from '@/assets/js/courseStatus'
+
   export default {
     name: "introduce",
     props: ['introData'],
+    components: {courseStatus},
     data() {
-      return {}
+      return {
+        courseStatus: {}
+      }
     },
     created() {
+      this.courseStatus = courseStatus
     }
   }
 </script>
@@ -40,9 +46,11 @@
     width: 6.9rem;
     padding: 0 0.3rem 0 0.3rem;
   }
-  .frm-content .flex-row{
+
+  .frm-content .flex-row {
     justify-content: space-between;
   }
+
   .time {
     width: 80%;
     padding-bottom: 0.4rem;
@@ -84,16 +92,19 @@
     width: 0.96rem;
     color: #666666;
   }
-  .icon-share{
+
+  .icon-share {
     width: 100%;
     justify-content: flex-end;
     text-align: center;
   }
-  .icon-share+div{
+
+  .icon-share + div {
     line-height: 0.46rem;
     font-size: 0.24rem;
     text-align: right;
   }
+
   .icon-share:before {
     width: 100%;
     font-size: 0.5rem;

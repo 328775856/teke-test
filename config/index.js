@@ -23,12 +23,22 @@ module.exports = {
     assetsSubDirectory: local.subDir || 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
+      '/api': {
         target: local.api || 'http://localhost:8080',
         changeOrigin: true,
         pathRewrite: {
           '\\?': '.json?',
           '$': '.json'
+        },
+        onProxyReq(proxyReq, req, res) {
+          // 本地配置
+          // proxyReq.setHeader('X-SESS', 'U5acdd14c33dd6-100595b07bc503a8ae8.25245587');
+          // let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'
+          // proxyReq.setHeader('User-Agent', ua);
+        },
+        onProxyRes(proxyRes, req, res) {
+          // proxyRes.headers['Access-Control-Request-Origin'] = '*';
+          // proxyRes.headers['Access-Control-Request-Headers'] = '*';
         }
       }
     },
@@ -70,9 +80,9 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: local.subDir ||'static',
+    assetsSubDirectory: local.subDir || 'static',
     // assetsPublicPath: utils.parseCommandArgv('assets') || '/',
-    assetsPublicPath:  argv('assets') || local.assets || '/',
+    assetsPublicPath: argv('assets') || local.assets || '/',
 
     /**
      * Source Maps

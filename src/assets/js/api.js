@@ -15,6 +15,7 @@ let api = {
 
     return new Promise((resolve, reject) => {
       axios.request(options).then( (response) => {
+       // console.log(options)
         if (response.data.error === '0') {
           resolve(response.data)
         } else {
@@ -35,7 +36,6 @@ let api = {
   },
   onErrorSign: function(res) {
     if (res.error === '0.1') {
-      alert(res.message)
       app.signIn()
     } else {
       api.onErrorBase(res)

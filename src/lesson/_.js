@@ -7,6 +7,8 @@ import router from './router'
 import axios from 'axios'
 
 import '@/assets/fonts/iconfont.css'
+import api from '@/assets/js/api'
+import wxa from '@/assets/js/wxa'
 
 import adaptor from '@/assets/js/screen-adaptor'
 
@@ -26,17 +28,8 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-
-Vue.filter('status', function (value) {
-  if (value === 'finish') {
-    value = '可回放'
-  } else if (value === 'beginning') {
-    value = '开课中'
-  } else {
-    value = '未开课'
-  }
-  return value
-})
+Vue.prototype.api = api
+Vue.prototype.wxa = wxa
 
 /* eslint-disable no-new */
 new Vue({

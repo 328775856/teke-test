@@ -41,11 +41,12 @@
         },
         "desc": [
           {
-            "text": "This is desc",
+            "text": "This is desc~",
             "font": "80px sans-serif",
             "style": "#00f",
             "align": "left",
             "bsline": "top",
+            "rotate": 0.5,
             "offset": [
               0,
               0

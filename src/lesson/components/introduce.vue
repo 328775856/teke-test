@@ -3,11 +3,14 @@
     <div class="container">
       <a  :href="introData.target" >
         <img class="frm-img" :src="introData.cover">
+        <div class="enroll-frm flex-row">
+          <div class="people flex-row">
+            <i class="icon-yike icon-my-selected"></i>
+            <i class="icon-yike icon-my-selected"></i>
+          </div>
+          <div class="enroll">{{introData.enrollment}}人</div>
+        </div>
       </a>
-      <i class="icon-yike icon-my-selected people">
-        <i class="icon-yike icon-my-selected"></i>
-      </i>
-      <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
         <div class="course-title">{{introData.title}}</div>
       </div>
@@ -35,38 +38,33 @@
   .container {
     position: relative;
   }
-
+.enroll-frm{
+  position: absolute;
+  top: 3.6rem;
+  left: 0.32rem;
+}
   /*people 图标*/
   .people {
-    position: absolute;
-    top: 3.6rem;
-    left: 0.32rem;
-    font-size: 0.24rem;
-    line-height: 0.36rem;
-    color: white;
+    height: 0.28rem;
   }
-
-  .people:before {
-    position: absolute;
-    left: -0.1rem;
+  .people i:first-child{
+    position: relative;
+    z-index: 1;
     color: #fff;
-    font-size: 0.25rem;
-    z-index: 2;
+    font-size: 0.3rem;
   }
-
-  .icon-my-selected .icon-my-selected:before {
+  .people i:last-child{
+    z-index: 0;
     position: absolute;
-    top: 0.03rem;
-    color: #ccc;
-    font-size: 0.2rem;
+    left: 0.16rem;
+    top: 0.01rem;
+    height: 0.28rem;
+    line-height: 0.33rem;
+    color: #a1a2a2;
+    font-size: 0.24rem;
   }
-
   .icon-arrow-r {
     font-weight: bolder;
-  }
-
-  p {
-    margin: 0px;
   }
 
   .icon-information:before {
@@ -85,9 +83,7 @@
   }
 
   .enroll {
-    position: absolute;
-    top: 3.58rem;
-    left: 0.65rem;
+    padding-left: 0.3rem;
     font-size: 0.24rem;
     color: white;
   }

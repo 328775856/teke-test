@@ -14,10 +14,11 @@
             </div>
           </div>
           <div class="time flex-row">
-            <i class="icon-yike icon-my-selected people flex-row">
+            <div class="people">
               <i class="icon-yike icon-my-selected"></i>
-              <span class="enroll">{{item.enrollment}}人</span>
-            </i>
+              <i class="icon-yike icon-my-selected"></i>
+            </div>
+            <span class="enroll">{{item.enrollment}}人</span>
             <span>{{item.plan.dtm_start}}</span>
           </div>
         </div>
@@ -137,25 +138,23 @@
   /*people 图标*/
   .people {
     position: relative;
-    font-size: 0.24rem;
   }
 
-  .people.icon-my-selected:before {
-    color: #999999;
-    font-size: 0.25rem;
-    z-index: 2;
+  .people i:first-child {
+    z-index: 1;
+    position: relative;
+    left: 0;
+    color: #999;
+    font-size: 0.3rem;
   }
 
-  .icon-my-selected .icon-my-selected {
-    width: 0.2rem;
-    height: 0.22rem;
-  }
-
-  .icon-my-selected .icon-my-selected:before {
+  .people i:last-child {
+    z-index: 0;
     position: absolute;
-    left: 0.1rem;
-    color: #CCCCCC;
-    font-size: 0.2rem;
+    left: 0.16rem;
+    top: 0.01rem;
+    color: #ccc;
+    font-size: 0.24rem;
   }
 
   .enroll {

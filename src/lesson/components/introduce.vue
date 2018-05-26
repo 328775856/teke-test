@@ -60,7 +60,7 @@
     top: 0.01rem;
     height: 0.28rem;
     line-height: 0.33rem;
-    color: #a1a2a2;
+    color: #DADADB;
     font-size: 0.24rem;
   }
   .icon-arrow-r {

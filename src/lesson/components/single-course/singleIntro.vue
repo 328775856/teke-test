@@ -7,12 +7,13 @@
           <div class="time">
             <div class="lesson-time flex-row">
               <i class="icon-yike icon-clock flex-row">{{introData.plan.dtm_start}}
-                <button :class="introData.status" :courseStatus="courseStatus">{{courseStatus[introData.status]}}</button>
+                <button :class="introData.status" :courseStatus="courseStatus">{{courseStatus[introData.status]}}
+                </button>
               </i>
             </div>
             <div class="s-price">￥{{introData.price}}</div>
           </div>
-          <div class="share flex-col">
+          <div class="share flex-col" @click="reward">
             <i class="icon-yike icon-share flex-col"></i>
             <div>邀请有奖</div>
           </div>
@@ -36,6 +37,11 @@
     },
     created() {
       this.courseStatus = courseStatus
+    },
+    methods: {
+      reward() {
+        location.href = `https://student.sandbox.yike.fm/promote-card?target_sn=${this.sn}`
+      }
     }
   }
 </script>

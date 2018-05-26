@@ -1,6 +1,7 @@
 html {
   height: 100%;
 }
+
 body {
   position: relative;
   margin: 0 auto;
@@ -9,9 +10,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-button{
+
+button {
   -webkit-tap-highlight-color: transparent;
 }
+
 .c-index {
   height: 100%;
 }
@@ -21,12 +24,14 @@ button{
   justify-content: center;
   align-items: center;
 }
+
 .flex-col {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .flex-item {
   flex-grow: 1;
 }
@@ -34,41 +39,47 @@ button{
 .btn {
   border: 0;
 }
+
 .c-index {
-    /*transform: scale(1,1);*/
+  /*transform: scale(1,1);*/
 }
+
 .btn {
   outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .mask {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 99;
 }
-.pie-r{
-  border-style:solid;
+
+.pie-r {
+  border-style: solid;
   border-color: #FCAEAE #F7E1BB #CF5544 #FCAEAE;
-  overflow:hidden;
+  overflow: hidden;
 }
-.pie-b{
-  border-style:solid;
+
+.pie-b {
+  border-style: solid;
   border-color: #9892D5 #AEF7FC #9892D5 #9892D5;
-  overflow:hidden;
+  overflow: hidden;
 }
-.pie-y{
-  border-style:solid;
+
+.pie-y {
+  border-style: solid;
   border-color: #F7E1BB #3E4AB8 #3E4AB8 #F7E1BB;
-  overflow:hidden;
+  overflow: hidden;
 }
 
-
+/*课程状态*/
 .finish {
   background: #FF7E7E;
 }
@@ -79,4 +90,24 @@ button{
 
 .repose {
   background: #D8C199;
+}
+
+/*标题栏*/
+.title {
+  position: relative;
+  height: 0.36rem;
+  font-size: 16px;
+  padding: 0.32rem 0.31rem;
+  line-height: 0.36rem;
+  font-weight: bold;
+  background: #fff;
+}
+
+.title:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 0.1rem;
+  height: 0.36rem;
+  background: #2F57DA
 }

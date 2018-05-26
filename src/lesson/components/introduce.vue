@@ -9,7 +9,7 @@
       </i>
       <div class="enroll">{{introData.enrollment}}人</div>
       <div class="frm-content">
-        <div class="title">{{introData.title}}</div>
+        <div class="course-title">{{introData.title}}</div>
       </div>
     </div>
   </div>
@@ -56,6 +56,7 @@
 
   .icon-my-selected .icon-my-selected:before {
     position: absolute;
+    top: 0.03rem;
     color: #ccc;
     font-size: 0.2rem;
   }
@@ -96,7 +97,7 @@
     padding: 0.3rem 0.3rem 0 0.3rem;
   }
 
-  .title {
+  .course-title {
     width: 5.85rem;
     height: 0.38rem;
     font-size: 0.36rem;

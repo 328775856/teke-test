@@ -50,13 +50,8 @@
     <div v-if="ratingData">
       <evaluate v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
-    <div class="title invite flex-row">邀请达人榜
-      <div class="icon flex-row">
-        <span class="pie-r"></span>
-        <span class="pie-b"></span>
-        <span class="pie-y"></span>
-        <span class="icon-yike icon-arrow-r"></span>
-      </div>
+    <div class="invite">
+      <invite :sn="sn"></invite>
     </div>
     <div class="qrcode">
       <qrcode></qrcode>
@@ -78,6 +73,7 @@
   import Teacher from '../components/teacher.vue'
   import Relative from '../components/single-course/relative.vue'
   import Tabs from '../components/tabs.vue'
+  import Invite from '../components/invite-list.vue'
   import Evaluate from '../components/single-course/evaluate.vue'
   import Qrcode from '../components/qrcode.vue'
   import SingleBtn from '../components/single-course/single-btn.vue'
@@ -91,6 +87,7 @@
       Teacher,
       SingleBtn,
       Tabs,
+      Invite,
       Evaluate,
       Qrcode,
       Relative,
@@ -137,8 +134,8 @@
     methods: {
       fetchRelative() {
         this.api.get('/api/lesson-relative', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.relativeData = res.data
@@ -147,8 +144,8 @@
       },
       fetchIntroduce() {
         this.api.get('/api/lesson-profile', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.introData = res.data
@@ -157,8 +154,8 @@
       },
       fetchTeacher() {
         this.api.get('/api/lesson-introduce', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.teacherData = res.data
@@ -168,8 +165,8 @@
       },
       fetchRating() {
         this.api.get('/api/lesson-rating-list', {
-              sn: this.$route.query.sn || this.sn
-          })
+          sn: this.$route.query.sn || this.sn
+        })
           .then(res => {
             if (res.error === '0') {
               this.ratingData = res.data
@@ -195,27 +192,7 @@
     background: #fff;
   }
 
-  .title {
-    position: relative;
-    justify-content: space-between;
-    height: 0.36rem;
-    font-size: 16px;
-    padding: 0.32rem 0.31rem;
-    line-height: 0.36rem;
-    font-weight: bold;
-    background: #fff;
-  }
-
-  .title:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 0.1rem;
-    height: 0.36rem;
-    background: #2F57DA
-  }
-
-  .title .flex-row {
+  .title.flex-row {
     justify-content: space-between;
     font-size: 16px;
   }
@@ -286,5 +263,10 @@
   .isShow {
     overflow-y: hidden;
     height: 100%;
+  }
+</style>
+<style>
+  .c-evaluate .frm:last-child{
+    border-bottom: 0;
   }
 </style>

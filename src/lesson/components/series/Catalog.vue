@@ -7,17 +7,17 @@
         </div>
         <div class="content flex-col">
           <div class="text flex-row">
-            <div class="msg">{{item.title}}</div>
+            <span class="msg">{{item.title}}</span>
             <div class="status flex-col">
-              <button :class="item.status">{{item.status | courseStatus}}</button>
+              <button :class="item.status" :courseStatus="courseStatus">{{courseStatus[item.status]}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
           <div class="time flex-row">
-            <i class="icon-yike icon-my-selected people">
+            <i class="icon-yike icon-my-selected people flex-row">
               <i class="icon-yike icon-my-selected"></i>
+              <span class="enroll">{{item.enrollment}}人</span>
             </i>
-            <div class="enroll">{{item.enrollment}}人</div>
             <span>{{item.plan.dtm_start}}</span>
           </div>
         </div>
@@ -27,50 +27,26 @@
 </template>
 
 <script>
+  import courseStatus from '@/assets/js/courseStatus'
+
   export default {
     name: "Catalog",
     props: ['catalogData'],
+    components: {courseStatus},
     data() {
       return {
+        courseStatus: {}
       }
     },
-    methods: {
-    },
+    methods: {},
     created() {
+      this.courseStatus = courseStatus
     }
   }
 </script>
 
 <style scoped>
-  /*people 图标*/
-  .people{
-    position: relative;
-    font-size: 0.24rem;
-  }
-  .people.icon-my-selected:before {
-    position: absolute;
-    top: -0.17rem;
-    left:  -0.1rem;
-    color: #999999;
-    font-size: 0.25rem;
-    z-index: 2;
-  }
 
-  .icon-my-selected .icon-my-selected:before {
-    position: absolute;
-    top: -0.17rem;
-    color: #CCCCCC;
-    font-size: 0.2rem;
-  }
-  .enroll {
-    position: absolute;
-    left: 0.23rem;
-    color: #808080;
-    font-size: 0.24rem;
-  }
-  .enroll+span{
-    color: #808080;
-  }
   p {
     margin: 0;
   }
@@ -90,6 +66,7 @@
     padding: 0.3rem 0;
     border-bottom: 1px solid #DDDDDD;
   }
+
   .img {
     width: 2.4rem;
     height: 1.28rem;
@@ -99,6 +76,7 @@
   .content {
     justify-content: space-between;
     width: 4.19rem;
+    height: 1.30rem;
     margin-left: 0.3rem;
     text-align: left;
   }
@@ -109,15 +87,16 @@
 
   .text {
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   .text div:first-child {
     color: #0D0D0D;
-    line-height: 21px;
   }
 
   .msg {
-    min-height: 0.81rem;
+    height: 0.3rem;
+    line-height: 0.3rem;
     font-size: 0.27rem;
     font-weight: bold;
   }
@@ -147,14 +126,40 @@
   }
 
   .time {
-    position: relative;
-    top: 0.1rem;
     justify-content: space-between;
     width: 4.19rem;
-    height: 0.36rem;
-    margin-top: 0.08rem;
+    height: 0.2rem;
     font-size: 0.24rem;
-    line-height: 0.36rem;
+    line-height: 0.28rem;
     color: #0D0D0D;
+  }
+
+  /*people 图标*/
+  .people {
+    position: relative;
+    font-size: 0.24rem;
+  }
+
+  .people.icon-my-selected:before {
+    color: #999999;
+    font-size: 0.25rem;
+    z-index: 2;
+  }
+
+  .icon-my-selected .icon-my-selected {
+    width: 0.2rem;
+    height: 0.22rem;
+  }
+
+  .icon-my-selected .icon-my-selected:before {
+    position: absolute;
+    left: 0.1rem;
+    color: #CCCCCC;
+    font-size: 0.2rem;
+  }
+
+  .enroll {
+    color: #808080;
+    font-size: 0.24rem;
   }
 </style>

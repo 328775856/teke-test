@@ -25,6 +25,7 @@
     },
     methods: {
       purchase() {
+        // 触发Series中payShow
         Bus.$emit('payShow')
       }
     }

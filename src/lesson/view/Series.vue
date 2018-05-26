@@ -5,7 +5,7 @@
         <introduce :introData="introData"></introduce>
       </div>
       <div class="i-content">
-        <series-intro v-if="introData && introData.progress" :introData="introData"></series-intro>
+        <series-intro v-if="introData && introData.progress" :introData="introData" :sn="sn"></series-intro>
       </div>
       <div class="i-bottom">
         <intro-bottom @show="show"></intro-bottom>
@@ -32,22 +32,17 @@
     <div class="contents">
       <catalog v-if="catalogData" :catalogData="catalogData"></catalog>
     </div>
-    <div class="title invite flex-row">邀请达人榜
-      <div class="icon flex-row">
-        <span class="pie-r"></span>
-        <span class="pie-b"></span>
-        <span class="pie-y"></span>
-        <span class="icon-yike icon-arrow-r"></span>
-      </div>
+    <div class="invite-list">
+      <invite :sn="sn"></invite>
     </div>
     <div class="qrcode">
       <qrcode></qrcode>
     </div>
     <div class="bottom-btn">
-      <series-btn  :isShow="isShow"></series-btn>
+      <series-btn :isShow="isShow"></series-btn>
     </div>
     <div>
-      <pay :width="width" :pay="pay"  :payData="payData"></pay>
+      <pay :width="width" :pay="pay" :payData="payData"></pay>
     </div>
     <div>
       <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
@@ -59,13 +54,13 @@
   import {markdown} from 'markdown'
   import qs from 'qs'
   import Bus from '@/assets/js/bus'
-  import courseStatus from '@/assets/js/courseStatus'
   import Introduce from '../components/introduce.vue'
   import SeriesIntro from '../components/series/seriesintro.vue'
   import IntroBottom from '../components/introBottom.vue'
   import Teacher from '../components/teacher.vue'
   import Catalog from '../components/series/Catalog.vue'
   import SeriesBtn from '../components/series/series-btn.vue'
+  import Invite from '../components/invite-list.vue'
   import Tabs from '../components/tabs.vue'
   import Qrcode from '../components/qrcode.vue'
   import Pay from '../components/series/pay.vue'
@@ -75,13 +70,13 @@
     name: 'series',
     components: {
       Bus,
-      courseStatus,
       markdown,
       Introduce,
       Teacher,
       Catalog,
       SeriesBtn,
       Tabs,
+      Invite,
       Qrcode,
       SeriesIntro,
       IntroBottom,
@@ -113,6 +108,8 @@
             .then(res => {
               if (res.error === '0') {
                 this.fetchPriceList(res.data.sn)
+                // 触发pay-btn中pay
+                Bus.$emit('pay', res.data.sn)
               }
             })
         }
@@ -120,7 +117,6 @@
       this.fetchCatalog()
       this.fetchIntroduce()
       this.fetchTeacher()
-      courseStatus.f()
     },
     mounted() {
       this.width = document.body.clientWidth
@@ -190,50 +186,6 @@
     background: #fff;
   }
 
-  .title {
-    position: relative;
-    height: 0.36rem;
-    font-size: 16px;
-    padding: 0.32rem 0.31rem;
-    line-height: 0.36rem;
-    font-weight: bold;
-    background: #fff;
-  }
-
-  .title:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 0.1rem;
-    height: 0.36rem;
-    background: #2F57DA
-  }
-
-  .invite {
-    margin: 0.2rem 0;
-    justify-content: space-between;
-  }
-
-  /*.invite > div span {*/
-  /*border: 1px solid #ccc;*/
-  /*border-radius: 0.4rem;*/
-  /*color: white;*/
-  /*}*/
-
-  .invite > div span:last-child {
-    color: #808080;
-    font-weight: bold;
-    margin-left: 0.06rem;
-    text-align: right;
-  }
-
-  .invite .icon-arrow-r:before {
-  }
-
-  .contents div:first-child {
-    padding-top: 0.1rem;
-  }
-
   .tabs {
     position: sticky;
     z-index: 3;
@@ -246,13 +198,6 @@
   .qrcode {
   }
 
-  .invite .pie-r, .invite .pie-b, .invite .pie-y {
-    display: block;
-    border-radius: 0.3rem;
-    border-width: 0.3rem;
-    margin-left: 0.1rem;
-  }
-
   .bottom-btn {
     position: fixed;
     width: 7.5rem;
@@ -263,5 +208,14 @@
   .isShow {
     overflow-y: hidden;
     height: 100%;
+  }
+</style>
+<style>
+
+  .c-contents .box:last-child .frm-content {
+    border-bottom: 0;
+  }
+  .c-contents .box:first-child .frm-content {
+    padding-top: 0;
   }
 </style>

@@ -4,15 +4,17 @@
       <div class="lesson-time flex-row">
         <i class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[1]}}/{{introData.progress[0]}}节</i>
       </div>
-      <div class="price">
+      <div class="price-frm flex-row">
         <div class="tag flex-row">
           <p>特价特惠</p>
         </div>
-        <div class="n-price">￥{{introData.price}}</div>
-        <div class="o-price">￥300</div>
+        <div class="price">
+          <span class="n-price ">￥{{introData.price}}</span>
+          <span class="o-price">￥300</span>
+        </div>
       </div>
     </div>
-    <div class="share flex-col">
+    <div class="share flex-col" @click="reward">
       <i class="icon-yike icon-share flex-col"></i>
       <div>邀请有奖</div>
     </div>
@@ -22,7 +24,12 @@
 <script>
   export default {
     name: "series",
-    props: ['introData']
+    props: ['introData', 'sn'],
+    methods: {
+      reward() {
+        location.href = `https://student.sandbox.yike.fm/promote-card?target_sn=${this.sn}`
+      }
+    }
   }
 </script>
 
@@ -89,10 +96,11 @@
     color: #2F57DA;
   }
 
-  .price {
-    display: flex;
-    flex-flow: row nowrap;
+  .price-frm {
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
+    height: 0.36rem;
     padding-bottom: 0.4rem;
   }
 
@@ -117,24 +125,29 @@
 
   .tag p {
     z-index: 99;
+    margin: 0;
     font-size: 0.2rem;
     color: #FEFEFE;
     text-align: right;
-    line-height: 0.2rem;
+  }
+
+  .price {
+    align-items: flex-end;
+    height: 0.36rem;
+    line-height: 0.4rem;
   }
 
   .n-price {
-    width: 1.1rem;
+    width: 0.8rem;
     padding-left: 0.31rem;
     font-size: 0.42rem;
     color: #F23F15;
-    line-height: 0.32rem;
   }
 
   .o-price {
-    width: 0.79rem;
+    align-self: flex-end;
+    padding-left: 0.1rem;
     font-size: 0.27rem;
-    padding-left: 0.2rem;
     text-decoration: line-through;
     color: #808080;
   }

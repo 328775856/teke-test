@@ -29,6 +29,16 @@ module.exports = {
         pathRewrite: {
           '\\?': '.json?',
           '$': '.json'
+        },
+        onProxyReq(proxyReq, req, res) {
+          // 本地配置
+          // proxyReq.setHeader('X-SESS', 'U5acdd14c33dd6-100595b08c0af9f0523.70599575');
+          // let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'
+          // proxyReq.setHeader('User-Agent', ua);
+        },
+        onProxyRes(proxyRes, req, res) {
+          proxyRes.headers['Access-Control-Request-Origin'] = '*';
+          proxyRes.headers['Access-Control-Request-Headers'] = '*';
         }
       }
     },

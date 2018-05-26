@@ -8,8 +8,8 @@
         <div class="name">{{introData.teacher.name}}</div>
         <div class="">{{teacherData.teacher}}</div>
       </div>
-      <div class="focus flex-col">
-        <p>关注</p>
+      <div class="focus flex-col" @click="focus" :class="{isFollow}">
+        <p :class="{isFollow}">关注</p>
       </div>
     </div>
     <div class="title">
@@ -26,17 +26,13 @@
     props: ['teacherData', 'introData'],
     data() {
       return {
-        isActive: true
+        isFollow: false
       }
     },
     methods: {
-      active() {
-        this.isActive = !this.isActive
+      focus() {
+        this.isFollow = !this.isFollow
       }
-    },
-    computed: {
-    },
-    created() {
     }
   }
 </script>
@@ -75,7 +71,7 @@
     align-items: left;
   }
 
-  .avatar img{
+  .avatar img {
     width: 0.72rem;
     height: 0.72rem;
     border-radius: 0.72rem;
@@ -118,6 +114,18 @@
     height: 0.18rem;
     color: #2A4EC4;
     border-radius: 0.01rem;
+  }
+
+  .focus .isFollow,.focus.isFollow {
+    justify-content: center;
+    color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 0.24rem;
+  }
+
+  .focus .isFollow:before {
+    content: '已';
+    color: #ccc;
   }
 
   .intro {

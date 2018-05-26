@@ -28,20 +28,6 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-let m = new Map();
-m.set('可回放', "finish");
-m.set('开课中', "onlive");
-m.set("未开课", 'repose');
-
-Vue.filter('courseStatus', (data) => {
-  let msg
-  m.forEach((key, value) => {
-    if (key === data) {
-      msg = value
-    }
-  })
-  return msg
-})
 Vue.prototype.api = api
 Vue.prototype.wxa = wxa
 

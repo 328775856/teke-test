@@ -1,7 +1,7 @@
 <template>
   <div class="c-pay" v-if="pay">
     <div class="mask  flex-col">
-      <div class="frm" :style="{width:width+'px'}">
+      <div class="frm">
         <div class="container">
           <div class="text flex-col">付款详情</div>
           <div class="title">{{payData.title}}</div>
@@ -15,7 +15,7 @@
             <span>小计</span>
             <div class="flex-row">
               <span class="prime">￥{{payData.order_total}}</span>
-              <span class="real-price">￥{{payData.order_amount}}</span>
+              <span id="real-price">￥{{payData.order_amount}}</span>
             </div>
           </div>
           <div class="price">
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="btn">
-        <paybtn :width="width"  :payData="payData"></paybtn>
+        <paybtn :payData="payData"></paybtn>
       </div>
     </div>
   </div>
@@ -40,14 +40,12 @@
 
   export default {
     name: "pay",
-    props: ['width', 'pay', 'payData'],
+    props: ['pay', 'payData'],
     components: {Paybtn},
     data() {
       return {}
     },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 
@@ -57,6 +55,7 @@
   }
 
   .frm {
+    width: 7.5rem;
     height: 65%;
   }
 
@@ -77,7 +76,7 @@
   }
 
   .block {
-    height: 40%;
+    height: 30%;
     overflow-y: scroll;
     color: #999999;
     -webkit-overflow-scrolling: touch;
@@ -85,6 +84,7 @@
 
   .title {
     height: 7%;
+    padding: 0.1rem 0.31rem;
     color: #0D0D0D;
     font-size: 0.30rem;
     font-weight: bold;
@@ -121,8 +121,8 @@
     font-size: 0.24rem;
   }
 
-  .real-price {
-    color: #F23F15;
+  #real-price {
+    color: #000;
     font-size: 0.27rem;
   }
 </style>

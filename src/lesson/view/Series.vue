@@ -5,7 +5,7 @@
         <introduce :introData="introData"></introduce>
       </div>
       <div class="i-content">
-        <series-intro v-if="introData && introData.progress" :introData="introData" :sn="sn"></series-intro>
+        <series-intro v-if="introData" :introData="introData" :sn="sn"></series-intro>
       </div>
       <div class="i-bottom">
         <intro-bottom @show="show"></intro-bottom>
@@ -25,7 +25,7 @@
         <div class="title">
           讲师
         </div>
-        <teacher v-if="teacherData && introData.teacher" :teacherData="teacherData" :introData="introData"></teacher>
+        <teacher v-if="teacherData" :teacherData="teacherData" :introData="introData"></teacher>
       </div>
     </div>
     <div class="title">目录</div>
@@ -42,17 +42,16 @@
       <series-btn :isShow="isShow"></series-btn>
     </div>
     <div>
-      <pay :width="width" :pay="pay" :payData="payData"></pay>
+      <pay :pay="pay" :payData="payData"></pay>
     </div>
     <div>
-      <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
+      <course-rules :isShow="isShow" @show="show"></course-rules>
     </div>
   </div>
 </template>
 
 <script>
   import {markdown} from 'markdown'
-  import qs from 'qs'
   import Bus from '@/assets/js/bus'
   import Introduce from '../components/introduce.vue'
   import SeriesIntro from '../components/series/seriesintro.vue'
@@ -95,16 +94,40 @@
         width: '',
         isShow: false,
         pay: false,
-        sn: 'S59f1ae4d89ee8'
+        sn: ''
       }
     },
     created() {
+      this.sn = this.$route.query.sn
+      // 相关系列课
+      this.api.get('/api/series-relative', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          this.catalogData = res.data
+        })
+      // 系列课详情
+      this.api.get('/api/series-profile', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          this.introData = res.data
+        })
+      // 系列课介绍
+      this.api.get('/api/series-introduce', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          this.teacherData = res.data
+          this.teacherData.content = markdown.toHTML(this.teacherData.content)
+        })
+      //
       Bus.$on('payShow', () => {
         this.pay = !this.pay
         if (this.pay === true) {
-          this.api.post('/api/order-book-series', qs.stringify({
-            sn: this.$route.query.sn || this.sn
-          }))
+          this.api.post('/api/order-book-series', {
+            sn: this.$route.query.sn
+          })
             .then(res => {
               if (res.error === '0') {
                 this.fetchPriceList(res.data.sn)
@@ -114,53 +137,14 @@
             })
         }
       })
-      this.fetchCatalog()
-      this.fetchIntroduce()
-      this.fetchTeacher()
-    },
-    mounted() {
-      this.width = document.body.clientWidth
     },
     methods: {
-      fetchCatalog() {
-        this.api.get('/api/series-relative', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.catalogData = res.data
-            }
-          })
-      },
-      fetchIntroduce() {
-        this.api.get('/api/series-profile', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.introData = res.data
-            }
-          })
-      },
-      fetchTeacher() {
-        this.api.get('/api/series-introduce', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.teacherData = res.data
-              this.teacherData.content = markdown.toHTML(this.teacherData.content)
-            }
-          })
-      },
       fetchPriceList(orderSn) {
         this.api.get('/api/order-inquiry', {
-          sn: this.$route.query.sn || orderSn
+          sn: orderSn
         })
           .then(res => {
-            if (res.error === '0') {
-              this.payData = res.data
-            }
+            this.payData = res.data
           })
       },
       active(index) {
@@ -215,6 +199,7 @@
   .c-contents .box:last-child .frm-content {
     border-bottom: 0;
   }
+
   .c-contents .box:first-child .frm-content {
     padding-top: 0;
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="rules flex-row">
     <div class="mask flex-col" v-show="isShow">
-      <div class="frm flex-col"  :style="{width:width+'px'}">
+      <div class="frm">
         <div class="container">
           <div class="title">课程须知</div>
           <div class="content">
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <button @click="show"  :style="{width:width+'px'}">完成</button>
+      <button @click="show">完成</button>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@
 <script>
   export default {
     name: "course-rules",
-    props: ['isShow', 'width'],
+    props: ['isShow'],
     methods: {
       show() {
         this.$emit('show')
@@ -60,16 +60,14 @@
   }
 
   .frm {
-    justify-content: flex-end;
-    width: 100%;
+    width: 7.5rem;
     height: 80%;
+    border-radius: 0.2rem 0.2rem 0 0;
+    background: #fff;
   }
 
   .container {
-    width: 100%;
     height: 100%;
-    background: #fff;
-    border-radius: 0.2rem 0.2rem 0 0;
   }
 
   .title {
@@ -79,6 +77,7 @@
     font-weight: 500;
     letter-spacing: 1px;
     text-align: center;
+    background: transparent;
   }
 
   .content {
@@ -113,7 +112,7 @@
   }
 
   button {
-    width: 100%;
+    width: 7.5rem;
     height: 1rem;
     border: 0;
     background: #2F57DA;

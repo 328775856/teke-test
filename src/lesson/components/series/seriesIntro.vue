@@ -2,7 +2,7 @@
   <div class="series-introduce flex-row">
     <div class="time flex-col">
       <div class="lesson-time flex-row">
-        <i class="icon-yike icon-clock  flex-row">周三开课 {{introData.progress[1]}}/{{introData.progress[0]}}节</i>
+        <i class="icon-yike icon-clock  flex-row" v-if="introData.progress">周三开课 {{introData.progress[1]}}/{{introData.progress[0]}}节</i>
       </div>
       <div class="price-frm flex-row">
         <div class="tag flex-row">

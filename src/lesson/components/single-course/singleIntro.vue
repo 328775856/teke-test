@@ -6,7 +6,7 @@
         <div class="flex-row">
           <div class="time">
             <div class="lesson-time flex-row">
-              <i class="icon-yike icon-clock flex-row">{{introData.plan.dtm_start}}
+              <i class="icon-yike icon-clock flex-row" v-if="introData.plan">{{introData.plan.dtm_start}}
                 <button :class="introData.status" :courseStatus="courseStatus">{{courseStatus[introData.status]}}
                 </button>
               </i>

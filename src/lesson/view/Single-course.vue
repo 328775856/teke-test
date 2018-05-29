@@ -2,10 +2,10 @@
   <div class="c-single" :class="{isShow:isShow}">
     <div class="introduce">
       <div class="i-header">
-        <introduce v-if="introData && introData.plan" :introData="introData"></introduce>
+        <introduce v-if="introData" :introData="introData"></introduce>
       </div>
       <div class="i-content">
-        <single-intro v-if="introData && introData.plan" :introData="introData"></single-intro>
+        <single-intro v-if="introData" :introData="introData"></single-intro>
       </div>
       <div class="i-bottom">
         <intro-bottom @show="show"></intro-bottom>
@@ -26,7 +26,7 @@
           <div class="title">
             讲师
           </div>
-          <teacher v-if="teacherData && introData.teacher" :teacherData="teacherData" :introData="introData"></teacher>
+          <teacher v-if="teacherData" :teacherData="teacherData" :introData="introData"></teacher>
         </div>
       </div>
       <div class="title" v-if="JSON.stringify(relativeData) !== '[]'">
@@ -41,13 +41,13 @@
       </div>
     </div>
     <div>
-      <div class="title flex-row" v-if="ratingData && ratingData.stats">评分({{ratingData.stats.score}})
+      <div class="title flex-row" v-if="ratingData.stats">评分({{ratingData.stats.score}})
         <div class="flex-row people">已有{{ratingData.stats.turnout}}人评价
           <div class="icon-yike icon-arrow-r"></div>
         </div>
       </div>
     </div>
-    <div v-if="ratingData">
+    <div>
       <evaluate v-if="ratingData" :ratingData="ratingData"></evaluate>
     </div>
     <div class="invite">
@@ -59,13 +59,12 @@
     <div class="bottom-btn">
       <single-btn></single-btn>
     </div>
-    <course-rules :width="width" :isShow="isShow" @show="show"></course-rules>
+    <course-rules :isShow="isShow" @show="show"></course-rules>
   </div>
 </template>
 
 <script>
   import {markdown} from 'markdown'
-  import qs from 'qs'
   import Bus from '@/assets/js/bus'
   import Introduce from '../components/introduce.vue'
   import SingleIntro from '../components/single-course/singleIntro.vue'
@@ -103,19 +102,56 @@
         ratingData: [],
         tabs: ['课程', '评价'],
         isActive: 0,
-        width: '',
         isShow: false,
-        // sn: 'L596f26c00ec46'
-        sn: 'L5ae148a3d73fe'
+        sn: ''
       }
     },
     created() {
+      this.sn = this.$route.query.sn
+      // 单课相关
+      this.api.get('/api/lesson-relative', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          if (res.error === '0') {
+            this.relativeData = res.data
+          }
+        })
+      // 单课详情
+      this.api.get('/api/lesson-profile', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          if (res.error === '0') {
+            this.introData = res.data
+          }
+        })
+      // 单课介绍
+      this.api.get('/api/lesson-introduce', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          if (res.error === '0') {
+            this.teacherData = res.data
+            this.teacherData.content = markdown.toHTML(this.teacherData.content)
+          }
+        })
+      // 单课评价
+      this.api.get('/api/lesson-rating-list', {
+        sn: this.$route.query.sn
+      })
+        .then(res => {
+          if (res.error === '0') {
+            this.ratingData = res.data
+          }
+        })
+      // 单课支付
       Bus.$on('payShow', () => {
         this.pay = !this.pay
         if (this.pay === true) {
-          this.api.post('/api/order-book-series', qs.stringify({
-            sn: this.$route.query.sn || this.sn
-          }))
+          this.api.post('/api/order-book-series', {
+            sn: this.$route.query.sn
+          })
             .then(res => {
               if (res.error === '0') {
                 this.fetchPriceList()
@@ -123,56 +159,8 @@
             })
         }
       })
-      this.fetchIntroduce()
-      this.fetchTeacher()
-      this.fetchRating()
-      this.fetchRelative()
-    },
-    mounted() {
-      this.width = document.body.clientWidth
     },
     methods: {
-      fetchRelative() {
-        this.api.get('/api/lesson-relative', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.relativeData = res.data
-            }
-          })
-      },
-      fetchIntroduce() {
-        this.api.get('/api/lesson-profile', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.introData = res.data
-            }
-          })
-      },
-      fetchTeacher() {
-        this.api.get('/api/lesson-introduce', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.teacherData = res.data
-              this.teacherData.content = markdown.toHTML(this.teacherData.content)
-            }
-          })
-      },
-      fetchRating() {
-        this.api.get('/api/lesson-rating-list', {
-          sn: this.$route.query.sn || this.sn
-        })
-          .then(res => {
-            if (res.error === '0') {
-              this.ratingData = res.data
-            }
-          })
-      },
       active(index) {
         this.isActive = index
       },
@@ -266,7 +254,7 @@
   }
 </style>
 <style>
-  .c-evaluate .frm:last-child{
+  .c-evaluate .frm:last-child {
     border-bottom: 0;
   }
 </style>

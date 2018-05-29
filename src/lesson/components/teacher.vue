@@ -1,5 +1,5 @@
 <template>
-  <div class="c-teacher">
+  <div class="c-teacher" v-if="introData.teacher">
     <div class="frm-teacher flex-row">
       <div class="avatar">
         <img :src="introData.teacher.avatar">

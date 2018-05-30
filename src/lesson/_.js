@@ -12,6 +12,8 @@ import wxa from '@/assets/js/wxa'
 
 import adaptor from '@/assets/js/screen-adaptor'
 
+const config = require('../config');
+
 adaptor(750, (screen) => {
   // return Math.min(screen.width, screen.height*0.8)
   return screen.width < screen.height ? screen.width : '750'
@@ -30,6 +32,10 @@ router.beforeEach((to, from, next) => {
 })
 Vue.prototype.api = api
 Vue.prototype.wxa = wxa
+Vue.prototype.config = config
+Vue.prototype.access = (path) => {
+  return config.assets+path
+}
 
 /* eslint-disable no-new */
 new Vue({

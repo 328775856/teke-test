@@ -42,13 +42,15 @@
     margin: 0;
   }
 
+  /*标题栏*/
   .title {
     position: relative;
     height: 0.36rem;
     font-size: 16px;
     padding: 0.32rem 0.31rem;
-    font-weight: bold;
     line-height: 0.36rem;
+    font-weight: bold;
+    background: #fff;
   }
 
   .title:before {
@@ -116,7 +118,7 @@
     border-radius: 0.01rem;
   }
 
-  .focus .isFollow,.focus.isFollow {
+  .focus .isFollow, .focus.isFollow {
     justify-content: center;
     color: #ccc;
     border: 1px solid #ccc;

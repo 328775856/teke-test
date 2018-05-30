@@ -14,11 +14,13 @@
             </div>
           </div>
           <div class="time flex-row">
-            <div class="people">
-              <i class="icon-yike icon-my-selected"></i>
-              <i class="icon-yike icon-my-selected"></i>
+            <div class="icon-frm flex-row">
+              <div class="people">
+                <i class="icon-yike icon-my-selected"></i>
+                <i class="icon-yike icon-my-selected"></i>
+              </div>
+              <span class="enroll">{{item.enrollment}}人</span>
             </div>
-            <span class="enroll">{{item.enrollment}}人</span>
             <span>{{item.plan.dtm_start}}</span>
           </div>
         </div>
@@ -160,5 +162,6 @@
   .enroll {
     color: #808080;
     font-size: 0.24rem;
+    padding-left: 0.21rem;
   }
 </style>

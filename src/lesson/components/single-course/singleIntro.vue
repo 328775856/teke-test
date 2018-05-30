@@ -28,7 +28,7 @@
 
   export default {
     name: "introduce",
-    props: ['introData'],
+    props: ['introData', 'sn'],
     components: {courseStatus},
     data() {
       return {

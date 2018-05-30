@@ -58,7 +58,7 @@
     mounted() {
       this.api.get('/api/promote-invitation', {
         // 本地环境
-         sn: this.$route.query.sn || 'S5aa0d6362ab78'
+         sn: this.$route.query.sn
       })
         .then(res => {
           if (res.error === '0') {

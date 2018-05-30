@@ -158,6 +158,25 @@
 </script>
 
 <style scoped>
+
+  .title {
+    position: relative;
+    height: 0.36rem;
+    font-size: 16px;
+    padding: 0.32rem 0.31rem;
+    font-weight: bold;
+    line-height: 0.36rem;
+    background: #fff;
+  }
+
+  .title:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 0.1rem;
+    height: 0.36rem;
+    background: #2F57DA
+  }
   .c-series {
   }
 

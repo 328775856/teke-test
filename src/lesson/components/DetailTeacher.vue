@@ -1,23 +1,39 @@
 <template>
   <div class="c-detail-teacher">
     <div class="flex-row">
-      <img v-if="profile.teacher" :src="profile.teacher.avatar"/>
+      <img :src="teacher.avatar"/>
       <div class="flex-col">
         <div class="name">{{teacher.name}}</div>
-        <div class="introduce">{{introduce.teacher}}</div>
+        <div class="about">{{teacher.about}}</div>
       </div>
-      <div :class="{follow:isFollow}" class="noFollow" @click="follow">{{isFollow?'已关注':'+ 关注'}}</div>
+      <div :class="{followed:teacher.followed}" class="follow" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: '',
-    props: ['teacher', 'profile', 'introduce', 'isFollow'],
+    name: 'lesson-detail-teacher',
+    props: ['tusn'],
+    data() {
+      return {
+        teacher: {
+          sn: null,
+          name: null,
+          avatar: null,
+          about: null
+        }
+      }
+    },
+    created() {
+      this.api.get('/api/teacher-datum', {
+        usn: this.tusn
+      }).then( (res) => {
+        this.teacher = res.data
+      })
+    },
     methods: {
       follow() {
-        this.$emit('isfollow')
       }
     }
   }
@@ -36,7 +52,7 @@
   .flex-col {
     align-items: flex-start;
     width: 80%;
-    padding-left: .21rem;
+    padding: 0 .21rem;
   }
 
   img {
@@ -50,13 +66,13 @@
     color: #0D0D0D;
   }
 
-  .introduce {
+  .about {
     font-size: .24rem;
     color: #808080;
     line-height: .36rem;
   }
 
-  .noFollow {
+  .follow {
     width: 1.2rem;
     height: .48rem;
     line-height: .48rem;
@@ -67,7 +83,7 @@
     text-align: center;
   }
 
-  .follow {
+  .followed {
     width: 1.2rem;
     height: .48rem;
     line-height: .48rem;

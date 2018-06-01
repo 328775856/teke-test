@@ -8,11 +8,11 @@
     <div class="qrcode flex-row">
       <div class="qrcode-yike_01 flex-col">
         <img :src="access('static/img/qrcode/yike-01.jpg')"/>
-        <span>小助手</span>
+        <i class="icon-yike icon-wxtb flex-row">易课小助手</i>
       </div>
       <div class="qrcode-mp flex-col">
         <img :src="access('static/img/qrcode/mp.png')"/>
-        <span>公众号</span>
+        <i class="icon-yike icon-wxtb flex-row">易课公众号</i>
       </div>
     </div>
   </div>
@@ -28,6 +28,7 @@
   .c-lesson-detail-contact {
     height: 3rem;
     justify-content: space-between;
+    background: white;
   }
   .desc {
     flex-grow: 1;
@@ -43,6 +44,8 @@
   .qrcode img {
     width: 1.1rem;
     height: 1.1rem;
+    border: .13rem solid #F7E1BB;
+    border-radius: .1rem;
   }
   .qrcode-yike_01 {
     padding: 0 .15rem 0 .3rem;
@@ -50,5 +53,16 @@
   .qrcode-mp {
     padding: 0 .3rem 0 .15rem;
   }
-
+  i{
+    justify-content: space-between;
+    width: 100%;
+    padding-top: .08rem;
+    color: #0D0D0D;
+    font-size: .21rem;
+  }
+  i:before{
+    height: 75%;
+    color: #29BC60;
+    font-size: .24rem;
+  }
 </style>

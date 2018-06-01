@@ -13,7 +13,8 @@ switch (process.env.NODE_ENV) {
 
 const config = {
   api: local.api,
-  assets: conf.assetsPublicPath
+  assets: conf.assetsPublicPath,
+  student: local.studentUrl
 }
 
 module.exports = config

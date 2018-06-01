@@ -1,5 +1,5 @@
 <template>
-  <div class="c-lesson-detail-policy">
+  <div class="c-lesson-detail-policy" @click="showPolicy">
     <div class="bar-items flex-row">
       <div class="flex-row">
         <div class="item">
@@ -17,12 +17,26 @@
       </div>
       <i class="icon-yike icon-arrow-r"></i>
     </div>
+    <policy :isShow="isShow"></policy>
   </div>
 </template>
 
 <script>
+  import Policy from '../components/Policy'
+
   export default {
-    name: 'lesson-detail-policy'
+    name: 'lesson-detail-policy',
+    components: {Policy},
+    data() {
+      return {
+        isShow: false
+      }
+    },
+    methods: {
+      showPolicy() {
+        this.isShow = !this.isShow
+      }
+    }
   }
 </script>
 
@@ -48,7 +62,7 @@
     font-size: .23rem;
   }
 
-  .icon-arrow-r:before{
+  .icon-arrow-r:before {
     display: inline-block;
     color: #999;
     font-size: .24rem;

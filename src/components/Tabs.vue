@@ -1,6 +1,6 @@
 <template>
   <div class="c-tabs flex-row">
-    <div class="tab flex-item flex-row" v-for="item in items" :key="item.key" @click="tab(item.key)" :class="{active: item.key == active}">
+    <div class="tab flex-item flex-row click" v-for="item in items" :key="item.key" @click="tab(item.key)" :class="{active: item.key === active}">
     <span class="flex-col">{{item.name}}</span>
     </div>
   </div>

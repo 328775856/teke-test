@@ -1,8 +1,11 @@
 <template>
   <div class="c-block">
     <div class="block-head flex-row">
-      <div class="block-title">{{title}}</div>
-      <div class="block-more">
+      <div class="flex-row">
+        <div class="block-title">{{title}}</div>
+        <slot class="score" name="score"></slot>
+      </div>
+      <div class="btn block-more">
         <slot name="more"></slot>
       </div>
     </div>
@@ -41,10 +44,15 @@
     font-weight: bold;
     border-left: .1rem solid #2F57DA;
   }
-
   .block-more {
     font-size: .27rem;
     color: #888;
     padding-right: .3rem;
+  }
+  .block-more .icon-arrow-r {
+    color: #808080;
+    font-size: .24rem;
+    font-weight: bold;
+    padding-left: .2rem;
   }
 </style>

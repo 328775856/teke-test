@@ -27,9 +27,6 @@
     height: 4rem;
   }
   .enrollment {
-    position: absolute;
-    left: .32rem;
-    bottom: .24rem;
     font-size: .24rem;
     font-weight: bold;
     color: #fff;

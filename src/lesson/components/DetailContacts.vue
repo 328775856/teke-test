@@ -1,16 +1,18 @@
 <template>
-  <div class="c-lesson-detail-contact flex-row">
-    <div class="desc flex-col">
-      <div>关注易灵微课</div>
-      <div>接收开课提醒</div>
-      <div>发现更多课程</div>
-      <!--<div>添加小助手，可向我们咨询、建议、反馈</div>-->
-    </div>
+  <div class="c-lesson-detail-contact flex-col">
     <div class="qrcode flex-row">
+      <div class="qrcode-yike_01 flex-col">
+        <img :src="app.linkToAssets('/img/qrcode/yike-01.jpg')"/>
+        <span>小助手</span>
+      </div>
       <div class="qrcode-mp flex-col">
         <img :src="app.linkToAssets('/img/qrcode/mp.png')"/>
         <span>公众号</span>
       </div>
+    </div>
+    <div class="desc">
+      <div>关注公众号，接收开课提醒及新课程消息</div>
+      <div>添加小助手，可向我们咨询、建议、反馈</div>
     </div>
   </div>
 </template>
@@ -23,18 +25,20 @@
 
 <style scoped>
   .c-lesson-detail-contact {
-    height: 3rem;
-    justify-content: space-around;
+    padding: .3rem;
+    justify-content: space-between;
     background: white;
   }
   .desc {
+    flex-grow: 1;
     font-size: .24rem;
     color: #666;
     padding: .3rem;
   }
   .qrcode {
-    justify-content: space-around;
-    /*border-left: 1px solid #0D0D0D;*/
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid #0D0D0D;
   }
   .qrcode img {
     width: 2rem;
@@ -43,7 +47,7 @@
     border-radius: .1rem;
   }
   .qrcode span {
-    padding-top: .1rem;
+    padding: .1rem 0;
     font-size: .2rem;
     color: #0D0D0D;
   }

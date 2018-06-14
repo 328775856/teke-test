@@ -11,7 +11,7 @@
     data() {
       return {
         dict: {
-          opened: '开放中',
+          opened: '报名中',
           onlive: '直播中',
           repose: '交流中',
           finish: '可观看',
@@ -33,16 +33,22 @@
     padding: 0 .15rem;
     border-radius: .18rem;
     color: #fff;
-    font-size: .21rem;
+    font-size: .22rem;
     text-align: center;
   }
   .opened {
-    background: #D8C199;
+    /*background: #D8C199;*/
+    color: #2F57DA;
+    border: 1px solid #2F57DA;
+    background: #fff;
   }
-  .onlive {
+  .onlive, .repose{
     background: #5DC96A;
   }
   .finish {
+    background: #2F57DA;
+  }
+  .close {
     background: #FF7E7E;
   }
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="rules flex-row" v-show="isShow">
-    <div class="mask flex-col">
+  <div class="rules flex-row">
+    <div class="mask flex-col" v-show="isShow">
       <div class="frm">
         <div class="container">
           <div class="title">课程须知</div>
@@ -34,15 +34,20 @@
           </div>
         </div>
       </div>
-      <button>知道了</button>
+      <button @click="show">完成</button>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Policy",
-    props: ['isShow']
+    name: "course-rules",
+    props: ['isShow'],
+    methods: {
+      show() {
+        this.$emit('show')
+      }
+    }
   }
 </script>
 
@@ -50,8 +55,7 @@
   li {
     list-style: none;
   }
-
-  .mask {
+  .mask{
     justify-content: flex-end;
   }
 
@@ -82,24 +86,20 @@
     margin: 0 auto;
     margin-top: 0.3rem;
   }
-
-  ul {
+  ul{
     height: 78%;
     overflow-y: scroll;
     color: #9f9c9c;
     padding: 0;
     -webkit-overflow-scrolling: touch;
   }
-
   li.flex-col {
     align-items: flex-start;
   }
-
-  .icon-select {
+  .icon-select{
     font-size: .28rem;
     font-weight: 500;
   }
-
   .icon-select:before {
     padding-right: 0.3rem;
     color: #2F57DA;

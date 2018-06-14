@@ -1,12 +1,14 @@
 <template>
-  <div class="c-detail-teacher">
-    <div class="flex-row">
-      <img :src="teacher.avatar"/>
+  <div class="c-detail-teacher" v-if="teacher">
+    <div class="flex-row" >
       <div class="flex-col">
+        <img :src="teacher.avatar"/>
+      </div>
+      <div class="flex-col flex-item">
         <div class="name">{{teacher.name}}</div>
         <div class="about">{{teacher.about}}</div>
       </div>
-      <div :class="{followed:teacher.followed}" class="follow" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>
+      <!--<div :class="{followed:teacher.followed}" class="follow" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>-->
     </div>
   </div>
 </template>
@@ -17,12 +19,7 @@
     props: ['tusn'],
     data() {
       return {
-        teacher: {
-          sn: null,
-          name: null,
-          avatar: null,
-          about: null
-        }
+        teacher: null
       }
     },
     created() {
@@ -34,6 +31,11 @@
     },
     methods: {
       follow() {
+        this.api.post('/api/follow-teacher', {
+          usn: this.tusn
+        }).then( (res) => {
+          this.teacher.followed = res.data.isFollow
+        }, this.api.onErrorSign)
       }
     }
   }
@@ -41,23 +43,27 @@
 
 <style scoped>
   .c-detail-teacher {
-  }
-
-  .flex-row {
-    justify-content: flex-start;
     padding-bottom: .3rem;
     border-bottom: 1px #DDDDDD solid;
   }
 
-  .flex-col {
+  .flex-row {
+    justify-content: flex-start;
     align-items: flex-start;
-    width: 80%;
+  }
+
+  .flex-col {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .flex-item {
     padding: 0 .21rem;
   }
 
   img {
     width: .72rem;
-    height: .7rem;
+    height: .72rem;
     border-radius: 1.4rem;
   }
 
@@ -70,6 +76,7 @@
     font-size: .24rem;
     color: #808080;
     line-height: .36rem;
+    text-align: justify;
   }
 
   .follow {

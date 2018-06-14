@@ -6,7 +6,7 @@
         <div class="title">{{profile.title}}</div>
         <div class="series" v-if="profile.series">{{profile.series.name}}</div>
         <div class="datum flex-row">
-          <div class="flex-col">
+          <div class="info flex-col">
             <div class="flex-row" v-if="profile.plan">
               <i class="icon-yike icon-clock"></i>
               <div class="time">{{profile.plan.dtm_start}}</div>
@@ -14,7 +14,7 @@
             </div>
             <div class="price">￥{{profile.price}}</div>
           </div>
-          <div class="invite flex-col click" @click="share">
+          <div class="invite flex-col btn" @click="invite">
             <i class="icon-yike icon-share"></i>
             <span>邀请有奖</span>
           </div>
@@ -25,31 +25,17 @@
     <div class="tabs">
       <tabs :items="tabs" :active="activeTab" v-on:switch="switchTab"></tabs>
     </div>
-    <!--<<<<<<< HEAD-->
-    <!--<div v-if="activeTab === 'lesson'">-->
-    <!--<div class="teacher">-->
-    <!--<block title="讲师">-->
-    <!--<detail-teacher :teacher="teacher" :profile="profile" :introduce="introduce"-->
-    <!--:isFollow="isFollow"></detail-teacher>-->
-    <!--</block>-->
-    <!--</div>-->
-    <!--<div class="content">-->
-    <!--<block title="简介">-->
-    <!--<div v-html="markdown(introduce.content)"></div>-->
-    <!--</block>-->
-    <!--</div>-->
-    <!--=======-->
     <div class="teacher">
       <block title="讲师">
-        <detail-teacher :tusn="profile.teacher.sn" v-if="profile.teacher"></detail-teacher>
+        <detail-teacher v-if="profile.teacher" :tusn="profile.teacher.sn"></detail-teacher>
       </block>
     </div>
-    <div class="content">
+    <div class="content border">
       <block title="简介">
-        <div v-html="markdown(introduce.content)"></div>
+        <div v-html="markdown(introduce)" class="markdown"></div>
       </block>
     </div>
-    <div class="relative" v-if="relative.length">
+    <div class="relative border" v-if="relative.length">
       <block title="相关系列课">
         <div slot="more">
           <span>查看完整课程</span>
@@ -58,37 +44,55 @@
         <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
       </block>
     </div>
-    <div class="rating">
-      <block title="评分">
-        <div slot="more" class="click" v-if="rating.stats">已有{{rating.stats.turnout}}人评价<i
-          class="icon-yike icon-arrow-r"></i></div>
-        <div slot="score" v-if="rating.stats" class="score">({{rating.stats.score
-          ===0?0:rating.stats.score.toFixed(1)}})
+    <div class="rating border">
+      <block :title="ratingTitle">
+        <div slot="more" v-if="rating.stats">
+          <a :href="app.linkToStudent(`/?v=1#/course/message/${$route.query.sn}/task?lesson_sn=${$route.query.sn}`)" class="btn">
+            <span>已有{{rating.stats.turnout}}人评价</span>
+            <i class="icon-yike icon-arrow-r"></i>
+          </a>
         </div>
+        <rating-cell v-for="(rate,index) in rating.list" :rate="rate" :key="index"></rating-cell>
       </block>
-      <rating v-for="rate in rating.list" :rate="rate" :key="rate.id"></rating>
     </div>
     <div class="promote-rank"></div>
     <div class="contact">
       <DetailContact></DetailContact>
     </div>
-    <div class="control flex-row">
-      <div class="ctrl-home flex-col ctrl-icon">
+    <div class="control flex-row" v-if="individual">
+      <div class="ctrl-home ctrl-icon" @click="home">
         <i class="icon-yike icon-home"></i>
         <span>首页</span>
       </div>
-      <div class="ctrl-refund flex-col ctrl-text" @click="refund" v-if="personal.refund !== 'forbid'">退款</div>
-      <div class="ctrl-refund flex-item flex-col ctrl-text" v-if="personal.status === 'refund'">已退款</div>
-      <div class="ctrl-enroll flex-item flex-col ctrl-text" @click="enroll" v-if="personal.status === 'fresh'">立即报名
-      </div>
-      <div class="ctrl-access flex-item flex-col ctrl-text" @click="access" v-if="canAccess">进入课堂</div>
+      <div class="ctrl-refund ctrl-text" @click="refund" v-if="individual.refund">退款</div>
+      <div class="ctrl-locked ctrl-text" v-if="individual.status === 'refund'">已退款</div>
+      <div class="ctrl-enroll ctrl-text" @click="enroll" v-if="check === 'enroll'">立即报名</div>
+      <div class="ctrl-access ctrl-text" @click="study" v-else-if="check === 'access'">进入课堂</div>
+      <div class="ctrl-locked ctrl-text" v-else-if="check === 'wait'">等待开课</div>
+      <div class="ctrl-locked ctrl-text" v-else>{{profile.status}}</div>
     </div>
-    <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:confirm="confirmEnroll"
-                  :orderShow="orderShow"></detail-order>
+    <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
+    <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
+      <div slot="head">报名成功</div>
+      <ul>
+        <li>永久回放</li>
+        <li>听课开始1小时内无条件退款</li>
+        <li v-if="!individual.subscribed">
+          <span>关注公众号可接收开课提醒</span>
+        </li>
+      </ul>
+      <div class="flex-row" v-if="!individual.subscribed">
+        <img :src="app.linkToAssets('/img/qrcode/mp.png')" style="width: 3rem; height: 3rem"/>
+      </div>
+      <div slot="foot" class="btn btn-vice" @click="displayAfterEnroll = false" v-if="check==='access'">稍后再看</div>
+      <div slot="foot" class="btn btn-primary" @click="study" v-if="check==='access'">开始学习</div>
+      <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
+    </modal-action>
   </div>
 </template>
 
 <script>
+  import qs from 'qs'
   import {markdown} from 'markdown'
   import Tabs from '@/components/Tabs'
   import Block from '@/components/Block'
@@ -98,13 +102,14 @@
   import DetailContact from '../components/DetailContact'
   import DetailOrder from '../components/DetailOrder'
   import StatusLabel from '../components/unit/StatusLabel'
-  import Rating from '../components/Rating'
-
-  import LessonCell from '../components/unit/Cell'
+  import RatingCell from '../components/unit/RatingCell'
+  import LessonCell from '../components/unit/LessonCell'
+  import ModalAction from "../../components/modal/Action";
 
   export default {
     name: 'lesson-detail',
     components: {
+      ModalAction,
       Tabs,
       Block,
       DetailCover,
@@ -113,16 +118,16 @@
       DetailContact,
       DetailOrder,
       StatusLabel,
-      Rating,
+      RatingCell,
       LessonCell
     },
     data() {
       return {
         profile: {},
         teacher: {},
-        introduce: {},
+        introduce: '',
         relative: [],
-        personal: {},
+        individual: null,
         rating: {},
         activeTab: 'lesson',
         CourseStatus: '',
@@ -131,13 +136,12 @@
           {'key': 'board', name: '交流'}
         ],
         order: null,
-        isFollow: false,
-        orderShow: false
+        displayAfterEnroll: false
       }
     },
     created() {
-      this.api.get('/api/jweixin-config').then((res) => {
-        // res.data.jsApiList = []
+      this.api.get('/api/jweixin-config', {url: location.href}).then((res) => {
+        res.data.jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage']
         this.wx.config(res.data)
       })
       let lessonSn = this.$route.query.sn
@@ -145,6 +149,7 @@
         sn: lessonSn
       }).then((res) => {
           this.profile = res.data
+          this.app.setTitle(this.profile.title)
         }
       )
       this.api.get('/api/lesson-introduce', {
@@ -162,16 +167,41 @@
       }).then((res) => {
         this.rating = res.data
       })
-      // this.enroll()
-      this.api.get('/api/personal-lesson', {
+      this.api.get('/api/individual-lesson', {
         sn: lessonSn
       }).then((res) => {
-        this.personal = res.data
-      }).catch(console.log)
+        this.individual = res.data
+      }).catch(() => {
+        this.individual = {
+          'status': 'fresh'
+        }
+      })
     },
     computed: {
-      canAccess() {
-        return true
+      check() {
+        switch (this.individual.status) {
+          case 'fresh':
+          case 'reset':
+            return 'enroll'
+          case 'enroll':
+          case 'access':
+            if (this.profile.status === 'opened') {
+              return 'wait'
+            } else if (['onlive', 'repose', 'finish'].indexOf(this.profile.status) !== -1) {
+              return 'access'
+            } else {
+              return this.profile.status
+            }
+          default:
+            return this.individual.status
+        }
+      },
+      ratingTitle() {
+        let title = '评分'
+        if (this.rating.stats) {
+          title += `(${this.rating.stats.score === 0 ? 0 : this.rating.stats.score.toFixed(1)})`
+        }
+        return title
       }
     },
     methods: {
@@ -182,65 +212,75 @@
         this.activeTab = key
         switch (key) {
           case 'board':
-            window.location.href = this.student(`/?v=1#/course/message/${this.$route.query.sn}/discuss`)
+            window.location.href = this.app.linkToStudent(`/?v=1#/course/message/${this.$route.query.sn}/discuss`)
             break;
           default:
             break;
         }
       },
-      showPolicy() {
-      },
-      enroll() {
+      enroll() { // 报名下单
+        this.app.disableBodyScroll()
         this.api.post('/api/order-book-lesson', {
-          sn: this.$route.query.sn
+          sn: this.$route.query.sn,
+          origin: this.$route.query.origin
         }).then((res) => {
-          this.order = res.data
+          if (res.data) { // 付费课程报名
+            this.order = res.data
+          } else { // 免费课程报名
+            this.completeEnroll()
+          }
         }, this.api.onErrorSign)
       },
-      purchase() {
-      },
-      cancel() {
-        this.orderShow = !this.orderShow
-      },
-      confirmEnroll() {
-        this.api.post('/api/order-prepay-wxm', {
-          sn: this.order.sn
+      completeEnroll() { // 订单支付完成
+        this.order = null
+        this.app.enableBodyScroll()
+        // 重新获取课程状态
+        this.api.get('/api/individual-lesson', {
+          sn: this.$route.query.sn
         }).then((res) => {
-          this.wx.chooseWXPay({
-            timestamp: res.data.timeStamp,
-            nonceStr: res.data.nonceStr,
-            package: res.data.package,
-            signType: res.data.signType,
-            paySign: res.data.paySign,
-            success: function (r) {
-            }
-          })
+          this.individual = res.data
+          this.displayAfterEnroll = true
         })
       },
-      cancelEnroll() {
+      cancelEnroll() { // 取消报名
+        this.app.enableBodyScroll()
         this.order = null
       },
-      share() {
+      home() { // 返回首页
+        this.$router.push('/lesson/home')
       },
-      refund() {
-      }
-    },
-    watch: {
-      activeTab: {
-        handler(newValue, oldValue) {
-          if (newValue === 'lesson') {
-          }
-          if (newValue === 'board') {
-            window.scrollTo(0, document.getElementsByClassName('tabs')[0].offsetTop)
-          }
-        }
+      study() { // 进入课堂
+        // todo 增加【报名成功，准备进入课堂】读秒缓冲
+        let lessonSn = this.$route.query.sn
+        let query = qs.stringify({
+          isOwner: 'no',
+          lesson_sn: lessonSn,
+          teach: `${lessonSn}-T`,
+          discuss: `${lessonSn}-D`
+        })
+        window.location.href = `/live?${query}`
+      },
+      invite() { // 邀请卡
+        window.location.href = `/promote/invite?sn=${this.$route.query.sn}`
+      },
+      refund() { // 退款
+        let query = qs.stringify({
+          isOwner: 'no',
+          lesson_sn: this.$route.query.sn,
+          mode: this.individual.refund.mode,
+          title: this.profile.title,
+          teacher: this.profile.teacher.name
+        })
+        window.location.href = this.app.linkToStudent(`/?v=1#/course/refund?${query}`)
       }
     }
   }
 </script>
-
+<style>
+  @import '../../assets/css/markdown.css';
+</style>
 <style scoped>
-  .frm-profile, .content, .relative, .rating {
+  .border {
     border-bottom: 1px #ddd solid;
   }
 
@@ -272,6 +312,10 @@
     margin-right: .2rem;
     font-size: .24rem;
     color: #808080;
+  }
+  .profile .info {
+    height: 1rem;
+    justify-content: space-between;
   }
 
   .profile .invite {
@@ -306,7 +350,7 @@
   .price {
     display: flex;
     justify-content: flex-start;
-    width: 105%;
+    width: 100%;
     color: #F23F15;
     font-size: .42rem;
   }
@@ -317,6 +361,7 @@
     height: 1rem;
     width: 7.5rem;
     font-size: .32rem;
+    box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
   }
 
   .control > div {
@@ -324,9 +369,14 @@
   }
 
   .ctrl-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: .2rem;
     color: #666;
     background: #fff;
+    cursor: pointer;
   }
 
   .ctrl-icon > i {
@@ -337,39 +387,34 @@
 
   .ctrl-text {
     padding: 0 .32rem;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    border-left:1px solid #ccc;
   }
 
-  .ctrl-enroll {
+  .ctrl-enroll, .ctrl-access {
     color: #fff;
     background: #2F57DA;
-  }
-
-  .relative .icon-arrow-r, .rating .icon-arrow-r {
-    color: #808080;
-    font-size: .24rem;
-    font-weight: bold;
-    padding-left: .189rem;
-  }
-
-  .ctrl-access {
-    color: #fff;
-    background: #2F57DA;
+    cursor: pointer;
   }
 
   .ctrl-refund {
+    color: #2F57DA;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .ctrl-locked {
+    color: #666;
     background: #fff;
   }
 
   .tabs {
     position: sticky;
     top: 0;
-  }
-
-  .score {
-    height: .36rem;
-    line-height: .36rem;
-    font-size: .32rem;
-    font-weight: bold;
+    cursor: pointer;
   }
 
   .rating {
@@ -378,51 +423,5 @@
 
   .contact {
     margin-top: .3rem;
-  }
-
-  .bar-bottom {
-    position: fixed;
-    bottom: 0;
-    height: 1rem;
-    width: 7.5rem;
-    background: #fff;
-    box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
-  }
-
-  .bar-bottom > .flex-row {
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .icon-favorite, .icon-home {
-    flex-grow: 1;
-    font-size: .2rem;
-    color: #666666;
-  }
-
-  .icon-favorite:before, .icon-home:before {
-    font-size: .37rem;
-    color: #2A4EC4;
-  }
-
-  .enroll {
-    width: 5.5rem;
-    height: 100%;
-    background: #2F57DA;
-    color: #FFFFFF;
-    font-size: .32rem;
-  }
-</style>
-<style>
-  .click {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .relative .c-relative-block:last-child {
-    border-bottom: 0;
-  }
-
-  .active .icon-star:before {
-    color: #FFC600;
   }
 </style>

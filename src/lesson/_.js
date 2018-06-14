@@ -6,13 +6,12 @@ import Index from './index'
 import router from './router'
 import axios from 'axios'
 
+import app from '@/assets/js/app'
 import api from '@/assets/js/api'
 import wxa from '@/assets/js/wxa'
 import wx from 'weixin-js-sdk'
 
 import adaptor from '@/assets/js/screen-adaptor'
-
-const config = require('../config');
 
 adaptor(750, (screen) => {
   // return Math.min(screen.width, screen.height*0.8)
@@ -33,13 +32,7 @@ router.beforeEach((to, from, next) => {
 Vue.prototype.wx = wx
 Vue.prototype.api = api
 Vue.prototype.wxa = wxa
-Vue.prototype.config = config
-Vue.prototype.access = (path) => {
-  return config.assets+path
-}
-Vue.prototype.student = (path) => {
-  return config.studentUrl+path
-}
+Vue.prototype.app = app
 
 /* eslint-disable no-new */
 new Vue({

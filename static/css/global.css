@@ -36,15 +36,22 @@ button, .btn {
   flex-grow: 1;
 }
 
-.btn {
-  border: 0;
-}
-
 .c-index {
   /*transform: scale(1,1);*/
 }
 
 .btn {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+a.btn {
+  text-decoration: none;
+}
+a.btn a.btn:visited, a.btn:active{
+  color: inherit;
+}
+button.btn {
+  border: 0;
   outline: none;
   display: flex;
   align-items: center;

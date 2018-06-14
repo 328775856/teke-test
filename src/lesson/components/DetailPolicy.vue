@@ -1,6 +1,6 @@
 <template>
-  <div class="c-lesson-detail-policy" @click="showPolicy">
-    <div class="bar-items flex-row">
+  <div class="c-lesson-detail-policy">
+    <div class="bar-items flex-row" @click="isOpen = true">
       <div class="flex-row">
         <div class="item">
           <i class="icon-yike icon-select"></i>
@@ -17,24 +17,41 @@
       </div>
       <i class="icon-yike icon-arrow-r"></i>
     </div>
-    <policy :isShow="isShow"></policy>
+    <popup :isOpen="isOpen" v-on:close="isOpen = false">
+      <div slot="head">听课须知</div>
+      <div class="items">
+        <ul>
+          <li v-for="(item,index) in items" :key="index">
+            <div class="items-head flex-row">
+              <i class="icon-yike icon-select"></i>
+              <span>{{item.head}}</span>
+            </div>
+            <div class="items-desc">{{item.desc}}</div>
+          </li>
+        </ul>
+      </div>
+      <div class="btn btn-roger flex-row" slot="foot" @click="isOpen = false">知道了</div>
+    </popup>
   </div>
 </template>
 
 <script>
-  import Policy from '../components/Policy'
+  import Popup from "../../components/Popup";
 
   export default {
     name: 'lesson-detail-policy',
-    components: {Policy},
+    components: {Popup},
     data() {
       return {
-        isShow: false
-      }
-    },
-    methods: {
-      showPolicy() {
-        this.isShow = !this.isShow
+        isOpen: false,
+        items: [
+          {'head': '永久回放', 'desc': '已购买课程可永久回放'},
+          {'head': '开课通知', 'desc': '关注【易灵微课】公众号(yike-fm)，接收开课提醒'},
+          {'head': '无条件退款', 'desc': '进入课堂1小时内，可无条件退款'},
+          {'head': '未听课退款', 'desc': '课程结束7天后，未听课自动退款'},
+          {'head': '授课形式', 'desc': '支持图文、语音、视频片段，建议在WiFi环境下观看'},
+          {'head': '讨论交流', 'desc': '课堂设有讨论区，课实时与讲师或其他学员交流。禁止发布违法法律法规或与课程无关的内容'}
+        ]
       }
     }
   }
@@ -68,6 +85,41 @@
     font-size: .24rem;
     font-weight: bold;
     text-align: right;
+  }
+  .items {
+    overflow-x: auto;
+    overflow-y: scroll;
+    padding: .3rem;
+    border-bottom: .3rem solid #fff;
+    max-height: 70vh;
+  }
+  .items ul {
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+  }
+  .items li {
+    padding: .1rem 0;
+    font-size: .24rem;
+  }
+  .items-head {
+    justify-content: flex-start;
+    color: #666;
+  }
+  .items-head > i {
+    color: #2F57DA;
+    margin-right: .2rem;
+  }
+  .items-desc {
+    padding: .1rem .44rem;
+    color: #888;
+  }
+  .btn-roger {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: .32rem;
+    background: #2F57DA;
   }
 
 </style>

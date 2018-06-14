@@ -1,5 +1,5 @@
 <template>
-  <div class="c-lesson-detail-order flex-col" v-if="order" v-show="orderShow">
+  <div class="c-lesson-detail-order flex-col" v-if="order">
     <div class="mask click" @click="cancel"></div>
     <div class="frm-order">
       <div class="head flex-row">订单详情</div>
@@ -36,13 +36,40 @@
 <script>
   export default {
     name: 'lesson-detail-order',
-    props: ['order', 'orderShow'],
+    props: ['order'],
     methods: {
       cancel() {
         this.$emit('cancel')
       },
       confirm() {
-        this.$emit('confirm')
+        if (this.order.surplus === 0) {
+          this.purchaseByBalance()
+        } else {
+          this.purchaseByWeixin()
+        }
+      },
+      purchaseByBalance() {
+        this.api.post('/api/order-purchase', {
+          sn: this.order.sn
+        }).then(() => {
+          this.$emit('complete')
+        })
+      },
+      purchaseByWeixin() {
+        this.api.post('/api/order-prepay-wxm', {
+          sn: this.order.sn
+        }).then((res) => {
+          this.wx.chooseWXPay({
+            timestamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            package: res.data.package,
+            signType: res.data.signType,
+            paySign: res.data.paySign,
+            success: () => {
+              this.$emit('complete')
+            }
+          })
+        })
       }
     }
   }

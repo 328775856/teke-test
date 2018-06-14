@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 import Index from './index'
 import router from './router'
 import axios from 'axios'
@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 
 Vue.use(router);
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 Vue.prototype.axios = axios
 Vue.prototype.api = api
 Vue.prototype.wx = wx
@@ -33,7 +33,6 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-Vue.use(Vuex)
 Vue.prototype.axios = axios
 
 /* eslint-disable no-new */

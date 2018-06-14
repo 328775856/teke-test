@@ -3,7 +3,7 @@
     <div class="cover">
       <img :src="profile.cover"/>
       <div class="enrollment">
-        <i class="icon-yike icon-my-selected"></i>
+        <i class="icon-yike icon-people"></i>
         <span>{{profile.enrollment}}</span>
       </div>
     </div>
@@ -32,6 +32,7 @@
     font-size: .24rem;
     font-weight: bold;
     color: #fff;
+    text-shadow: 0 0 .1rem #000;
   }
   .enrollment > i {
     font-size: .24rem;

@@ -9,13 +9,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: '/vue/',
   routes: [
-    {
-      path: '/lesson'
-      // name: 'Home',
-      // component: Home
-    },
     {
       path: '/lesson/detail',
       name: 'Detail',
@@ -31,6 +25,7 @@ export default new Router({
     },
     {
       path: '/lesson/home',
+      alias: '/lesson/',
       name: 'Home',
       component: Home
     }

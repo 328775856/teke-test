@@ -9,7 +9,7 @@
           <div class="text flex-row">
             <span class="msg">{{item.title}}</span>
             <div class="status flex-col">
-              <button :class="item.status" :courseStatus="courseStatus">{{courseStatus[item.status]}}</button>
+              <button :class="item.status">{{courseStatus[item.status]}}</button>
               <div class="price">￥{{item.price}}</div>
             </div>
           </div>
@@ -30,21 +30,22 @@
 </template>
 
 <script>
-  import courseStatus from '@/assets/js/courseStatus'
 
   export default {
     name: "Catalog",
     props: ['catalogData'],
-    components: {courseStatus},
     data() {
       return {
-        courseStatus: {}
+        courseStatus: {
+          opened: '开放中',
+          onlive: '直播中',
+          repose: '交流中',
+          finish: '可观看',
+          closed: '已下架'
+        }
       }
     },
-    methods: {},
-    created() {
-      this.courseStatus = courseStatus
-    }
+    methods: {}
   }
 </script>
 
@@ -163,5 +164,17 @@
     color: #808080;
     font-size: 0.24rem;
     padding-left: 0.21rem;
+  }
+
+  .opened {
+    background: #D8C199;
+  }
+
+  .onlive {
+    background: #5DC96A;
+  }
+
+  .finish {
+    background: #FF7E7E;
   }
 </style>

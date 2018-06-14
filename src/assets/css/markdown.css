@@ -1,0 +1,36 @@
+.markdown {
+  color: #0d0d0d;
+}
+.markdown h1 {
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  background: #2F57DA;
+  border-radius: 1em;
+  padding: .1rem .2rem;
+}
+.markdown h2 {
+  text-align: center;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;
+  padding: .05rem;
+}
+.markdown h3 {
+  display: inline-block;
+  border-bottom: 3px solid transparent;
+  padding: .03rem;
+  border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;
+}
+.markdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.markdown ul > li {
+  padding: .1rem 0;
+}
+.markdown ul > li:before {
+  padding: 0 .1rem;
+  content: "•";
+  color: #2F57DA;
+}

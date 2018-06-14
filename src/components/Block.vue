@@ -3,7 +3,6 @@
     <div class="block-head flex-row">
       <div class="flex-row">
         <div class="block-title">{{title}}</div>
-        <slot class="score" name="score"></slot>
       </div>
       <div class="btn block-more">
         <slot name="more"></slot>
@@ -54,5 +53,8 @@
     font-size: .24rem;
     font-weight: bold;
     padding-left: .2rem;
+  }
+  .block-more a{
+    color: #888;
   }
 </style>

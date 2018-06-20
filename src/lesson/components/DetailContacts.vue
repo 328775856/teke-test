@@ -10,7 +10,7 @@
         <span>公众号</span>
       </div>
     </div>
-    <div class="desc">
+    <div class="desc font-24">
       <div>关注公众号，接收开课提醒及新课程消息</div>
       <div>添加小助手，可向我们咨询、建议、反馈</div>
     </div>
@@ -31,7 +31,6 @@
   }
   .desc {
     flex-grow: 1;
-    font-size: .24rem;
     color: #666;
     padding: .3rem;
   }

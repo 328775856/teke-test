@@ -6,9 +6,9 @@
       </div>
       <div class="flex-col flex-item">
         <div class="name">{{teacher.name}}</div>
-        <div class="about">{{teacher.about}}</div>
+        <div class="about font-24">{{teacher.about}}</div>
       </div>
-      <!--<div :class="{followed:teacher.followed}" class="follow" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>-->
+      <!--<div :class="{followed:teacher.followed}" class="follow font-24" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>-->
     </div>
   </div>
 </template>
@@ -43,8 +43,8 @@
 
 <style scoped>
   .c-detail-teacher {
-    padding-bottom: .3rem;
     border-bottom: 1px #DDDDDD solid;
+    padding: .1rem 0 .4rem 0;
   }
 
   .flex-row {
@@ -73,10 +73,10 @@
   }
 
   .about {
-    font-size: .24rem;
     color: #808080;
     line-height: .36rem;
     text-align: justify;
+    word-break: break-all;
   }
 
   .follow {
@@ -86,7 +86,6 @@
     border: 1px solid #2A4EC4;
     border-radius: .24rem;
     color: #2A4EC4;
-    font-size: .24rem;
     text-align: center;
   }
 
@@ -97,7 +96,6 @@
     border: 1px solid #ccc;
     border-radius: .24rem;
     color: #ccc;
-    font-size: .24rem;
     text-align: center;
   }
 </style>

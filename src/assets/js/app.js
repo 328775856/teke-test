@@ -24,7 +24,7 @@ const app = {
   },
   enableBodyScroll: () => {
     document.body.style.overflow = 'visible'
-    document.documentElement.style.overflow='auto'
+    document.documentElement.style.overflow='visible'
   }
 };
 

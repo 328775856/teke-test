@@ -16,7 +16,7 @@
           document.documentElement.style.overflow='hidden'
         } else {
           document.body.style.overflow = 'visible'
-          document.documentElement.style.overflow='auto'
+          document.documentElement.style.overflow='visible'
         }
       }
     }

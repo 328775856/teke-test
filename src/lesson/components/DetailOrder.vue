@@ -37,6 +37,19 @@
   export default {
     name: 'lesson-detail-order',
     props: ['order'],
+    data() {
+      return {
+        checkWXPay: null
+      }
+    },
+    created() {
+      this.wx.checkJsApi({
+        jsApiList: ['chooseWXPay'],
+        success: (res) => {
+          this.checkWXPay = res.checkResult.chooseWXPay
+        }
+      })
+    },
     methods: {
       cancel() {
         this.$emit('cancel')

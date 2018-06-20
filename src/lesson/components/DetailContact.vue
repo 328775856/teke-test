@@ -8,8 +8,11 @@
     </div>
     <div class="qrcode flex-row">
       <div class="qrcode-mp flex-col">
-        <img :src="app.linkToAssets('/img/qrcode/mp.png')"/>
-        <span>公众号</span>
+        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')"/>
+        <span>
+          <i class="icon-yike icon-wechat"></i>
+          易灵微课公众号
+        </span>
       </div>
     </div>
   </div>
@@ -28,9 +31,10 @@
     background: white;
   }
   .desc {
-    font-size: .24rem;
-    color: #666;
+    font-size: .32rem;
+    color: #333;
     padding: .3rem;
+    line-height: .5rem;
   }
   .qrcode {
     justify-content: space-around;
@@ -39,8 +43,6 @@
   .qrcode img {
     width: 2rem;
     height: 2rem;
-    border: .13rem solid #F7E1BB;
-    border-radius: .1rem;
   }
   .qrcode span {
     padding-top: .1rem;
@@ -52,5 +54,9 @@
   }
   .qrcode-mp {
     padding: 0 .2rem 0 .1rem;
+  }
+  .icon-wechat {
+    font-size: .2rem;
+    color: #29BC60;
   }
 </style>

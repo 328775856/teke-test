@@ -3,12 +3,12 @@
     <div class="profile">
       <detail-cover :profile="profile"></detail-cover>
       <div class="frm-profile">
-        <div class="title">{{profile.title}}</div>
+        <div class="title font-36">{{profile.title}}</div>
         <div class="datum flex-row">
           <div class="flex-col about">
             <div class="flex-row">
               <i class="icon-yike icon-clock"></i>
-              <span class="flex-row"
+              <span class="flex-row font-24"
                     v-if="profile.progress">周三开课 {{profile.progress[1]}}/{{profile.progress[0]}}节</span>
             </div>
             <div class="price-frm flex-row">
@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div class="invite flex-col btn" @click="invite">
+          <div class="invite flex-col btn font-24" @click="invite">
             <i class="icon-yike icon-share"></i>
             <span>邀请有奖</span>
           </div>
@@ -40,10 +40,10 @@
     </div>
     <div class="content border">
       <block title="简介">
-        <div v-html="markdown(introduce)"></div>
+        <div class="markdown" v-html="markdown(introduce)"></div>
       </block>
     </div>
-    <div class="relative border" v-if="relative.length">
+    <div id="category" class="relative border" v-if="relative.length">
       <block title="目录">
         <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
       </block>
@@ -51,15 +51,15 @@
     <div class="contact">
       <DetailContact></DetailContact>
     </div>
-    <div class="control flex-row" v-if="individual">
+    <div class="control flex-row font-32" v-if="individual">
       <div class="ctrl-home ctrl-icon" @click="home">
-        <i class="icon-yike icon-home"></i>
+        <i class="icon-yike icon-home font-32"></i>
         <span>首页</span>
       </div>
-      <div class="ctrl-icon">
-        <i class="icon-yike icon-favorite"></i>
-        <span>收藏</span>
-      </div>
+      <!--<div class="ctrl-icon">-->
+      <!--<i class="icon-yike icon-favorite"></i>-->
+      <!--<span>收藏</span>-->
+      <!--</div>-->
       <div class="ctrl-refund ctrl-text" @click="refund" v-if="individual.refund">退款</div>
       <div class="ctrl-locked ctrl-text" v-if="individual.status === 'refund'">已退款</div>
       <div class="ctrl-enroll ctrl-text" @click="enroll" v-if="check === 'enroll'">报名系列课</div>
@@ -77,7 +77,7 @@
         </li>
       </ul>
       <div class="flex-row" v-if="!individual.subscribed">
-        <img :src="app.linkToAssets('/img/qrcode/mp.png')" style="width: 3rem; height: 3rem"/>
+        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')" style="width: 3rem; height: 3rem"/>
       </div>
       <div slot="foot" class="btn btn-vice" @click="displayAfterEnroll = false" v-if="check==='access'">稍后再看</div>
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check==='access'">开始学习</div>
@@ -88,7 +88,6 @@
 
 <script>
   import qs from 'qs'
-  import {markdown} from 'markdown'
   import Tabs from '@/components/Tabs'
   import Block from '@/components/Block'
   import DetailCover from '../components/DetailCover'
@@ -100,6 +99,8 @@
   import RatingCell from '../components/unit/RatingCell'
   import LessonCell from '../components/unit/LessonCell'
   import ModalAction from "../../components/modal/Action"
+
+  const markdown = require('markdown-it')({html: true})
 
   export default {
     name: 'lesson-detail',
@@ -131,7 +132,7 @@
           {'key': 'catalog', name: '目录'}
         ],
         order: null,
-        displayAfterEnroll: true
+        displayAfterEnroll: false
       }
     },
     created() {
@@ -190,10 +191,13 @@
     },
     methods: {
       markdown(text) {
-        return markdown.toHTML(text || '');
+        return markdown.render(text || '');
       },
       switchTab(key) {
+        // pc
         let d = document.documentElement// eslint-disable-line no-unused-vars
+        // phone
+        let db = document.body
         let relativeTop = document.getElementsByClassName('relative')[0]
         let teacherTop = document.getElementsByClassName('teacher')[0]
         let t = document.getElementsByClassName('tabs')[0]
@@ -201,9 +205,11 @@
         switch (key) {
           case 'catalog':
             d.scrollTop = relativeTop.offsetTop - t.offsetHeight
+            db.scrollTop = relativeTop.offsetTop - t.offsetHeight
             break;
           default:
             d.scrollTop = teacherTop.offsetTop - t.offsetHeight
+            db.scrollTop = teacherTop.offsetTop - t.offsetHeight
             break;
         }
       },
@@ -229,7 +235,6 @@
         }).then((res) => {
           this.individual = res.data
           if (this.check === 'access') {
-            this.displayAfterEnroll = true
             this.study() // 自动进入课堂
           }
         })
@@ -269,6 +274,10 @@
   }
 </script>
 
+<style>
+  @import "../../assets/css/markdown.css";
+</style>
+
 <style scoped>
   .border {
     border-bottom: 1px #ddd solid;
@@ -288,7 +297,8 @@
   }
 
   .profile .title {
-    font-size: .36rem;
+    height: .38rem;
+    line-height: .38rem;
     font-weight: bold;
     color: #0D0D0D;
   }
@@ -297,20 +307,12 @@
     justify-content: space-between;
     padding-top: .2rem;
   }
-
-  .profile .time {
-    margin-right: .2rem;
-    font-size: .24rem;
-    color: #808080;
-  }
-
   .profile .info {
     height: 1rem;
     justify-content: space-between;
   }
 
   .profile .invite {
-    font-size: .24rem;
     color: #666;
   }
 
@@ -332,15 +334,20 @@
     background: #fff;
   }
 
-  .icon-clock:before {
+  .icon-clock {
+    height: .3rem;
+    line-height: .3rem;
     padding-right: .13rem;
+  }
+
+  .icon-clock:before {
     color: #2F57DA;
-    font-size: .3rem;
+    font-size: .4rem;
   }
 
   .icon-clock + span {
     color: #808080;
-    font-size: .24rem;
+    height: .3rem;
   }
 
   .price {
@@ -352,11 +359,11 @@
   }
 
   .control {
+    z-index: 2;
     position: fixed;
     bottom: 0;
     height: 1rem;
     width: 7.5rem;
-    font-size: .32rem;
     box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
   }
 
@@ -376,7 +383,6 @@
   }
 
   .ctrl-icon > i {
-    font-size: .32rem;
     color: #2F57DA;
     padding: 0 .32rem;
   }
@@ -408,6 +414,7 @@
   }
 
   .tabs {
+    z-index: 2;
     position: sticky;
     top: 0;
     cursor: pointer;
@@ -456,7 +463,7 @@
   .price {
     align-items: flex-end;
     height: 0.36rem;
-    line-height: 0.4rem;
+    line-height: 0.36rem;
   }
 
   .n-price {
@@ -467,11 +474,11 @@
   }
 
   .o-price {
-    align-self: flex-end;
     padding-left: 0.1rem;
     font-size: 0.27rem;
     text-decoration: line-through;
     color: #808080;
+    line-height: 1;
   }
 
   .o-price + div {

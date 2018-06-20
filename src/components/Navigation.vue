@@ -1,25 +1,38 @@
 <template>
-  <div class="c-navigation">
-    <div class="flex-row">
-      <div class="flex-item">
-        <div class="nav-item flex-col">
-          <i class="nav-icon">icon</i>
-          <span class="nav-text">foo</span>
-        </div>
-      </div>
-      <div class="flex-item">
-        <div class="nav-item flex-col">
-          <i class="nav-icon flex-item">icon</i>
-          <span class="nav-text flex-item">foo</span>
-        </div>
-      </div>
-    </div>
+  <div class="c-navigation flex-row">
+    <a class="nav btn flex-col" v-for="(nav, idx) in navs"
+       :key="idx"
+       :href="nav.path"
+       :class="{active: nav.path === $route.path}">
+      <i class="icon-yike" :class="[nav.path === $route.path ? `icon-${nav.icon}-selected` : `icon-${nav.icon}`]"></i>
+      <span class="nav-name">{{nav.name}}</span>
+    </a>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'navigation'
+    name: 'navigation',
+    data() {
+      return {
+        navs: [
+          {
+            'icon': 'home',
+            'name': '首页',
+            'path': '/lesson/home'
+          },
+          {
+            'icon': 'my',
+            'name': '我的',
+            'path': this.app.linkToStudent('/link-user')
+          }
+        ]
+      }
+    },
+    created() {
+    },
+    computed: {
+    }
   }
 </script>
 
@@ -28,8 +41,22 @@
     position: fixed;
     bottom: 0;
     height: 1rem;
-    width: 100%;
-    background: #aaa;
+    width: 7.5rem;
+    background: #fff;
+    box-shadow: 0 0 10px #ddd;
+  }
+  .nav {
+    font-size: .2rem;
+    flex-grow: 1;
+    color: #666;
+    height: 100%
+  }
+  .nav i {
+    font-size: .4rem;
+    color: #2A4EC4
+  }
+  .nav.active i {
+    color: #2A4EC4
   }
 
 </style>

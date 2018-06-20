@@ -1,25 +1,39 @@
 .markdown {
   color: #0d0d0d;
 }
+.markdown hr {
+  color: #2F57DA;
+  border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;
+}
+/*.markdown h1 {*/
+  /*text-align: center;*/
+  /*border-bottom: .1em solid transparent;*/
+  /*border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;*/
+  /*padding: .1em;*/
+/*}*/
 .markdown h1 {
+  display: inline-block;
+  padding: 0 .2rem;
+  font-size: .32rem;
+  line-height: .32rem;
+  color: #333;
+  background-image: linear-gradient(to bottom, transparent .14rem, #fff220 .14rem, #fff220);
+}
+.markdown h2 {
   display: inline-block;
   color: #fff;
   text-align: center;
   background: #2F57DA;
   border-radius: 1em;
-  padding: .1rem .2rem;
-}
-.markdown h2 {
-  text-align: center;
-  border-bottom: 3px solid transparent;
-  border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;
-  padding: .05rem;
+  padding: .2em 1em;
 }
 .markdown h3 {
   display: inline-block;
-  border-bottom: 3px solid transparent;
-  padding: .03rem;
-  border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;
+  padding: .1em;
+  border-bottom: .2em dotted #2F57DA;
+  /*border-bottom: .1em solid transparent;*/
+  /*border-image: linear-gradient(to right, transparent, #2F57DA , transparent) 1 1;*/
+  /*background-image: linear-gradient(to right, #2F57DA, transparent 20%);*/
 }
 .markdown ul {
   list-style: none;
@@ -33,4 +47,7 @@
   padding: 0 .1rem;
   content: "•";
   color: #2F57DA;
+}
+.markdown img {
+  max-width: 100%;
 }

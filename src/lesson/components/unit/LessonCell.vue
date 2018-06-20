@@ -11,11 +11,12 @@
           </div>
         </div>
         <div class="flex-row detail-bottom">
-          <div class="enrollment">
-            <i class="icon-yike icon-my"></i>
+          <div class="enrollment font-24">
+            <i class="icon-yike icon-people font-24">
+            </i>
             <span>{{lesson.enrollment}}人</span>
           </div>
-          <div class="tms">{{lesson.plan.dtm_start}}</div>
+          <div class="tms font-24">{{lesson.plan.dtm_start}}</div>
         </div>
       </div>
     </div>
@@ -43,8 +44,14 @@
     border-bottom: 1px solid #DDDDDD;
     cursor: pointer;
   }
+
+  .c-lesson-cell:first-child {
+    padding-top: .1rem;
+  }
+
   .c-lesson-cell:last-child {
     border-bottom: 0;
+    padding-bottom: .5rem;
   }
 
   .frm {
@@ -96,24 +103,39 @@
     font-size: .3rem;
     color: #F23F15;
     text-align: right;
-  }
-
-  .enroll {
-    font-size: .24rem;
-    color: #999999;
+    padding-bottom: .1rem;
   }
 
   .tms {
-    font-size: .24rem;
     color: #808080;
     line-height: .36rem;
   }
+
   .enrollment {
-    font-size: .24rem;
-    font-weight: bold;
+    color: #808080;
+  }
+
+  .icon-single-people {
+    position: relative;
+  }
+
+  .icon-single-people:before {
+    position: relative;
+    z-index: 1;
+    color: #999;
+  }
+
+  .icon-single-people:after {
+    z-index: 0;
+    content: "\e623";
+    position: absolute;
+    top: .01rem;
+    left: .1rem;
+    font-size: .2rem;
     color: #ccc;
   }
-  .enrollment > i {
-    font-size: .24rem;
+
+  .icon-single-people + span {
+    padding-left: .21rem;
   }
 </style>

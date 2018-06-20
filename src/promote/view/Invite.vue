@@ -117,6 +117,16 @@
               context.restore()
             }
           }
+          if (card.cover) {
+            let cover = card.cover
+            cover.img = new Image();
+            cover.img.crossOrigin = "Anonymous";
+            cover.img.src = cover.src
+            cover.img.onload = () => {
+              context.drawImage(cover.img, cover.offset[0], cover.offset[1], cover.size[0], cover.size[1])
+              context.restore()
+            }
+          }
           // qrcode
           let qrcode = card.qrcode
           qrcode.img = new Image();

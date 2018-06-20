@@ -3,20 +3,22 @@
     <div class="profile">
       <detail-cover :profile="profile"></detail-cover>
       <div class="frm-profile">
-        <div class="title">{{profile.title}}</div>
-        <div class="series" v-if="profile.series">{{profile.series.name}}</div>
+        <div class="title font-36">{{profile.title}}</div>
+        <router-link class="series font-24" v-if="profile.series" :to="`/lesson/series?sn=${profile.series.sn}`">
+          所属系列 · {{profile.series.name}}
+        </router-link>
         <div class="datum flex-row">
           <div class="info flex-col">
             <div class="flex-row" v-if="profile.plan">
-              <i class="icon-yike icon-clock"></i>
-              <div class="time">{{profile.plan.dtm_start}}</div>
+              <i class="icon-yike icon-clock flex-col"></i>
+              <div class="time font-24">{{profile.plan.dtm_start}}</div>
               <status-label :status="profile.status"/>
             </div>
             <div class="price">￥{{profile.price}}</div>
           </div>
           <div class="invite flex-col btn" @click="invite">
             <i class="icon-yike icon-share"></i>
-            <span>邀请有奖</span>
+            <span class="font-24">邀请有奖</span>
           </div>
         </div>
       </div>
@@ -36,11 +38,11 @@
       </block>
     </div>
     <div class="relative border" v-if="relative.length">
-      <block title="相关系列课">
-        <div slot="more">
-          <span>查看完整课程</span>
-          <i class="icon-yike icon-arrow-r"></i>
-        </div>
+      <block title="相关课程">
+        <router-link slot="more" :to="`/lesson/series?sn=${profile.series.sn}#category`">
+          <span>查看全部</span>
+          <i class="icon-yike icon-arrow-r font-24"></i>
+        </router-link>
         <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
       </block>
     </div>
@@ -49,7 +51,7 @@
         <div slot="more" v-if="rating.stats">
           <a :href="app.linkToStudent(`/?v=1#/course/message/${$route.query.sn}/task?lesson_sn=${$route.query.sn}`)" class="btn">
             <span>已有{{rating.stats.turnout}}人评价</span>
-            <i class="icon-yike icon-arrow-r"></i>
+            <i class="icon-yike icon-arrow-r font-24"></i>
           </a>
         </div>
         <rating-cell v-for="(rate,index) in rating.list" :rate="rate" :key="index"></rating-cell>
@@ -59,11 +61,12 @@
     <div class="contact">
       <DetailContact></DetailContact>
     </div>
-    <div class="control flex-row" v-if="individual">
+    <div class="control flex-row font-32" v-if="individual">
       <div class="ctrl-home ctrl-icon" @click="home">
         <i class="icon-yike icon-home"></i>
         <span>首页</span>
       </div>
+      <!--<div class="ctrl-locked ctrl-text" @click="displayAfterEnroll=true">pop</div>-->
       <div class="ctrl-refund ctrl-text" @click="refund" v-if="individual.refund">退款</div>
       <div class="ctrl-locked ctrl-text" v-if="individual.status === 'refund'">已退款</div>
       <div class="ctrl-enroll ctrl-text" @click="enroll" v-if="check === 'enroll'">立即报名</div>
@@ -93,7 +96,6 @@
 
 <script>
   import qs from 'qs'
-  import {markdown} from 'markdown'
   import Tabs from '@/components/Tabs'
   import Block from '@/components/Block'
   import DetailCover from '../components/DetailCover'
@@ -105,6 +107,8 @@
   import RatingCell from '../components/unit/RatingCell'
   import LessonCell from '../components/unit/LessonCell'
   import ModalAction from "../../components/modal/Action";
+
+  const markdown = require('markdown-it')({html: true})
 
   export default {
     name: 'lesson-detail',
@@ -206,7 +210,7 @@
     },
     methods: {
       markdown(text) {
-        return markdown.toHTML(text || '');
+        return markdown.render(text || '');
       },
       switchTab(key) {
         this.activeTab = key
@@ -248,6 +252,7 @@
       },
       home() { // 返回首页
         this.$router.push('/lesson/home')
+        // window.location.href = this.app.linkToStudent('/')
       },
       study() { // 进入课堂
         // todo 增加【报名成功，准备进入课堂】读秒缓冲
@@ -298,28 +303,35 @@
   }
 
   .profile .title {
-    font-size: .36rem;
+    height: .34rem;
+    line-height: .34rem;
     font-weight: bold;
     color: #0D0D0D;
   }
 
   .profile .datum {
     justify-content: space-between;
-    padding-top: .2rem;
   }
 
   .profile .time {
     margin-right: .2rem;
-    font-size: .24rem;
     color: #808080;
   }
+  .time+div.c-lesson-status-label{
+    height: .36rem;
+    line-height: .36rem;
+  }
   .profile .info {
-    height: 1rem;
     justify-content: space-between;
   }
-
+  .info .flex-row{
+    height: .8rem;
+    line-height: .8rem;
+  }
   .profile .invite {
-    font-size: .24rem;
+    justify-content: space-between;
+    height: .92rem;
+    padding-top: .2rem;
     color: #666;
   }
 
@@ -328,11 +340,13 @@
     font-size: .5rem;
   }
 
-  .series {
-    font-size: .24rem;
+  a.series {
+    height: .25rem;
+    display: inline-block;
+    text-decoration: none;
     color: #0D0D0D;
-    line-height: .36rem;
-    padding-top: .26rem;
+    line-height: .25rem;
+    margin-top: .3rem;
   }
 
   .content {
@@ -344,13 +358,15 @@
   .icon-clock:before {
     padding-right: .13rem;
     color: #2F57DA;
-    font-size: .3rem;
+    font-size: .4rem;
   }
 
   .price {
     display: flex;
     justify-content: flex-start;
     width: 100%;
+    height: .32rem;
+    line-height: .32rem;
     color: #F23F15;
     font-size: .42rem;
   }
@@ -360,7 +376,6 @@
     bottom: 0;
     height: 1rem;
     width: 7.5rem;
-    font-size: .32rem;
     box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
   }
 
@@ -369,6 +384,7 @@
   }
 
   .ctrl-icon {
+    width: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -380,9 +396,9 @@
   }
 
   .ctrl-icon > i {
-    font-size: .32rem;
+    font-size: .4rem;
     color: #2F57DA;
-    padding: 0 .32rem;
+    padding-top: .1rem;
   }
 
   .ctrl-text {
@@ -391,7 +407,6 @@
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    border-left:1px solid #ccc;
   }
 
   .ctrl-enroll, .ctrl-access {
@@ -401,14 +416,16 @@
   }
 
   .ctrl-refund {
-    color: #2F57DA;
-    background: #fff;
+    flex-grow: 0;
+    color: #fff;
+    padding: 0 .68rem;
+    background: #63a4fb;
     cursor: pointer;
   }
 
   .ctrl-locked {
-    color: #666;
-    background: #fff;
+    background: #ccc;
+    color: #fff;
   }
 
   .tabs {

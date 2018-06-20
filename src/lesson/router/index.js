@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Home = r => require.ensure([], () => r(require('../view/Home')), 'lesson/home')
+const Search = r => require.ensure([], () => r(require('../view/Search')), 'lesson/search')
 const Detail = r => require.ensure([], () => r(require('../view/Detail')), 'lesson/detail')
 const Series = r => require.ensure([], () => r(require('../view/Series')), 'lesson/series')
 
@@ -11,6 +12,17 @@ export default new Router({
   mode: 'history',
   routes: [
     {
+      path: '/lesson/home',
+      alias: '/lesson/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/lesson/search',
+      name: 'Search',
+      component: Search
+    },
+    {
       path: '/lesson/detail',
       name: 'Detail',
       component: Detail
@@ -18,16 +30,7 @@ export default new Router({
     {
       path: '/lesson/series',
       name: 'Series',
-      meta: {
-        title: '系列课详情'
-      },
       component: Series
-    },
-    {
-      path: '/lesson/home',
-      alias: '/lesson/',
-      name: 'Home',
-      component: Home
     }
   ]
 })

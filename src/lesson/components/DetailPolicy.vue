@@ -1,21 +1,21 @@
 <template>
-  <div class="c-lesson-detail-policy">
+  <div class="c-lesson-detail-policy  font-24">
     <div class="bar-items flex-row" @click="isOpen = true">
       <div class="flex-row">
         <div class="item">
-          <i class="icon-yike icon-select"></i>
+          <i class="icon-yike icon-select font-24"></i>
           永久回放
         </div>
         <div class="item">
-          <i class="icon-yike icon-select"></i>
+          <i class="icon-yike icon-select font-24"></i>
           无条件退款
         </div>
         <div class="item">
-          <i class="icon-yike icon-select"></i>
+          <i class="icon-yike icon-select font-24"></i>
           图文语音
         </div>
       </div>
-      <i class="icon-yike icon-arrow-r"></i>
+      <i class="icon-yike icon-arrow-r font-24"></i>
     </div>
     <popup :isOpen="isOpen" v-on:close="isOpen = false">
       <div slot="head">听课须知</div>
@@ -23,14 +23,14 @@
         <ul>
           <li v-for="(item,index) in items" :key="index">
             <div class="items-head flex-row">
-              <i class="icon-yike icon-select"></i>
+              <i class="icon-yike icon-select font-24"></i>
               <span>{{item.head}}</span>
             </div>
             <div class="items-desc">{{item.desc}}</div>
           </li>
         </ul>
       </div>
-      <div class="btn btn-roger flex-row" slot="foot" @click="isOpen = false">知道了</div>
+      <div class="btn btn-roger flex-row font-32" slot="foot" @click="isOpen = false">知道了</div>
     </popup>
   </div>
 </template>
@@ -50,7 +50,7 @@
           {'head': '无条件退款', 'desc': '进入课堂1小时内，可无条件退款'},
           {'head': '未听课退款', 'desc': '课程结束7天后，未听课自动退款'},
           {'head': '授课形式', 'desc': '支持图文、语音、视频片段，建议在WiFi环境下观看'},
-          {'head': '讨论交流', 'desc': '课堂设有讨论区，课实时与讲师或其他学员交流。禁止发布违法法律法规或与课程无关的内容'}
+          {'head': '讨论交流', 'desc': '课堂设有讨论区，可实时与讲师或其他学员交流。禁止发布违法法律法规或与课程无关的内容'}
         ]
       }
     }
@@ -63,27 +63,23 @@
     height: .8rem;
     padding: 0 .3rem;
     background: #FFFCF5;
-    font-size: .24rem;
-    color: #999;
+    color: #caac91;
   }
 
   .item {
     padding-right: .4rem;
-    color: #999999;
+    color: #caac91;
   }
 
   .icon-select {
     display: inline-block;
     width: .24rem;
     height: .24rem;
-    font-size: .23rem;
   }
 
   .icon-arrow-r:before {
     display: inline-block;
-    color: #999;
-    font-size: .24rem;
-    font-weight: bold;
+    color: #caac91;
     text-align: right;
   }
   .items {
@@ -100,7 +96,6 @@
   }
   .items li {
     padding: .1rem 0;
-    font-size: .24rem;
   }
   .items-head {
     justify-content: flex-start;
@@ -118,7 +113,6 @@
     width: 100%;
     height: 100%;
     color: #fff;
-    font-size: .32rem;
     background: #2F57DA;
   }
 

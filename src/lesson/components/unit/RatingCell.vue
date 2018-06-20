@@ -37,9 +37,16 @@
     align-items: flex-start;
     background: #fff;
     padding-top: .3rem;
+    border-bottom: 1px solid #ddd;
   }
 
-  .frm-rating {
+  .c-rating:first-child {
+    padding-top: .1rem;
+  }
+
+  .c-rating:last-child {
+    padding-bottom: .27rem;
+    border: 0;
   }
 
   .frm-user {
@@ -85,7 +92,6 @@
     width: 100%;
     font-size: .3rem;
     color: #333333;
-    border-bottom: 1px solid #ddd;
   }
 
   .title {
@@ -94,10 +100,12 @@
     font-size: .3rem;
     color: #808388;
   }
-  .icon-star{
+
+  .icon-star {
     font-size: .3rem;
     color: #e4e8ef;
   }
+
   .active.icon-star:before {
     color: #FFC600;
   }

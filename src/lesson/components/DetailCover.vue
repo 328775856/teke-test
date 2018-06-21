@@ -2,9 +2,9 @@
   <div class="c-detail-profile">
     <div class="cover">
       <img :src="profile.cover"/>
-      <div class="enrollment font-24">
-        <i class="icon-yike icon-people font-24"></i>
-        <span>{{profile.enrollment}}人</span>
+      <div class="enrollment">
+        <i class="icon-yike icon-people"></i>
+        <span class="text-desc font-bold">{{profile.enrollment}}人</span>
       </div>
     </div>
   </div>
@@ -37,4 +37,11 @@
     text-shadow: 0 0 .05rem #333;
   }
 
+  .icon-people {
+    font-size: .28rem;
+  }
+
+  .icon-people + span {
+    color: #fff;
+  }
 </style>

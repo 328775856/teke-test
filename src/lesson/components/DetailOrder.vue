@@ -1,41 +1,47 @@
 <template>
-  <div class="c-lesson-detail-order flex-col" v-if="order">
-    <div class="mask click" @click="cancel"></div>
-    <div class="frm-order">
-      <div class="head flex-row">订单详情</div>
-      <div class="body">
+  <modal class="c-lesson-detail-order flex-col" :display="order" v-on:cancel="$emit('cancel')">
+    <div class="frm-order" v-if="order">
+      <div class="order-head flex-row font-medium">订单详情</div>
+      <div class="order-body">
         <div class="title">{{order.title}}</div>
         <div class="list" v-if="order.list.length">
-          <div v-for="(lesson, index) in order.list" :key="index" class="flex-row">
-            <div>{{lesson.title}}</div>
-            <div>￥{{lesson.price}}</div>
-          </div>
+          <ul>
+            <li v-for="(lesson, index) in order.list" :key="index" class="flex-row">
+              <!--<div class="flex-row list-item">-->
+              <div>{{lesson.title}}</div>
+              <div>￥{{lesson.price}}</div>
+              <!--</div>-->
+            </li>
+          </ul>
         </div>
         <div class="item">
-          <div class="item-head">订单金额</div>
-          <div class="item-info">￥{{order.order_amount}}</div>
+          <div class="item-head font-bold">订单金额</div>
+          <div class="item-info font-bold">￥{{order.order_amount}}</div>
         </div>
         <div class="item" v-if="order.discount">
-          <div class="item-head">优惠抵扣</div>
-          <div class="item-info">{{order.discount}}</div>
+          <div class="item-head font-bold">优惠抵扣</div>
+          <div class="item-info font-bold">{{order.discount}}</div>
         </div>
         <div class="item">
-          <div class="item-head">余额支付</div>
-          <div class="item-info">{{order.charge}}</div>
+          <div class="item-head font-bold">余额支付</div>
+          <div class="item-info font-bold">{{order.charge}}</div>
         </div>
       </div>
-      <div class="foot flex-row">
-        <div class="foot-cancel flex-row click" @click="cancel">取消</div>
+      <div class="order-foot flex-row">
+        <div class="foot-cancel flex-row click font-medium" @click="$emit('cancel')">取消</div>
         <div class="foot-message flex-row">应付: ￥{{order.surplus}}</div>
-        <div class="foot-confirm flex-row click" @click="confirm">确认支付</div>
+        <div class="foot-confirm flex-row click font-medium" @click="confirm">确认支付</div>
       </div>
     </div>
-  </div>
+  </modal>
 </template>
 
 <script>
+  import Modal from "../../components/Modal";
+
   export default {
     name: 'lesson-detail-order',
+    components: {Modal},
     props: ['order'],
     data() {
       return {
@@ -51,9 +57,6 @@
       })
     },
     methods: {
-      cancel() {
-        this.$emit('cancel')
-      },
       confirm() {
         if (this.order.surplus === 0) {
           this.purchaseByBalance()
@@ -106,16 +109,16 @@
     color: #0D0D0D
   }
 
-  .head {
+  .order-head {
     height: 1.4rem;
     font-size: .32rem;
   }
 
-  .body {
+  .order-body {
     padding: 0 .3rem;
   }
 
-  .foot {
+  .order-foot {
     height: 1rem;
   }
 
@@ -151,15 +154,24 @@
     padding: .2rem 0;
     display: -webkit-box;
     overflow-y: scroll;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    border: .1rem solid #fff;
   }
 
-  .list > div {
+  .list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     width: 100%;
+  }
+
+  .list li {
     justify-content: space-between;
     font-size: .27rem;
     color: #666;
-    padding: .2rem 0;
+    padding: .2rem;
   }
 
   .item {

@@ -9,13 +9,14 @@ body {
   background: #f0eff5;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family:  PingFangSC-Regular, "Microsoft YaHei", sans-serif;
+  font-family: PingFangSC-Regular, "Microsoft YaHei", sans-serif;
 }
 
 a {
   text-decoration: none;
 }
-a a:visited, a:active{
+
+a a:visited, a:active {
   color: inherit;
 }
 
@@ -48,6 +49,7 @@ a a:visited, a:active{
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+
 button.btn {
   border: 0;
   outline: none;
@@ -72,6 +74,7 @@ button.btn {
   /*width: 1em;*/
   /*height: 1em;*/
 }
+
 .icon-persons:before {
   position: absolute;
   content: "\e623";
@@ -79,33 +82,27 @@ button.btn {
   top: .1em;
   left: .7em;
 }
+
 .icon-persons:after {
   position: relative;
   content: "\e623";
 }
 
-.font-24{
-  font-size: .24rem!important;
-}
-.font-32{
-  font-size: .32rem!important;
-}
-.font-36{
-  font-size: .36rem!important;
-}
-
 .font-medium {
   font-family: PingFangSC-Medium, "Microsoft YaHei", sans-serif;
 }
+
 .font-ragular {
   font-family: PingFangSC-Regular, "Microsoft YaHei", sans-serif;
 }
+
 .font-bold {
+  font-weight: bold;
   font-family: PingFangSC-Bold, "Microsoft YaHei", sans-serif;
 }
 
 .text-desc {
   font-size: .24rem;
   line-height: .36rem;
-  color: #808080;
+  /*color: #808080;*/
 }

@@ -4,18 +4,18 @@
       <img :src="profile.cover"/>
     </div>
     <div class="datum flex-col">
-      <div class="datum-head">{{profile.title}}</div>
+      <div class="datum-head font-bold">{{profile.title}}</div>
       <div class="datum-body flex-row">
-        <div class="teacher">讲师：{{profile.teacher.name}}</div>
+        <div class="teacher font-medium text-desc">讲师：{{profile.teacher.name}}</div>
         <!--<div class="progress" v-if="profile.type === 'lesson'">{{profile.progress[1] ? '已开' : '未开'}}</div>-->
         <div class="progress" v-if="profile.type === 'series'">{{profile.progress[1]}}/{{profile.progress[0]}}</div>
       </div>
       <div class="datum-foot flex-row">
         <div class="enrollment flex-row">
           <i class="icon-yike icon-people"></i>
-          <span>{{profile.enrollment}}人</span>
+          <span class="font-bold text-desc">{{profile.enrollment}}人</span>
         </div>
-        <div class="price">￥{{profile.price}}</div>
+        <div class="price font-bold">￥{{profile.price}}</div>
       </div>
     </div>
   </div>
@@ -72,7 +72,6 @@
   .datum-head {
     font-size: .3rem;
     color: #0D0D0D;
-    font-weight: bold;
   }
   .datum-body {
     justify-content: space-between;

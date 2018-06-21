@@ -3,22 +3,22 @@
     <div class="profile">
       <detail-cover :profile="profile"></detail-cover>
       <div class="frm-profile">
-        <div class="title font-36">{{profile.title}}</div>
-        <router-link class="series font-24" v-if="profile.series" :to="`/lesson/series?sn=${profile.series.sn}`">
+        <div class="title font-bold">{{profile.title}}</div>
+        <router-link class="series text-desc font-medium" v-if="profile.series" :to="`/lesson/series?sn=${profile.series.sn}`">
           所属系列 · {{profile.series.name}}
         </router-link>
         <div class="datum flex-row">
           <div class="info flex-col">
             <div class="flex-row" v-if="profile.plan">
               <i class="icon-yike icon-clock flex-col"></i>
-              <div class="time font-24">{{profile.plan.dtm_start}}</div>
+              <div class="time text-desc font-medium">{{profile.plan.dtm_start}}</div>
               <status-label :status="profile.status"/>
             </div>
-            <div class="price">￥{{profile.price}}</div>
+            <div class="price font-bold">￥{{profile.price}}</div>
           </div>
           <div class="invite flex-col btn" @click="invite">
             <i class="icon-yike icon-share"></i>
-            <span class="font-24">邀请有奖</span>
+            <span class="text-desc font-medium">邀请有奖</span>
           </div>
         </div>
       </div>
@@ -39,9 +39,9 @@
     </div>
     <div class="relative border" v-if="relative.length">
       <block title="相关课程">
-        <router-link slot="more" :to="`/lesson/series?sn=${profile.series.sn}#category`">
+        <router-link slot="more" :to="`/lesson/series?sn=${profile.series.sn}#catalog`">
           <span>查看全部</span>
-          <i class="icon-yike icon-arrow-r font-24"></i>
+          <i class="icon-yike icon-arrow-r text-desc"></i>
         </router-link>
         <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
       </block>
@@ -50,8 +50,8 @@
       <block :title="ratingTitle">
         <div slot="more" v-if="rating.stats">
           <a :href="app.linkToStudent(`/?v=1#/course/message/${$route.query.sn}/task?lesson_sn=${$route.query.sn}`)" class="btn">
-            <span>已有{{rating.stats.turnout}}人评价</span>
-            <i class="icon-yike icon-arrow-r font-24"></i>
+            <span class="font-medium">已有{{rating.stats.turnout}}人评价</span>
+            <i class="icon-yike icon-arrow-r text-desc"></i>
           </a>
         </div>
         <rating-cell v-for="(rate,index) in rating.list" :rate="rate" :key="index"></rating-cell>
@@ -61,18 +61,18 @@
     <div class="contact">
       <DetailContact></DetailContact>
     </div>
-    <div class="control flex-row font-32" v-if="individual">
+    <div class="control flex-row" v-if="individual">
       <div class="ctrl-home ctrl-icon" @click="home">
         <i class="icon-yike icon-home"></i>
-        <span>首页</span>
+        <span class="font-ragular">首页</span>
       </div>
       <!--<div class="ctrl-locked ctrl-text" @click="displayAfterEnroll=true">pop</div>-->
-      <div class="ctrl-refund ctrl-text" @click="refund" v-if="individual.refund">退款</div>
-      <div class="ctrl-locked ctrl-text" v-if="individual.status === 'refund'">已退款</div>
-      <div class="ctrl-enroll ctrl-text" @click="enroll" v-if="check === 'enroll'">立即报名</div>
-      <div class="ctrl-access ctrl-text" @click="study" v-else-if="check === 'access'">进入课堂</div>
-      <div class="ctrl-locked ctrl-text" v-else-if="check === 'wait'">等待开课</div>
-      <div class="ctrl-locked ctrl-text" v-else>{{profile.status}}</div>
+      <div class="ctrl-refund ctrl-text font-medium" @click="refund" v-if="individual.refund">退款</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-if="individual.status === 'refund'">已退款</div>
+      <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="check === 'enroll'">立即报名</div>
+      <div class="ctrl-access ctrl-text font-medium" @click="study" v-else-if="check === 'access'">进入课堂</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-else-if="check === 'wait'">等待开课</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-else>{{profile.status}}</div>
     </div>
     <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
@@ -133,7 +133,7 @@
         relative: [],
         individual: null,
         rating: {},
-        activeTab: 'lesson',
+        activeTab: null,
         CourseStatus: '',
         tabs: [
           {'key': 'lesson', name: '课程'},
@@ -223,7 +223,6 @@
         }
       },
       enroll() { // 报名下单
-        this.app.disableBodyScroll()
         this.api.post('/api/order-book-lesson', {
           sn: this.$route.query.sn,
           origin: this.$route.query.origin
@@ -237,7 +236,6 @@
       },
       completeEnroll() { // 订单支付完成
         this.order = null
-        this.app.enableBodyScroll()
         // 重新获取课程状态
         this.api.get('/api/individual-lesson', {
           sn: this.$route.query.sn
@@ -247,7 +245,6 @@
         })
       },
       cancelEnroll() { // 取消报名
-        this.app.enableBodyScroll()
         this.order = null
       },
       home() { // 返回首页
@@ -305,6 +302,7 @@
   .profile .title {
     height: .34rem;
     line-height: .34rem;
+    font-size: .36rem;
     font-weight: bold;
     color: #0D0D0D;
   }
@@ -344,7 +342,7 @@
     height: .25rem;
     display: inline-block;
     text-decoration: none;
-    color: #0D0D0D;
+    color: #2F57DA;
     line-height: .25rem;
     margin-top: .3rem;
   }
@@ -376,6 +374,7 @@
     bottom: 0;
     height: 1rem;
     width: 7.5rem;
+    font-size: .32rem;
     box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
   }
 
@@ -399,6 +398,9 @@
     font-size: .4rem;
     color: #2F57DA;
     padding-top: .1rem;
+  }
+  .ctrl-icon > span {
+    font-size: .2rem;
   }
 
   .ctrl-text {

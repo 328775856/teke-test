@@ -2,7 +2,7 @@
   <div class="c-block">
     <div class="block-head flex-row">
       <div class="flex-row">
-        <div class="block-title font-32">{{title}}</div>
+        <div class="block-title font-bold">{{title}}</div>
       </div>
       <div class="btn block-more">
         <slot name="more"></slot>
@@ -39,7 +39,7 @@
     height: .36rem;
     line-height: .36rem;
     padding: .12rem 0 .12rem .24rem;
-    font-weight: bold;
+    font-size: .32rem;
     border-left: .1rem solid #2F57DA;
   }
   .block-more {

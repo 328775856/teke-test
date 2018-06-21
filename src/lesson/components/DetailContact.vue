@@ -1,6 +1,6 @@
 <template>
   <div class="c-lesson-detail-contact flex-row">
-    <div class="desc flex-col">
+    <div class="desc flex-col font-regular">
       <div>关注易灵微课</div>
       <div>接收开课提醒</div>
       <div>发现更多课程</div>
@@ -10,7 +10,7 @@
       <div class="qrcode-mp flex-col">
         <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')"/>
         <span>
-          <i class="icon-yike icon-wechat"></i>
+          <i class="icon-yike icon-wechat font-ragular"></i>
           易灵微课公众号
         </span>
       </div>

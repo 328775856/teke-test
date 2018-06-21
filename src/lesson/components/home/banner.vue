@@ -1,9 +1,11 @@
 <template>
   <div class="c-banner">
-    <swiper :options="swiperOption" ref="mySwiper" class="swiper-no-swiping">
+    <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide v-for="(item,index) in data.list" :key="index" class="ani" swiper-animate-effect="shutter2"><img
-        :src="item.profile.cover"></swiper-slide>
+      <swiper-slide v-for="(item,index) in data.list" :key="index" class="ani" swiper-animate-effect="shutter2">
+        <router-link v-if="item.profile.type === 'series'" :to="{path:`/lesson/series?sn=${item.profile.sn}`}"><img :src="item.profile.cover"></router-link>
+        <router-link v-if="item.profile.type === 'lesson'" :to="{path:`/lesson/Detail?sn=${item.profile.sn}`}"><img :src="item.profile.cover"></router-link>
+      </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
       <div class="swiper-button-prev" slot="button-prev"></div>
@@ -23,11 +25,16 @@
     data() {
       return {
         swiperOption: {
+          on: {
+            slideChange: function () {
+             // alert(this.realIndex)
+            }
+          },
           notNextTick: true,
-          simulateTouch: false, //  禁止鼠标模拟
+          simulateTouch: true, //  禁止鼠标模拟
           // swiper configs 所有的配置同swiper官方api配置
           autoplay: {
-            delay: 2500,
+            delay: 7000,
             stopOnLastSlide: false,
             disableOnInteraction: false
           },

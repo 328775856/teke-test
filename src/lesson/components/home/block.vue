@@ -1,7 +1,7 @@
 <template>
   <block :title="data.title">
     <router-link slot="more" :to="`/lesson/search?title=${data.title}&tag=${data.tag}`">
-      <span>查看全部</span>
+      <span class="font-medium">查看全部</span>
       <!--<i class="icon-yike icon-arrow-r"></i>-->
     </router-link>
     <course-cell :profile="profile" v-for="(profile,index) in profiles" :key="index"></course-cell>
@@ -33,5 +33,7 @@
 </script>
 
 <style scoped>
-
+span{
+  font-size: .27rem;
+}
 </style>

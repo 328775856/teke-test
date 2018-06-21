@@ -5,8 +5,8 @@
         <img :src="teacher.avatar"/>
       </div>
       <div class="flex-col flex-item">
-        <div class="name">{{teacher.name}}</div>
-        <div class="about font-24">{{teacher.about}}</div>
+        <div class="name font-medium">{{teacher.name}}</div>
+        <div class="about text-desc font-medium">{{teacher.about}}</div>
       </div>
       <!--<div :class="{followed:teacher.followed}" class="follow font-24" @click="follow">{{teacher.followed?'已关注':'+ 关注'}}</div>-->
     </div>

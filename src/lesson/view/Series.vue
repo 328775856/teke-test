@@ -3,28 +3,28 @@
     <div class="profile">
       <detail-cover :profile="profile"></detail-cover>
       <div class="frm-profile">
-        <div class="title font-36">{{profile.title}}</div>
+        <div class="title font-bold">{{profile.title}}</div>
         <div class="datum flex-row">
           <div class="flex-col about">
             <div class="flex-row">
-              <i class="icon-yike icon-clock"></i>
-              <span class="flex-row font-24"
-                    v-if="profile.progress">周三开课 {{profile.progress[1]}}/{{profile.progress[0]}}节</span>
+              <!--<i class="icon-yike icon-clock"></i>-->
+              <span class="flex-row  text-desc font-medium"
+                    v-if="profile.progress">已开 {{profile.progress[1]}}/{{profile.progress[0]}}节</span>
             </div>
             <div class="price-frm flex-row">
-              <div class="tag flex-row">
-                <span>特价特惠</span>
-                <span class="tag-foot"></span>
+              <div class="on-sale flex-row" v-if="profile.price && 0">
+                <span class="font-medium">特价特惠</span>
+                <span class="on-sale-tag"></span>
               </div>
               <div class="price">
-                <span class="n-price ">￥{{profile.price}}</span>
-                <span class="o-price">￥300</span>
+                <span class="n-price font-bold">￥{{profile.price}}</span>
+                <span class="o-price" v-if="profile._price">￥{{profile._price}}</span>
               </div>
             </div>
           </div>
-          <div class="invite flex-col btn font-24" @click="invite">
+          <div class="invite flex-col btn text-desc" @click="invite">
             <i class="icon-yike icon-share"></i>
-            <span>邀请有奖</span>
+            <span class="font-medium text-desc">邀请有奖</span>
           </div>
         </div>
       </div>
@@ -33,38 +33,39 @@
     <div class="tabs">
       <tabs :items="tabs" :active="activeTab" v-on:switch="switchTab"></tabs>
     </div>
-    <div class="teacher">
-      <block title="讲师">
-        <detail-teacher v-if="profile.teacher" :tusn="profile.teacher.sn"></detail-teacher>
-      </block>
+    <div id="lesson">
+      <div id="teacher" class="teacher">
+        <block title="讲师">
+          <detail-teacher v-if="profile.teacher" :tusn="profile.teacher.sn"></detail-teacher>
+        </block>
+      </div>
+      <div id="introduce" class="content border">
+        <block title="简介">
+          <div class="markdown" v-html="markdown(introduce)"></div>
+        </block>
+      </div>
     </div>
-    <div class="content border">
-      <block title="简介">
-        <div class="markdown" v-html="markdown(introduce)"></div>
-      </block>
-    </div>
-    <div id="category" class="relative border" v-if="relative.length">
-      <block title="目录">
-        <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
-      </block>
+    <div id="catalog">
+      <div id="category" class="relative border" v-if="relative.length">
+        <block title="目录">
+          <lesson-cell :lesson="item" v-for="(item,index) in relative" :key="index"></lesson-cell>
+        </block>
+      </div>
     </div>
     <div class="contact">
       <DetailContact></DetailContact>
     </div>
-    <div class="control flex-row font-32" v-if="individual">
+    <div class="control flex-row" v-if="individual">
       <div class="ctrl-home ctrl-icon" @click="home">
-        <i class="icon-yike icon-home font-32"></i>
-        <span>首页</span>
+        <i class="icon-yike icon-home"></i>
+        <span class="font-ragular">首页</span>
       </div>
-      <!--<div class="ctrl-icon">-->
-      <!--<i class="icon-yike icon-favorite"></i>-->
-      <!--<span>收藏</span>-->
-      <!--</div>-->
-      <div class="ctrl-refund ctrl-text" @click="refund" v-if="individual.refund">退款</div>
-      <div class="ctrl-locked ctrl-text" v-if="individual.status === 'refund'">已退款</div>
-      <div class="ctrl-enroll ctrl-text" @click="enroll" v-if="check === 'enroll'">报名系列课</div>
-      <div class="ctrl-access ctrl-text" @click="study" v-else-if="check === 'access'">进入课堂</div>
-      <div class="ctrl-locked ctrl-text" v-else-if="check === 'wait'">等待开课</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'refund'">已退款</div>
+      <div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>
+      <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="canEnroll && check !== 'access'">报名系列课</div>
+      <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">继续报名</div>
+      <div class="ctrl-access ctrl-text font-medium" @click="study" v-if="check === 'access'">进入课堂</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'pending'">等待开课</div>
     </div>
     <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
@@ -80,7 +81,7 @@
         <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')" style="width: 3rem; height: 3rem"/>
       </div>
       <div slot="foot" class="btn btn-vice" @click="displayAfterEnroll = false" v-if="check==='access'">稍后再看</div>
-      <div slot="foot" class="btn btn-primary" @click="study" v-if="check==='access'">开始学习</div>
+      <div slot="foot" class="btn btn-primary" @click="study" v-if="check === 'access'">开始学习</div>
       <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
     </modal-action>
   </div>
@@ -101,6 +102,7 @@
   import ModalAction from "../../components/modal/Action"
 
   const markdown = require('markdown-it')({html: true})
+  //  let scroll = 0
 
   export default {
     name: 'lesson-detail',
@@ -125,14 +127,15 @@
         relative: [],
         individual: null,
         rating: {},
-        activeTab: 'lesson',
+        activeTab: null,
         CourseStatus: '',
         tabs: [
           {'key': 'lesson', name: '课程'},
           {'key': 'catalog', name: '目录'}
         ],
         order: null,
-        displayAfterEnroll: false
+        displayAfterEnroll: false,
+        bodyScrollTop: 0
       }
     },
     created() {
@@ -159,33 +162,44 @@
       }).then((res) => {
         this.relative = res.data
       })
-      this.api.get('/api/individual-lesson', {
+      this.api.get('/api/individual-series', {
         sn: lessonSn
       }).then((res) => {
         this.individual = res.data
       }).catch(() => {
-        this.individual = {
-          'status': 'fresh'
-        }
+        this.individual = {}
       })
+    },
+    mounted() {
+      window.addEventListener('scroll', this.menu)
     },
     computed: {
       check() {
-        switch (this.individual.status) {
-          case 'fresh':
-          case 'reset':
-            return 'enroll'
-          case 'enroll':
-          case 'access':
-            if (this.profile.status === 'opened') {
-              return 'wait'
-            } else if (['onlive', 'repose', 'finish'].indexOf(this.profile.status) !== -1) {
-              return 'access'
-            } else {
-              return this.profile.status
-            }
-          default:
-            return this.individual.status
+        if (!this.individual.lesson) {
+          return false
+        }
+        for (let lesson of this.individual.access) {
+          if (lesson.step !== 'opened') {
+            return 'access' // 有任一课程可观看
+          }
+        }
+        if (this.individual.refund.length === this.individual.lesson) {
+          return 'refund' // 所有课已退款
+        }
+        return 'pending'; // 全部课程尚未开启
+      },
+      canEnroll() {
+        if (this.individual.enroll) {
+          return this.individual.enroll.length
+        } else {
+          return true
+        }
+      },
+      canRefund() {
+        if (this.individual.refund) {
+          return this.individual.refund.length
+        } else {
+          return 0
         }
       }
     },
@@ -194,27 +208,10 @@
         return markdown.render(text || '');
       },
       switchTab(key) {
-        // pc
-        let d = document.documentElement// eslint-disable-line no-unused-vars
-        // phone
-        let db = document.body
-        let relativeTop = document.getElementsByClassName('relative')[0]
-        let teacherTop = document.getElementsByClassName('teacher')[0]
-        let t = document.getElementsByClassName('tabs')[0]
-        this.activeTab = key
-        switch (key) {
-          case 'catalog':
-            d.scrollTop = relativeTop.offsetTop - t.offsetHeight
-            db.scrollTop = relativeTop.offsetTop - t.offsetHeight
-            break;
-          default:
-            d.scrollTop = teacherTop.offsetTop - t.offsetHeight
-            db.scrollTop = teacherTop.offsetTop - t.offsetHeight
-            break;
-        }
+        this.activeTab = window.location.hash = key
       },
       enroll() { // 报名下单
-        this.app.disableBodyScroll()
+        // this.app.disableBodyScroll()
         this.api.post('/api/order-book-series', {
           sn: this.$route.query.sn,
           origin: this.$route.query.origin
@@ -227,10 +224,11 @@
         }, this.api.onErrorSign)
       },
       completeEnroll() { // 订单支付完成
+        alert('complete enroll')
         this.order = null
-        this.app.enableBodyScroll()
-        // 重新获取课程状态
-        this.api.get('/api/individual-lesson', {
+        // this.app.enableBodyScroll()
+        // 重新获取课程状
+        this.api.get('/api/individual-series', {
           sn: this.$route.query.sn
         }).then((res) => {
           this.individual = res.data
@@ -240,7 +238,7 @@
         })
       },
       cancelEnroll() { // 取消报名
-        this.app.enableBodyScroll()
+        // this.app.enableBodyScroll()
         this.order = null
       },
       home() {
@@ -248,7 +246,7 @@
       },
       study() { // 进入课堂
         // todo 增加【报名成功，准备进入课堂】读秒缓冲
-        let lessonSn = this.$route.query.sn
+        let lessonSn = this.individual.access[0].sn
         let query = qs.stringify({
           isOwner: 'no',
           lesson_sn: lessonSn,
@@ -269,6 +267,17 @@
           teacher: this.profile.teacher.name
         })
         window.location.href = this.app.linkToStudent(`/?v=1#/course/refund?${query}`)
+      },
+      menu() {
+        // if (!document.getElementsByClassName('relative')[0]) {
+        //   console.log(document.getElementsByClassName('relative')[0])
+        // } else {
+        if (document.documentElement.scrollTop > document.getElementsByClassName('relative')[0].offsetTop) {
+          this.activeTab = 'catalog'
+        } else {
+          this.activeTab = 'lesson'
+        }
+        //   }
       }
     }
   }
@@ -299,6 +308,7 @@
   .profile .title {
     height: .38rem;
     line-height: .38rem;
+    font-size: .36rem;
     font-weight: bold;
     color: #0D0D0D;
   }
@@ -307,6 +317,7 @@
     justify-content: space-between;
     padding-top: .2rem;
   }
+
   .profile .info {
     height: 1rem;
     justify-content: space-between;
@@ -365,6 +376,7 @@
     height: 1rem;
     width: 7.5rem;
     box-shadow: 0 0 0.1rem rgba(0, 0, 0, .1);
+    font-size: .32rem;
   }
 
   .control > div {
@@ -385,6 +397,11 @@
   .ctrl-icon > i {
     color: #2F57DA;
     padding: 0 .32rem;
+    font-size: .32rem;
+  }
+
+  .ctrl-icon > span {
+    font-size: .2rem;
   }
 
   .ctrl-text {
@@ -393,7 +410,6 @@
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid #ccc;
   }
 
   .ctrl-enroll, .ctrl-access {
@@ -403,8 +419,18 @@
   }
 
   .ctrl-refund {
-    color: #2F57DA;
+    flex-grow: 0;
     background: #fff;
+    color: #2F57DA;
+    cursor: pointer;
+    border-left: 1px solid #ccc;
+  }
+
+  .ctrl-enroll_ {
+    flex-grow: 0;
+    color: #fff;
+    padding: 0 1em;
+    background: #63a4fb;
     cursor: pointer;
   }
 
@@ -414,7 +440,6 @@
   }
 
   .tabs {
-    z-index: 2;
     position: sticky;
     top: 0;
     cursor: pointer;
@@ -441,13 +466,13 @@
     padding-top: .2rem;
   }
 
-  .tag {
+  .on-sale {
     background: #F23F15;
     color: white;
     text-align: center;
   }
 
-  .tag > span:first-child {
+  .on-sale > span:first-child {
     display: block;
     width: .8rem;
     text-align: center;
@@ -455,7 +480,7 @@
     padding-left: .2rem;
   }
 
-  .tag-foot {
+  .on-sale-tag {
     border: #F23F15 0.2rem solid;
     border-right: 0.1rem solid #fff;
   }
@@ -467,14 +492,14 @@
   }
 
   .n-price {
-    width: 0.8rem;
-    padding-left: 0.31rem;
+    /*width: 0.8rem;*/
+    /*padding-left: 0.31rem;*/
     font-size: 0.42rem;
     color: #F23F15;
   }
 
   .o-price {
-    padding-left: 0.1rem;
+    /*padding-left: 0.1rem;*/
     font-size: 0.27rem;
     text-decoration: line-through;
     color: #808080;

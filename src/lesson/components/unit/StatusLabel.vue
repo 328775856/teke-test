@@ -1,5 +1,5 @@
 <template>
-  <div class="c-lesson-status-label flex-row" :class="status">
+  <div class="c-lesson-status-label flex-row font-bold" :class="status">
     {{label}}
   </div>
 </template>
@@ -33,7 +33,7 @@
     padding: 0 .15rem;
     border-radius: .18rem;
     color: #fff;
-    font-size: .22rem;
+    font-size: .21rem;
     text-align: center;
   }
   .opened {

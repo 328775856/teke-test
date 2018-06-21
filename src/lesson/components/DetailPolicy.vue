@@ -1,36 +1,36 @@
 <template>
-  <div class="c-lesson-detail-policy  font-24">
+  <div class="c-lesson-detail-policy">
     <div class="bar-items flex-row" @click="isOpen = true">
       <div class="flex-row">
         <div class="item">
-          <i class="icon-yike icon-select font-24"></i>
-          永久回放
+          <i class="icon-yike icon-select"></i>
+          <span class="text-desc font-medium">永久回放</span>
         </div>
         <div class="item">
-          <i class="icon-yike icon-select font-24"></i>
-          无条件退款
+          <i class="icon-yike icon-select"></i>
+          <span class="text-desc font-medium">无条件退款</span>
         </div>
         <div class="item">
-          <i class="icon-yike icon-select font-24"></i>
-          图文语音
+          <i class="icon-yike icon-select"></i>
+          <span class="text-desc font-medium">图文语音</span>
         </div>
       </div>
-      <i class="icon-yike icon-arrow-r font-24"></i>
+      <i class="icon-yike icon-arrow-r"></i>
     </div>
     <popup :isOpen="isOpen" v-on:close="isOpen = false">
-      <div slot="head">听课须知</div>
+      <div slot="head" class="font-medium">听课须知</div>
       <div class="items">
         <ul>
           <li v-for="(item,index) in items" :key="index">
             <div class="items-head flex-row">
-              <i class="icon-yike icon-select font-24"></i>
+              <i class="icon-yike icon-select"></i>
               <span>{{item.head}}</span>
             </div>
             <div class="items-desc">{{item.desc}}</div>
           </li>
         </ul>
       </div>
-      <div class="btn btn-roger flex-row font-32" slot="foot" @click="isOpen = false">知道了</div>
+      <div class="btn btn-roger flex-row font-medium" slot="foot" @click="isOpen = false">知道了</div>
     </popup>
   </div>
 </template>
@@ -65,6 +65,9 @@
     background: #FFFCF5;
     color: #caac91;
   }
+  .bar-items span{
+    color: #caac91;
+  }
 
   .item {
     padding-right: .4rem;
@@ -72,9 +75,8 @@
   }
 
   .icon-select {
-    display: inline-block;
-    width: .24rem;
-    height: .24rem;
+    font-size: .24rem;
+    padding-right: .11rem;
   }
 
   .icon-arrow-r:before {
@@ -114,6 +116,7 @@
     height: 100%;
     color: #fff;
     background: #2F57DA;
+    font-size: .32rem;
   }
 
 </style>

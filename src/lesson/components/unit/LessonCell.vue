@@ -4,19 +4,19 @@
       <img :src="lesson.cover">
       <div class="flex-col detail">
         <div class="flex-row detail-top">
-          <div class="title">{{lesson.title}}</div>
+          <div class="title font-bold">{{lesson.title}}</div>
           <div class="flex-col">
             <status-label :status="lesson.status"/>
-            <div class="price">￥{{lesson.price}}</div>
+            <div class="price font-bold">￥{{lesson.price}}</div>
           </div>
         </div>
         <div class="flex-row detail-bottom">
-          <div class="enrollment font-24">
-            <i class="icon-yike icon-people font-24">
+          <div class="enrollment">
+            <i class="icon-yike icon-people">
             </i>
-            <span>{{lesson.enrollment}}人</span>
+            <span class="font-bold text-desc">{{lesson.enrollment}}人</span>
           </div>
-          <div class="tms font-24">{{lesson.plan.dtm_start}}</div>
+          <div class="tms font-medium text-desc">{{lesson.plan.dtm_start}}</div>
         </div>
       </div>
     </div>
@@ -137,5 +137,13 @@
 
   .icon-single-people + span {
     padding-left: .21rem;
+  }
+
+  .icon-people {
+    font-size: .28rem;
+  }
+
+  .icon-people + span {
+    color: #999999;
   }
 </style>

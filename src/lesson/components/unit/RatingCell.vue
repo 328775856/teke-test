@@ -4,7 +4,7 @@
       <div class="frm-user flex-row">
         <div class="flex-row">
           <img :src="rate.user.avatar"/>
-          <div class="nickname">{{rate.user.name}}</div>
+          <div class="nickname font-bold">{{rate.user.name}}</div>
         </div>
         <div class="star flex-row">
           <i class="icon-yike icon-star active" v-for="num in rate.score" :key="num.id"></i>
@@ -12,13 +12,13 @@
         </div>
       </div>
       <div class="frm-remark flex-col">
-        <div class="tms">{{rate.tms}}</div>
-        <div class="remark">{{rate.remark}}</div>
+        <div class="tms font-medium">{{rate.tms}}</div>
+        <div class="remark font-medium">{{rate.remark}}</div>
       </div>
       <div class="frm-reply flex-col" v-if="rate.reply">
         <div class="title">讲师回复</div>
-        <div class="tms_reply">{{rate.tms_reply}}</div>
-        <div class="reply">{{rate.reply}}</div>
+        <div class="tms_reply font-medium">{{rate.tms_reply}}</div>
+        <div class="reply font-medium">{{rate.reply}}</div>
       </div>
     </div>
   </div>

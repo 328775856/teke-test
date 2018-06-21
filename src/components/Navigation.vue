@@ -5,7 +5,7 @@
        :href="nav.path"
        :class="{active: nav.path === $route.path}">
       <i class="icon-yike" :class="[nav.path === $route.path ? `icon-${nav.icon}-selected` : `icon-${nav.icon}`]"></i>
-      <span class="nav-name">{{nav.name}}</span>
+      <span class="nav-name font-ragular">{{nav.name}}</span>
     </a>
   </div>
 </template>

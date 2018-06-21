@@ -6,7 +6,7 @@
         <lesson-home-block v-if="item.form === 'block' && item.list.length" :data="item"></lesson-home-block>
       </div>
     </div>
-    <div class="overall flex-row" v-if="sections.length">
+    <div class="overall flex-row font-medium" v-if="sections.length">
       <router-link to="/lesson/search?title=课程列表&tag=">查看所有课程</router-link>
     </div>
     <navigation></navigation>

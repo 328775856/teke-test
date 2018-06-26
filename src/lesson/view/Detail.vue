@@ -4,14 +4,14 @@
       <detail-cover :profile="profile"></detail-cover>
       <div class="frm-profile">
         <div class="title font-bold">{{profile.title}}</div>
-        <router-link class="series text-desc font-medium" v-if="profile.series" :to="`/lesson/series?sn=${profile.series.sn}`">
+        <span class="series text-desc font-medium btn" v-if="profile.series" @click="go">
           所属系列 · {{profile.series.name}}
-        </router-link>
+        </span>
         <div class="datum flex-row">
           <div class="info flex-col">
             <div class="flex-row" v-if="profile.plan">
               <i class="icon-yike icon-clock flex-col"></i>
-              <div class="time text-desc font-medium">{{profile.plan.dtm_start}}</div>
+              <span class="time text-desc font-medium flex-row">{{profile.plan.dtm_start}}</span>
               <status-label :status="profile.status"/>
             </div>
             <div class="price font-bold">￥{{profile.price}}</div>
@@ -49,7 +49,8 @@
     <div class="rating border">
       <block :title="ratingTitle">
         <div slot="more" v-if="rating.stats">
-          <a :href="app.linkToStudent(`/?v=1#/course/message/${$route.query.sn}/task?lesson_sn=${$route.query.sn}`)" class="btn">
+          <a :href="app.linkToStudent(`/?v=1#/course/message/${$route.query.sn}/task?lesson_sn=${$route.query.sn}`)"
+             class="btn">
             <span class="font-medium">已有{{rating.stats.turnout}}人评价</span>
             <i class="icon-yike icon-arrow-r text-desc"></i>
           </a>
@@ -66,13 +67,11 @@
         <i class="icon-yike icon-home"></i>
         <span class="font-ragular">首页</span>
       </div>
-      <!--<div class="ctrl-locked ctrl-text" @click="displayAfterEnroll=true">pop</div>-->
       <div class="ctrl-refund ctrl-text font-medium" @click="refund" v-if="individual.refund">退款</div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="individual.status === 'refund'">已退款</div>
       <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="check === 'enroll'">立即报名</div>
       <div class="ctrl-access ctrl-text font-medium" @click="study" v-else-if="check === 'access'">进入课堂</div>
       <div class="ctrl-locked ctrl-text font-medium" v-else-if="check === 'wait'">等待开课</div>
-      <div class="ctrl-locked ctrl-text font-medium" v-else>{{profile.status}}</div>
     </div>
     <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
@@ -133,7 +132,7 @@
         relative: [],
         individual: null,
         rating: {},
-        activeTab: null,
+        activeTab: 'lesson',
         CourseStatus: '',
         tabs: [
           {'key': 'lesson', name: '课程'},
@@ -154,6 +153,11 @@
       }).then((res) => {
           this.profile = res.data
           this.app.setTitle(this.profile.title)
+          this.app.onShare({
+            title: `易灵微课-${this.profile.title}`,
+            desc: '永久回放，1小时不满意退款',
+            imgUrl: this.profile.cover
+          })
         }
       )
       this.api.get('/api/lesson-introduce', {
@@ -274,6 +278,9 @@
           teacher: this.profile.teacher.name
         })
         window.location.href = this.app.linkToStudent(`/?v=1#/course/refund?${query}`)
+      },
+      go(index) {
+        location.href = `/lesson/series?sn=${this.profile.series.sn}`
       }
     }
   }
@@ -315,17 +322,16 @@
     margin-right: .2rem;
     color: #808080;
   }
-  .time+div.c-lesson-status-label{
-    height: .36rem;
-    line-height: .36rem;
-  }
+
   .profile .info {
     justify-content: space-between;
   }
-  .info .flex-row{
+
+  .info .flex-row {
     height: .8rem;
     line-height: .8rem;
   }
+
   .profile .invite {
     justify-content: space-between;
     height: .92rem;
@@ -338,7 +344,7 @@
     font-size: .5rem;
   }
 
-  a.series {
+  span.series {
     height: .25rem;
     display: inline-block;
     text-decoration: none;
@@ -399,6 +405,7 @@
     color: #2F57DA;
     padding-top: .1rem;
   }
+
   .ctrl-icon > span {
     font-size: .2rem;
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="c-detail-profile">
-    <div class="cover">
+    <div class="cover icon-course-selected icon-yike">
       <img :src="profile.cover"/>
       <div class="enrollment">
         <i class="icon-yike icon-people"></i>
@@ -21,9 +21,20 @@
   .cover {
     position: relative;
     height: 4rem;
+    background: #ddd;
+  }
+
+  .cover:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 1rem;
+    color: #fff;
+    margin: -.5rem -.5rem;
   }
 
   .cover > img {
+    position: relative;
     width: 100%;
     height: 4rem;
   }

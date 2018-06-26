@@ -13,7 +13,8 @@ const app = {
     document.title = `易灵微课-${title}`
   },
   linkToAssets: (path) => {
-    return config.assetsPreUrl+path
+    let prefix = config.assetsPreUrl.indexOf('http') === 0 ? '' : location.origin
+    return prefix + config.assetsPreUrl + path
   },
   linkToStudent: (path) => {
     return config.studentPreUrl+path

@@ -9,7 +9,7 @@ body {
   background: #f0eff5;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: PingFangSC-Regular, "Microsoft YaHei", sans-serif;
+  font-family: sans-serif;
 }
 
 a {
@@ -88,12 +88,13 @@ button.btn {
   content: "\e623";
 }
 
-.font-medium {
-  font-family: PingFangSC-Medium, "Microsoft YaHei", sans-serif;
-}
-
 .font-ragular {
   font-family: PingFangSC-Regular, "Microsoft YaHei", sans-serif;
+}
+
+.font-medium {
+  font-family: PingFangSC-Medium, "Microsoft YaHei", sans-serif;
+  font-weight: 500
 }
 
 .font-bold {
@@ -104,5 +105,4 @@ button.btn {
 .text-desc {
   font-size: .24rem;
   line-height: .36rem;
-  /*color: #808080;*/
 }

@@ -3,8 +3,12 @@
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
       <swiper-slide v-for="(item,index) in data.list" :key="index" class="ani" swiper-animate-effect="shutter2">
-        <router-link v-if="item.profile.type === 'series'" :to="{path:`/lesson/series?sn=${item.profile.sn}`}"><img :src="item.profile.cover"></router-link>
-        <router-link v-if="item.profile.type === 'lesson'" :to="{path:`/lesson/Detail?sn=${item.profile.sn}`}"><img :src="item.profile.cover"></router-link>
+        <router-link class="go" v-if="item.profile.type === 'lesson'"
+                     :to="{path:`/lesson/Detail?sn=${item.profile.sn}`}">
+          <img :src="item.profile.cover"></router-link>
+        <router-link class="go" v-if="item.profile.type === 'series'"
+                     :to="{path:`/lesson/series?sn=${item.profile.sn}`}">
+          <img :src="item.profile.cover"></router-link>
       </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
@@ -18,6 +22,7 @@
 <script>
   import 'swiper/dist/css/swiper.css'
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
+
   export default {
     name: 'lesson-home-banner',
     props: ['data'],
@@ -27,7 +32,7 @@
         swiperOption: {
           on: {
             slideChange: function () {
-             // alert(this.realIndex)
+              // alert(this.realIndex)
             }
           },
           notNextTick: true,
@@ -39,8 +44,8 @@
             disableOnInteraction: false
           },
           onlyExternal: true,
-          spaceBetween: 20,
           centeredSlides: true,
+          spaceBetween: '2.7%',
           slidesPerView: 'auto',
           loop: true,
           effect: '"slide"',
@@ -63,27 +68,8 @@
     created() {
     },
     mounted() {
-   //   this.animete()
       // current swiper instance
       console.log('this is current swiper instance object', this.swiper)
-      // this.swiper.width = 750 + 'px'
-      // alert(this.swiper.width)
-      // let list = document.querySelectorAll('.swiper-slide')
-      // //    alert(list[0].style.width)
-      // list[0].style.width = '100px'
-    },
-    methods: {
-      // animete() {
-      //   setInterval(() => {
-      //     let slide = document.querySelector('.swiper-slide-active')
-      //    // let slideN = document.querySelector('.swiper-slide-next')
-      //     slide.style.transform = 'scale(1.2)'
-      //     slide.style.zIndex = 11
-      //     // alert(slide.querySelector('img').src)
-      //   }, 3000)
-      //   let slideP = document.querySelector('.swiper-slide-prev')
-      //   slideP.style.transform = 'scale(1)'
-      // }
     }
   }
 </script>
@@ -129,20 +115,20 @@
 
   img {
     width: 100%;
-    height: 3rem;
+    height: 100%;
     border-top-left-radius: .08rem;
     border-top-right-radius: .08rem;
   }
 
   .swiper-container {
-    height: 3rem;
-    padding: .30rem 0 .42rem 0;
+    height: 3.12rem;
+    padding-top: .3rem;
     background: linear-gradient(0deg, #999, #E5E5E5);
   }
 
   .swiper-slide {
-    height: 3rem;
-    width: 5.3rem !important;
+    width: 6.3rem !important;
+    height: 2.7rem;
   }
 
   .swiper-slide-next {
@@ -154,12 +140,21 @@
     height: .42rem;
     line-height: .42rem;
     background: white;
-    bottom: 0;
+    bottom: 0 !important;
   }
 
   .swiper-button-next, .swiper-button-prev {
     background-image: none;
+    width: .4rem;
+    height: 100%;
+    top: 0;
   }
+  .swiper-button-prev{
+    left: 0;
+  }
+  .swiper-button-prev{
+    right: 0;
+    }
 
   @-webkit-keyframes shutter2 {
     from {
@@ -175,32 +170,9 @@
     animation: shutter2 0.5s forwards;
   }
 
-  @keyframes change {
-    0% {
-      transform: scale(1);
-    }
-    10% {
-      z-index: 11;
-      transform: scale(1.1);
-    }
-    20% {
-      transform: scale(1.2);
-    }
-    /*30% {*/
-    /*transform: rotate(5deg);*/
-    /*}*/
-    /*40% {*/
-    /*transform: rotate(0deg);*/
-    /*}*/
-    /*60% {*/
-    /*transform: rotate(-5deg);*/
-    /*}*/
-    /*80% {*/
-    /*transform: rotateY(0deg);*/
-    /*}*/
-    100% {
-      z-index: 11;
-      transform: scale(1.2);
-    }
+  .go {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
   }
 </style>

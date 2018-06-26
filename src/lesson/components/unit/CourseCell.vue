@@ -1,7 +1,7 @@
 <template>
   <div class="c-profile-cell flex-row" @click="go">
     <div class="cover">
-      <img :src="profile.cover"/>
+      <img :src="profile.cover || app.linkToAssets('/img/lesson/default-cover.png')"/>
     </div>
     <div class="datum flex-col">
       <div class="datum-head font-bold">{{profile.title}}</div>
@@ -13,7 +13,7 @@
       <div class="datum-foot flex-row">
         <div class="enrollment flex-row">
           <i class="icon-yike icon-people"></i>
-          <span class="font-bold text-desc">{{profile.enrollment}}人</span>
+          <span class="text-desc">{{profile.enrollment}}人</span>
         </div>
         <div class="price font-bold">￥{{profile.price}}</div>
       </div>
@@ -48,9 +48,9 @@
 <style scoped>
   .c-profile-cell {
     padding: .3rem 0;
-    border-bottom: 1px solid #DDDDDD;
     cursor: pointer;
     justify-content: space-between;
+    border-bottom: 1px solid #eee;
   }
 
   .c-profile-cell:last-child {
@@ -64,7 +64,7 @@
   .datum {
     justify-content: space-between;
     width: 4.2rem;
-    height: 1.28rem;
+    height: auto;
   }
   .datum>div {
     width: 100%;
@@ -72,6 +72,9 @@
   .datum-head {
     font-size: .3rem;
     color: #0D0D0D;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .datum-body {
     justify-content: space-between;
@@ -90,11 +93,12 @@
 
   .enrollment {
     font-size: .24rem;
-    color: #808080;
+    color: #999;
   }
   .enrollment > i {
-    font-size: .24rem;
+    font-size: .32rem;
     margin-right: .5em;
+    color: #ccc;
   }
 
 </style>

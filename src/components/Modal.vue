@@ -1,8 +1,10 @@
 <template>
-  <div class="c-modal flex-col" v-if="display">
-    <div class="mask" @click="$emit('cancel')"></div>
-    <slot></slot>
-  </div>
+  <transition name="slide">
+    <div class="c-modal flex-col" v-if="display">
+      <div class="mask" @click="$emit('cancel')"></div>
+      <slot></slot>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -13,10 +15,10 @@
       display: (status) => {
         if (status) {
           document.body.style.overflow = 'hidden'
-          document.documentElement.style.overflow='hidden'
+          document.documentElement.style.overflow = 'hidden'
         } else {
           document.body.style.overflow = 'visible'
-          document.documentElement.style.overflow='visible'
+          document.documentElement.style.overflow = 'visible'
         }
       }
     }
@@ -31,5 +33,13 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .slide-enter-active, .slide-leave-active {
+    transition: all .3s;
+  }
+
+  .slide-enter, .slide-leave-to {
+    transform: translateY(100%);
   }
 </style>

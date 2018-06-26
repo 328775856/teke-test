@@ -1,7 +1,7 @@
 <template>
   <div class="c-lesson-cell" @click="go">
     <div class="frm flex-row">
-      <img :src="lesson.cover">
+      <img :src="lesson.cover || app.linkToAssets('/img/lesson/default-cover.png')">
       <div class="flex-col detail">
         <div class="flex-row detail-top">
           <div class="title font-bold">{{lesson.title}}</div>
@@ -12,8 +12,7 @@
         </div>
         <div class="flex-row detail-bottom">
           <div class="enrollment">
-            <i class="icon-yike icon-people">
-            </i>
+            <i class="icon-yike icon-people"></i>
             <span class="font-bold text-desc">{{lesson.enrollment}}人</span>
           </div>
           <div class="tms font-medium text-desc">{{lesson.plan.dtm_start}}</div>
@@ -50,8 +49,8 @@
   }
 
   .c-lesson-cell:last-child {
-    border-bottom: 0;
-    padding-bottom: .5rem;
+    border-bottom: 0!important;
+    padding-bottom: .5rem!important;
   }
 
   .frm {
@@ -112,7 +111,11 @@
   }
 
   .enrollment {
-    color: #808080;
+    color: #999;
+  }
+  .enrollment > i {
+    font-size: .32rem;
+    color: #ccc;
   }
 
   .icon-single-people {

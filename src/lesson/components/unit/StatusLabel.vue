@@ -1,5 +1,5 @@
 <template>
-  <div class="c-lesson-status-label flex-row font-bold" :class="status">
+  <div class="c-lesson-status-label" :class="status">
     {{label}}
   </div>
 </template>
@@ -29,12 +29,12 @@
 
 <style scoped>
   .c-lesson-status-label {
-    height: .36rem;
-    padding: 0 .15rem;
-    border-radius: .18rem;
+    padding: 0 .5em;
+    border-radius: 1em;
     color: #fff;
-    font-size: .21rem;
+    font-size: .22rem;
     text-align: center;
+    line-height: 1.8em;
   }
   .opened {
     /*background: #D8C199;*/

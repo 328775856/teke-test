@@ -22,7 +22,7 @@
               </div>
             </div>
           </div>
-          <div class="invite flex-col btn text-desc" @click="invite">
+          <div class="invite flex-col btn" @click="invite">
             <i class="icon-yike icon-share"></i>
             <span class="font-medium text-desc">邀请有奖</span>
           </div>
@@ -30,7 +30,7 @@
       </div>
       <detail-policy></detail-policy>
     </div>
-    <div class="tabs">
+    <div class="tabs" id="tabs">
       <tabs :items="tabs" :active="activeTab" v-on:switch="switchTab"></tabs>
     </div>
     <div id="lesson">
@@ -63,7 +63,7 @@
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'refund'">已退款</div>
       <div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>
       <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="canEnroll && check !== 'access'">报名系列课</div>
-      <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">继续报名</div>
+      <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">报名剩余课程</div>
       <div class="ctrl-access ctrl-text font-medium" @click="study" v-if="check === 'access'">进入课堂</div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'pending'">等待开课</div>
     </div>
@@ -72,7 +72,7 @@
       <div slot="head">报名成功</div>
       <ul>
         <li>永久回放</li>
-        <li>听课开始1小时内无条件退款</li>
+        <li>进入课堂1小时内无条件退款</li>
         <li v-if="!individual.subscribed">
           <span>关注公众号可接收开课提醒</span>
         </li>
@@ -102,7 +102,7 @@
   import ModalAction from "../../components/modal/Action"
 
   const markdown = require('markdown-it')({html: true})
-  //  let scroll = 0
+  let tabsHeight
 
   export default {
     name: 'lesson-detail',
@@ -127,15 +127,14 @@
         relative: [],
         individual: null,
         rating: {},
-        activeTab: null,
+        activeTab: 'lesson',
         CourseStatus: '',
         tabs: [
           {'key': 'lesson', name: '课程'},
           {'key': 'catalog', name: '目录'}
         ],
         order: null,
-        displayAfterEnroll: false,
-        bodyScrollTop: 0
+        displayAfterEnroll: false
       }
     },
     created() {
@@ -149,6 +148,11 @@
       }).then((res) => {
           this.profile = res.data
           this.app.setTitle(this.profile.title)
+          this.app.onShare({
+            title: `易灵微课-${this.profile.title}`,
+            desc: '永久回放，1小时不满意退款',
+            imgUrl: this.profile.cover
+          })
         }
       )
       this.api.get('/api/series-introduce', {
@@ -171,6 +175,7 @@
       })
     },
     mounted() {
+      tabsHeight = document.getElementById('tabs').clientHeight
       window.addEventListener('scroll', this.menu)
     },
     computed: {
@@ -178,15 +183,17 @@
         if (!this.individual.lesson) {
           return false
         }
+        let access = false
         for (let lesson of this.individual.access) {
           if (lesson.step !== 'opened') {
             return 'access' // 有任一课程可观看
           }
+          access = true
         }
         if (this.individual.refund.length === this.individual.lesson) {
           return 'refund' // 所有课已退款
         }
-        return 'pending'; // 全部课程尚未开启
+        return access ? 'pending' : false; // 全部课程尚未开启
       },
       canEnroll() {
         if (this.individual.enroll) {
@@ -208,6 +215,10 @@
         return markdown.render(text || '');
       },
       switchTab(key) {
+        if (key === 'catalog') {
+          document.body.scrollTop = document.getElementById('catalog').offsetTop
+          document.documentElement.scrollTop = document.getElementById('catalog').offsetTop
+        }
         this.activeTab = window.location.hash = key
       },
       enroll() { // 报名下单
@@ -224,7 +235,6 @@
         }, this.api.onErrorSign)
       },
       completeEnroll() { // 订单支付完成
-        alert('complete enroll')
         this.order = null
         // this.app.enableBodyScroll()
         // 重新获取课程状
@@ -232,9 +242,7 @@
           sn: this.$route.query.sn
         }).then((res) => {
           this.individual = res.data
-          if (this.check === 'access') {
-            this.study() // 自动进入课堂
-          }
+          this.displayAfterEnroll = true
         })
       },
       cancelEnroll() { // 取消报名
@@ -245,15 +253,18 @@
         this.$router.push('/lesson/home')
       },
       study() { // 进入课堂
-        // todo 增加【报名成功，准备进入课堂】读秒缓冲
-        let lessonSn = this.individual.access[0].sn
-        let query = qs.stringify({
-          isOwner: 'no',
-          lesson_sn: lessonSn,
-          teach: `${lessonSn}-T`,
-          discuss: `${lessonSn}-D`
-        })
-        window.location.href = `/live?${query}`
+        for (let lesson of this.individual.access) {
+          if (lesson.step !== 'opened') {
+            let query = qs.stringify({
+              isOwner: 'no',
+              lesson_sn: lesson.sn,
+              teach: `${lesson.sn}-T`,
+              discuss: `${lesson.sn}-D`
+            })
+            window.location.href = `/live?${query}`
+            return
+          }
+        }
       },
       invite() { // 邀请卡
         window.location.href = `/promote/invite?sn=${this.$route.query.sn}`
@@ -269,15 +280,15 @@
         window.location.href = this.app.linkToStudent(`/?v=1#/course/refund?${query}`)
       },
       menu() {
-        // if (!document.getElementsByClassName('relative')[0]) {
-        //   console.log(document.getElementsByClassName('relative')[0])
-        // } else {
-        if (document.documentElement.scrollTop > document.getElementsByClassName('relative')[0].offsetTop) {
+        let d = document.documentElement
+        if (navigator.userAgent.indexOf('Mobile') !== -1) {
+          d = document.body
+        }
+        if (d.scrollTop > document.getElementById('catalog').offsetTop - tabsHeight || d.scrollHeight - d.scrollTop === d.clientHeight) {
           this.activeTab = 'catalog'
         } else {
           this.activeTab = 'lesson'
         }
-        //   }
       }
     }
   }
@@ -435,8 +446,8 @@
   }
 
   .ctrl-locked {
-    color: #666;
-    background: #fff;
+    color: #fff;
+    background: #ccc;
   }
 
   .tabs {
@@ -499,7 +510,7 @@
   }
 
   .o-price {
-    /*padding-left: 0.1rem;*/
+    padding-left: 0.1rem;
     font-size: 0.27rem;
     text-decoration: line-through;
     color: #808080;

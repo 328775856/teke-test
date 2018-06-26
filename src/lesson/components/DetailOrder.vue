@@ -1,39 +1,39 @@
 <template>
-  <modal class="c-lesson-detail-order flex-col" :display="order" v-on:cancel="$emit('cancel')">
-    <div class="frm-order" v-if="order">
-      <div class="order-head flex-row font-medium">订单详情</div>
-      <div class="order-body">
-        <div class="title">{{order.title}}</div>
-        <div class="list" v-if="order.list.length">
-          <ul>
-            <li v-for="(lesson, index) in order.list" :key="index" class="flex-row">
-              <!--<div class="flex-row list-item">-->
-              <div>{{lesson.title}}</div>
-              <div>￥{{lesson.price}}</div>
-              <!--</div>-->
-            </li>
-          </ul>
+    <modal class="c-lesson-detail-order flex-col" :display="order" v-on:cancel="$emit('cancel')">
+      <div class="frm-order" v-if="order">
+        <div class="order-head flex-row font-medium">订单详情</div>
+        <div class="order-body">
+          <div class="title">{{order.title}}</div>
+          <div class="list" v-if="order.list.length">
+            <ul>
+              <li v-for="(lesson, index) in order.list" :key="index" class="flex-row">
+                <!--<div class="flex-row list-item">-->
+                <div>{{lesson.title}}</div>
+                <div>￥{{lesson.price}}</div>
+                <!--</div>-->
+              </li>
+            </ul>
+          </div>
+          <div class="item">
+            <div class="item-head font-bold">订单金额</div>
+            <div class="item-info font-bold">￥{{order.order_amount}}</div>
+          </div>
+          <div class="item" v-if="order.discount">
+            <div class="item-head font-bold">优惠抵扣</div>
+            <div class="item-info font-bold">{{order.discount}}</div>
+          </div>
+          <div class="item">
+            <div class="item-head font-bold">余额支付</div>
+            <div class="item-info font-bold">{{order.charge}}</div>
+          </div>
         </div>
-        <div class="item">
-          <div class="item-head font-bold">订单金额</div>
-          <div class="item-info font-bold">￥{{order.order_amount}}</div>
-        </div>
-        <div class="item" v-if="order.discount">
-          <div class="item-head font-bold">优惠抵扣</div>
-          <div class="item-info font-bold">{{order.discount}}</div>
-        </div>
-        <div class="item">
-          <div class="item-head font-bold">余额支付</div>
-          <div class="item-info font-bold">{{order.charge}}</div>
+        <div class="order-foot flex-row">
+          <div class="foot-cancel flex-row click font-medium" @click="$emit('cancel')">取消</div>
+          <div class="foot-message flex-row">应付: ￥{{order.surplus}}</div>
+          <div class="foot-confirm flex-row click font-medium" @click="confirm">确认支付</div>
         </div>
       </div>
-      <div class="order-foot flex-row">
-        <div class="foot-cancel flex-row click font-medium" @click="$emit('cancel')">取消</div>
-        <div class="foot-message flex-row">应付: ￥{{order.surplus}}</div>
-        <div class="foot-confirm flex-row click font-medium" @click="confirm">确认支付</div>
-      </div>
-    </div>
-  </modal>
+    </modal>
 </template>
 
 <script>
@@ -189,5 +189,4 @@
   .item-info {
     color: #F23F15;
   }
-
 </style>

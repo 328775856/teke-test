@@ -18,7 +18,7 @@
       <i class="icon-yike icon-arrow-r"></i>
     </div>
     <popup :isOpen="isOpen" v-on:close="isOpen = false">
-      <div slot="head" class="font-medium">听课须知</div>
+      <div slot="head" class="head font-medium">听课须知</div>
       <div class="items">
         <ul>
           <li v-for="(item,index) in items" :key="index">
@@ -65,7 +65,8 @@
     background: #FFFCF5;
     color: #caac91;
   }
-  .bar-items span{
+
+  .bar-items span {
     color: #caac91;
   }
 
@@ -84,33 +85,43 @@
     color: #caac91;
     text-align: right;
   }
+
   .items {
     overflow-x: auto;
     overflow-y: scroll;
     padding: .3rem;
     border-bottom: .3rem solid #fff;
-    max-height: 70vh;
+    max-height: 60vh;
+    -webkit-overflow-scrolling: touch;
   }
+
   .items ul {
-    list-style-type:none;
+    list-style-type: none;
     margin: 0;
     padding: 0;
   }
+
   .items li {
     padding: .1rem 0;
   }
+
   .items-head {
     justify-content: flex-start;
+    font-size: .3rem;
     color: #666;
   }
+
   .items-head > i {
     color: #2F57DA;
-    margin-right: .2rem;
+    margin-right: .1rem;
   }
+
   .items-desc {
-    padding: .1rem .44rem;
+    padding: .1rem .45rem;
     color: #888;
+    text-align: justify;
   }
+
   .btn-roger {
     width: 100%;
     height: 100%;
@@ -119,4 +130,7 @@
     font-size: .32rem;
   }
 
+  .head {
+    font-size: .32rem;
+  }
 </style>

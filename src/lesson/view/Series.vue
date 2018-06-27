@@ -62,12 +62,18 @@
       </div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'refund'">已退款</div>
       <div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>
+      <div class="ctrl-free ctrl-text font-medium " v-if="freeTry && check === false"
+           @click="$router.push(`/lesson/detail?sn=${freeTry}`)">
+        免费试听
+      </div>
       <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="canEnroll && check !== 'access'">报名系列课</div>
       <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">报名剩余课程</div>
       <div class="ctrl-access ctrl-text font-medium" @click="study" v-if="check === 'access'">进入课堂</div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'pending'">等待开课</div>
     </div>
-    <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
+    <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll">
+    </detail-order>
+    <!--<div class="mask" v-show="order"></div>-->
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
       <div slot="head">报名成功</div>
       <ul>
@@ -84,6 +90,7 @@
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check === 'access'">开始学习</div>
       <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
     </modal-action>
+    <!--<div class="mask" v-if="displayAfterEnroll" v-on:close="displayAfterEnroll = false"></div>-->
   </div>
 </template>
 
@@ -126,6 +133,7 @@
         introduce: '',
         relative: [],
         individual: null,
+        freeTry: null,
         rating: {},
         activeTab: 'lesson',
         CourseStatus: '',
@@ -165,6 +173,14 @@
         sn: lessonSn
       }).then((res) => {
         this.relative = res.data
+        console.log(res.data)
+        for (let lesson of res.data) {
+          if (lesson.price === 0) {
+            this.freeTry = lesson.sn
+            console.log(lesson.sn)
+            return
+          }
+        }
       })
       this.api.get('/api/individual-series', {
         sn: lessonSn
@@ -429,7 +445,7 @@
     cursor: pointer;
   }
 
-  .ctrl-refund {
+  .ctrl-refund, .ctrl-free {
     flex-grow: 0;
     background: #fff;
     color: #2F57DA;

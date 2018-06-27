@@ -5,14 +5,14 @@
         <lesson-home-banner class="banner" v-if="item.form === 'banner'" :data="item"></lesson-home-banner>
         <lesson-home-block class="block" v-if="item.form === 'block' && item.list.length" :data="item">
           <!--<div slot="another" class="another-frm flex-row">-->
-            <!--<div class="another text-desc font-medium" @click="another">换一批</div>-->
+          <!--<div class="another text-desc font-medium" @click="another">换一批</div>-->
           <!--</div>-->
         </lesson-home-block>
       </div>
     </div>
-    <div class="overall flex-row font-medium" v-if="sections.length">
-      <router-link to="/lesson/search?title=课程列表&tag=">查看所有课程</router-link>
-    </div>
+      <div class="overall flex-row font-medium" v-if="sections.length">
+        <span @click="go" class="font-medium">查看全部</span>
+      </div>
     <navigation></navigation>
   </div>
 </template>
@@ -46,12 +46,13 @@
     },
     methods: {
       another() {
-        this.api.post('/api/lesson-list', {
-
-        })
+        this.api.post('/api/lesson-list', {})
           .then((res) => {
 
           })
+      },
+      go() {
+        location.href = `/lesson/search?title=课程列表&tag=`
       }
     }
   }
@@ -60,6 +61,7 @@
   .c-home {
     padding-bottom: 1rem;
   }
+
   .block {
     margin-bottom: .1rem;
   }
@@ -68,12 +70,13 @@
     padding: .5rem;
   }
 
-  .overall a {
+  .overall span {
     font-size: .2rem;
     color: #aaa;
     padding: .1rem .2rem;
     border: 1px solid #ccc;
     border-radius: 1em;
+    cursor: pointer;
   }
 
   .another-frm {

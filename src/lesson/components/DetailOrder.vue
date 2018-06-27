@@ -1,39 +1,39 @@
 <template>
-    <modal class="c-lesson-detail-order flex-col" :display="order" v-on:cancel="$emit('cancel')">
-      <div class="frm-order" v-if="order">
-        <div class="order-head flex-row font-medium">订单详情</div>
-        <div class="order-body">
-          <div class="title">{{order.title}}</div>
-          <div class="list" v-if="order.list.length">
-            <ul>
-              <li v-for="(lesson, index) in order.list" :key="index" class="flex-row">
-                <!--<div class="flex-row list-item">-->
-                <div>{{lesson.title}}</div>
-                <div>￥{{lesson.price}}</div>
-                <!--</div>-->
-              </li>
-            </ul>
-          </div>
-          <div class="item">
-            <div class="item-head font-bold">订单金额</div>
-            <div class="item-info font-bold">￥{{order.order_amount}}</div>
-          </div>
-          <div class="item" v-if="order.discount">
-            <div class="item-head font-bold">优惠抵扣</div>
-            <div class="item-info font-bold">{{order.discount}}</div>
-          </div>
-          <div class="item">
-            <div class="item-head font-bold">余额支付</div>
-            <div class="item-info font-bold">{{order.charge}}</div>
-          </div>
+  <modal class="c-lesson-detail-order flex-col" :display="order" v-on:cancel="$emit('cancel')">
+    <div class="frm-order" id="frm-order" v-if="order" :style="{bottom: top}">
+      <div class="order-head flex-row font-medium">订单详情</div>
+      <div class="order-body">
+        <div class="title">{{order.title}}</div>
+        <div class="list" v-if="order.list.length">
+          <ul>
+            <li v-for="(lesson, index) in order.list" :key="index" class="flex-row">
+              <!--<div class="flex-row list-item">-->
+              <div>{{lesson.title}}</div>
+              <div>￥{{lesson.price}}</div>
+              <!--</div>-->
+            </li>
+          </ul>
         </div>
-        <div class="order-foot flex-row">
-          <div class="foot-cancel flex-row click font-medium" @click="$emit('cancel')">取消</div>
-          <div class="foot-message flex-row">应付: ￥{{order.surplus}}</div>
-          <div class="foot-confirm flex-row click font-medium" @click="confirm">确认支付</div>
+        <div class="item">
+          <div class="item-head font-bold">订单金额</div>
+          <div class="item-info font-bold">￥{{order.order_amount}}</div>
+        </div>
+        <div class="item" v-if="order.discount">
+          <div class="item-head font-bold">优惠抵扣</div>
+          <div class="item-info font-bold">{{order.discount}}</div>
+        </div>
+        <div class="item">
+          <div class="item-head font-bold">余额支付</div>
+          <div class="item-info font-bold">{{order.charge}}</div>
         </div>
       </div>
-    </modal>
+      <div class="order-foot flex-row">
+        <div class="foot-cancel flex-row click font-medium" @click="$emit('cancel')">取消</div>
+        <div class="foot-message flex-row">应付: ￥{{order.surplus}}</div>
+        <div class="foot-confirm flex-row click font-medium" @click="confirm">确认支付</div>
+      </div>
+    </div>
+  </modal>
 </template>
 
 <script>
@@ -42,19 +42,23 @@
   export default {
     name: 'lesson-detail-order',
     components: {Modal},
-    props: ['order'],
+    props: ['order', 'top'],
     data() {
       return {
         checkWXPay: null
       }
     },
     created() {
+      alert(this.top)
       this.wx.checkJsApi({
         jsApiList: ['chooseWXPay'],
         success: (res) => {
           this.checkWXPay = res.checkResult.chooseWXPay
         }
       })
+    },
+    mounted() {
+      // this.top = document.getElementById('frm-order').offsetHeight + 'px'
     },
     methods: {
       confirm() {
@@ -95,6 +99,7 @@
   .c-lesson-detail-order {
     position: fixed;
     justify-content: flex-end;
+    z-index: 100;
     bottom: 0;
     left: 0;
     height: 100%;
@@ -102,11 +107,13 @@
   }
 
   .frm-order {
+    position: relative;
     width: 7.5rem;
     background: #fff;
-    z-index: 999;
     border-radius: .2rem .2rem 0 0;
-    color: #0D0D0D
+    color: #0D0D0D;
+    z-index: 100;
+    transition: all .3s;
   }
 
   .order-head {
@@ -126,6 +133,7 @@
     padding: .3rem;
     font-size: .28rem;
     color: #999;
+    cursor: pointer;
   }
 
   .foot-message {
@@ -142,6 +150,7 @@
     background: #2F57DA;
     padding: 0 .48rem;
     height: 100%;
+    cursor: pointer;
   }
 
   .title {

@@ -73,7 +73,9 @@
       <div class="ctrl-access ctrl-text font-medium" @click="study" v-else-if="check === 'access'">进入课堂</div>
       <div class="ctrl-locked ctrl-text font-medium" v-else-if="check === 'wait'">等待开课</div>
     </div>
-    <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll"></detail-order>
+    <detail-order :top="top" v-if="order" :order="order" v-on:cancel="cancelEnroll"
+                  v-on:complete="completeEnroll"></detail-order>
+    <!--<div class="mask" v-show="order"></div>-->
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
       <div slot="head">报名成功</div>
       <ul>
@@ -90,6 +92,7 @@
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check==='access'">开始学习</div>
       <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
     </modal-action>
+    <!--<div class="mask" v-if="displayAfterEnroll" v-on:close="displayAfterEnroll = false"></div>-->
   </div>
 </template>
 
@@ -139,7 +142,8 @@
           {'key': 'board', name: '交流'}
         ],
         order: null,
-        displayAfterEnroll: false
+        displayAfterEnroll: false,
+        top: ''
       }
     },
     created() {
@@ -233,6 +237,7 @@
         }).then((res) => {
           if (res.data) { // 付费课程报名
             this.order = res.data
+            this.top = 0 + 'px'
           } else { // 免费课程报名
             this.completeEnroll()
           }

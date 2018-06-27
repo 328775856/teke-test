@@ -12,8 +12,8 @@
       </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
-      <div class="swiper-button-prev" slot="button-prev"></div>
-      <div class="swiper-button-next" slot="button-next"></div>
+      <div class="swiper-button-prev btn" slot="button-prev"></div>
+      <div class="swiper-button-next btn" slot="button-next"></div>
       <!--<div class="swiper-scrollbar" slot="scrollbar"></div>-->
     </swiper>
   </div>
@@ -152,7 +152,7 @@
   .swiper-button-prev{
     left: 0;
   }
-  .swiper-button-prev{
+  .swiper-button-next{
     right: 0;
     }
 

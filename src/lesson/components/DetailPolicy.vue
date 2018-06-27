@@ -16,6 +16,7 @@
         </div>
       </div>
       <i class="icon-yike icon-arrow-r"></i>
+      <div class="mask" @click="isOpen = false"  v-if="isOpen"></div>
     </div>
     <popup :isOpen="isOpen" v-on:close="isOpen = false">
       <div slot="head" class="head font-medium">听课须知</div>
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-  import Popup from "../../components/Popup";
+  import Popup from "../../components/Popup"
 
   export default {
     name: 'lesson-detail-policy',

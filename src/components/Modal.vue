@@ -1,10 +1,10 @@
 <template>
-  <transition name="slide">
+  <!--<transition name="slide" @enter="enter">-->
     <div class="c-modal flex-col" v-if="display">
       <div class="mask" @click="$emit('cancel')"></div>
       <slot></slot>
     </div>
-  </transition>
+  <!--</transition>-->
 </template>
 
 <script>
@@ -20,6 +20,11 @@
           document.body.style.overflow = 'visible'
           document.documentElement.style.overflow = 'visible'
         }
+      }
+    },
+    methods: {
+      enter(el) {
+
       }
     }
   }

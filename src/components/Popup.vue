@@ -1,7 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="c-popup flex-col" v-if="isOpen">
-        <div class="mask" @click="close"></div>
+    <div class="c-popup flex-col" v-show="isOpen" @click="close">
       <div class="frm-popup flex-col" :style="{width: width}">
         <div class="popup-head flex-row">
           <slot name="head">popup head</slot>

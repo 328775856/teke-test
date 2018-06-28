@@ -1,6 +1,7 @@
 <template>
   <transition name="slide">
-    <div class="c-popup flex-col" v-show="isOpen" @click="close">
+    <div class="c-popup flex-col" v-show="isOpen">
+      <div class="btn-mask flex-item" @click="close"></div>
       <div class="frm-popup flex-col" :style="{width: width}">
         <div class="popup-head flex-row">
           <slot name="head">popup head</slot>
@@ -17,8 +18,11 @@
 </template>
 
 <script>
+  import Modal from "./Modal";
+
   export default {
     name: 'popup',
+    components: {Modal},
     props: ['isOpen'],
     methods: {
       close: function () {
@@ -32,12 +36,16 @@
     },
     watch: {
       isOpen: (status) => {
+        let d = document.documentElement
+        if (navigator.userAgent.indexOf('Mobile') !== -1) {
+          d = document.body
+        }
         if (status) {
+          d.style.overflow = 'hidden'
           document.documentElement.style.overflow = 'hidden'
-          document.body.style.overflow = 'hidden'
         } else {
-          document.body.style.overflow = 'visible'
-          document.documentElement.style.overflow = 'auto'
+          d.style.overflow = 'visible'
+          document.documentElement.style.overflow = 'visible'
         }
       }
     }
@@ -53,6 +61,11 @@
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+  }
+
+  .btn-mask {
+    width: 100%;
   }
 
   .frm-popup {
@@ -78,7 +91,7 @@
   }
 
   .slide-enter-active, .slide-leave-active {
-    transition: all .3s;
+    transition: all .5s;
   }
 
   .slide-enter, .slide-leave-to {

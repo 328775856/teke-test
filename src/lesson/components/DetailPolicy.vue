@@ -16,8 +16,8 @@
         </div>
       </div>
       <i class="icon-yike icon-arrow-r"></i>
-      <div class="mask" @click="isOpen = false"  v-if="isOpen"></div>
     </div>
+
     <popup :isOpen="isOpen" v-on:close="isOpen = false">
       <div slot="head" class="head font-medium">听课须知</div>
       <div class="items">

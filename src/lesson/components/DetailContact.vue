@@ -26,7 +26,7 @@
 
 <style scoped>
   .c-lesson-detail-contact {
-    height: 3rem;
+    height: 4rem;
     justify-content: space-around;
     background: white;
   }
@@ -41,8 +41,8 @@
     /*border-left: 1px solid #0D0D0D;*/
   }
   .qrcode img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
   .qrcode span {
     padding-top: .1rem;

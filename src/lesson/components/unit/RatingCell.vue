@@ -81,6 +81,7 @@
     padding-left: .32rem;
     font-size: .36rem;
     color: #0D0D0D;
+    font-weight: 600;
   }
 
   .tms, .tms_reply {

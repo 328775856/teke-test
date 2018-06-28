@@ -1,0 +1,108 @@
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  margin: 0 auto;
+  height: 100%;
+  background: #f0eff5;;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+a a:visited, a:active {
+  color: inherit;
+}
+
+.c-index {
+  height: 100%;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-item {
+  flex-grow: 1;
+}
+
+.c-index {
+  /*transform: scale(1,1);*/
+}
+
+.btn {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.btn {
+  border: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+.icon-persons {
+  position: relative;
+  padding-right: .4em;
+  /*width: 1em;*/
+  /*height: 1em;*/
+}
+
+.icon-persons:before {
+  position: absolute;
+  content: "\e623";
+  font-size: 80%;
+  top: .1em;
+  left: .7em;
+}
+
+.icon-persons:after {
+  position: relative;
+  content: "\e623";
+}
+
+.font-ragular {
+  font-family: PingFangSC-Regular, "Microsoft YaHei", sans-serif;
+}
+
+.font-medium {
+  font-family: PingFangSC-Medium, "Microsoft YaHei", sans-serif;
+  font-weight: 500
+}
+
+.font-bold {
+  font-weight: bold;
+  font-family: PingFangSC-Bold, "Microsoft YaHei", sans-serif;
+}
+
+.text-desc {
+  font-size: .24rem;
+  line-height: .36rem;
+}

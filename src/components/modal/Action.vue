@@ -26,7 +26,7 @@
 </script>
 
 <style scoped>
-  .cc-action {
+  .c-action {
     position: fixed;
     z-index: 99;
     width: 100%;

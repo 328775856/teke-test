@@ -60,20 +60,20 @@
         <i class="icon-yike icon-home"></i>
         <span class="font-ragular">首页</span>
       </div>
-      <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'refund'">已退款</div>
+      <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'denied'">不可访问</div>
       <div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>
       <div class="ctrl-free ctrl-text font-medium " v-if="freeTry && check === false"
-           @click="$router.push(`/lesson/detail?sn=${freeTry}`)">
+           @click="$router.push(`/lesson/detail?sn=${freeTry}&action=enroll`)">
         免费试听
       </div>
-      <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="canEnroll && check !== 'access'">报名系列课</div>
-      <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">报名剩余课程</div>
-      <div class="ctrl-access ctrl-text font-medium" @click="study" v-if="check === 'access'">进入课堂</div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'pending'">等待开课</div>
+      <div class="ctrl-enroll ctrl-text font-medium" @click="enroll" v-if="canEnroll && check !== 'access'">报名系列课</div>
+      <div class="ctrl-enroll_ ctrl-text font-medium" @click="enroll" v-if="canEnroll && check === 'access'">报名剩余课程
+      </div>
+      <div class="ctrl-access ctrl-text font-medium" @click="study" v-if="check === 'access'">进入课堂</div>
     </div>
     <detail-order :order="order" v-on:cancel="cancelEnroll" v-on:complete="completeEnroll">
     </detail-order>
-    <!--<div class="mask" v-show="order"></div>-->
     <modal-action v-on:close="displayAfterEnroll = false" :display="displayAfterEnroll" width="90%" v-if="individual">
       <div slot="head">报名成功</div>
       <ul>
@@ -90,7 +90,6 @@
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check === 'access'">开始学习</div>
       <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
     </modal-action>
-    <!--<div class="mask" v-if="displayAfterEnroll" v-on:close="displayAfterEnroll = false"></div>-->
   </div>
 </template>
 
@@ -206,8 +205,8 @@
           }
           access = true
         }
-        if (this.individual.refund.length === this.individual.lesson) {
-          return 'refund' // 所有课已退款
+        if (this.individual.access.length + this.individual.enroll.length === 0) {
+          return 'denied' // 无可用课程
         }
         return access ? 'pending' : false; // 全部课程尚未开启
       },
@@ -262,7 +261,6 @@
         })
       },
       cancelEnroll() { // 取消报名
-        // this.app.enableBodyScroll()
         this.order = null
       },
       home() {

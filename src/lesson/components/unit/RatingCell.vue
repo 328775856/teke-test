@@ -4,7 +4,7 @@
       <div class="frm-user flex-row">
         <div class="flex-row">
           <img :src="rate.user.avatar"/>
-          <div class="nickname font-bold">{{rate.user.name}}</div>
+          <div class="nickname">{{rate.user.name}}</div>
         </div>
         <div class="star flex-row">
           <i class="icon-yike icon-star active" v-for="num in rate.score" :key="num.id"></i>
@@ -78,10 +78,9 @@
   }
 
   .nickname {
-    padding-left: .32rem;
-    font-size: .36rem;
+    padding-left: 1em;
+    font-size: .32rem;
     color: #0D0D0D;
-    font-weight: 600;
   }
 
   .tms, .tms_reply {

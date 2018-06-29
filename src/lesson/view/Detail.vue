@@ -250,7 +250,11 @@
           sn: this.$route.query.sn
         }).then((res) => {
           this.individual = res.data
-          this.displayAfterEnroll = true
+          if (this.profile.price === 0 && this.check === 'access') {
+            this.study()
+          } else {
+            this.displayAfterEnroll = true
+          }
         })
       },
       cancelEnroll() { // 取消报名

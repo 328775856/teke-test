@@ -11,7 +11,7 @@
       </div>
     </div>
       <div class="overall flex-row font-medium" v-if="sections.length">
-        <span @click="go" class="font-medium">查看全部</span>
+        <span @click="go" class="font-medium">查看全部课程</span>
       </div>
     <navigation></navigation>
   </div>

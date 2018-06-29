@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
-    <div class="c-popup flex-col" v-show="isOpen">
-      <div class="btn-mask flex-item" @click="close"></div>
+    <div class="c-popup flex-col" v-show="isOpen" @touchmove.prevent>
+      <div class="btn-mask flex-item" @click="close" @touchmove.prevent></div>
       <div class="frm-popup flex-col" :style="{width: width}">
         <div class="popup-head flex-row">
           <slot name="head">popup head</slot>
@@ -42,10 +42,12 @@
         }
         if (status) {
           d.style.overflow = 'hidden'
-          document.documentElement.style.overflow = 'hidden'
+          document.getElementsByClassName('items')[0].addEventListener('touchmove', (e) => {
+            e.stopPropagation()
+            e.returnValue = true
+          })
         } else {
           d.style.overflow = 'visible'
-          document.documentElement.style.overflow = 'visible'
         }
       }
     }

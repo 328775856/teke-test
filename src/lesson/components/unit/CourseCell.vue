@@ -15,7 +15,7 @@
           <i class="icon-yike icon-people"></i>
           <span class="text-desc">{{profile.enrollment}}人</span>
         </div>
-        <div class="price font-bold">￥{{profile.price}}</div>
+        <div class="price">￥{{profile.price}}</div>
       </div>
     </div>
   </div>
@@ -51,6 +51,7 @@
     cursor: pointer;
     justify-content: space-between;
     border-bottom: 1px solid #eee;
+    height: 1.28rem;
   }
 
   .c-profile-cell:last-child {
@@ -60,11 +61,12 @@
   .cover > img {
     width: 2.4rem;
     height: 1.28rem;
+    padding-top: .1rem;
   }
   .datum {
     justify-content: space-between;
     width: 4.2rem;
-    height: auto;
+    height: 113%;
   }
   .datum>div {
     width: 100%;

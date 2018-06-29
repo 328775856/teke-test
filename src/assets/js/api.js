@@ -7,14 +7,17 @@ import app from './app'
 import axios from 'axios'
 
 let api = {
+  loading: 0,
   request: function(method, url, data, options) {
     options = options || {}
     options.method = method
     options.url = url
     options.data = data
+    api.loading ++;
 
     return new Promise((resolve, reject) => {
       axios.request(options).then( (response) => {
+        api.loading --
         if (response.data.error === '0') {
           resolve(response.data)
         } else {

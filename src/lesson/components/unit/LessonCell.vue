@@ -87,7 +87,7 @@
 
   .title {
     width: 75%;
-    height: 110%;
+    height: 115%;
     font-size: .27rem;
     color: #0D0D0D;
     font-weight: bold;

@@ -13,6 +13,7 @@ switch (process.env.NODE_ENV) {
 
 const config = {
   api: local.api,
+  mtaAppId: local.mtaAppId,
   assetsPreUrl: conf.assetsPublicPath + local.subDir,
   studentPreUrl: local.studentPreUrl
 }

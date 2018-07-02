@@ -1,11 +1,12 @@
 <template>
-  <block :title="title" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-    <router-link slot="more" to="/lesson/home">
-      <i class="icon-yike icon-home">首页</i>
+  <block class="c-search" :title="title" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+    <router-link slot="more" to="/lesson/home" class="home">
+      <i class="icon-yike icon-home"></i>
+      <span>首页</span>
     </router-link>
     <course-cell :profile="item.profile" v-for="(item,index) in list" :key="index"></course-cell>
     <div class="end flex-row" v-show="isEnd">
-      <span class="btn-warning">到底部了...</span>
+      <span class="btn-warning">现在只有这么多课啦</span>
       <!--<router-link to="/lesson/home">查看精品课程</router-link>-->
     </div>
   </block>
@@ -65,18 +66,19 @@
 </script>
 
 <style scoped>
+
+  .icon-home {
+    font-size: .24rem;
+    font-weight: bold;
+  }
   .end {
     padding: .3rem 0;
-  }
-
-  .end > span:first-child {
-    margin-right: 10%;
   }
 
   .end span, .end > a {
     font-size: .2rem;
     color: #aaa;
-    padding: .1rem .2rem;
+    /*padding: .1rem .2rem;*/
     /*border: 1px solid #ccc;*/
     border-radius: 1em;
     cursor: pointer;
@@ -85,5 +87,14 @@
   .btn-warning {
     color: #aaa;
     background: #fff;
+  }
+</style>
+
+<style>
+  .c-search > .block-head {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
   }
 </style>

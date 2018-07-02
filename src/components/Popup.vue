@@ -36,18 +36,30 @@
     },
     watch: {
       isOpen: (status) => {
+        let ua = navigator.userAgent
         let d = document.documentElement
-        if (navigator.userAgent.indexOf('Mobile') !== -1) {
+        if (/(Android)/i.test(ua) || /(iPhone)/i.test(ua)) {
           d = document.body
         }
         if (status) {
+         // let top = d.scrollTop
           d.style.overflow = 'hidden'
           document.getElementsByClassName('items')[0].addEventListener('touchmove', (e) => {
             e.stopPropagation()
             e.returnValue = true
           })
+          document.getElementsByClassName('list')[0].addEventListener('touchmove', (e) => {
+            e.stopPropagation()
+            e.returnValue = true
+          })
+          // window.addEventListener('scroll', function () {
+          //   d.scrollTop = top
+          // })
         } else {
           d.style.overflow = 'visible'
+          // window.removeEventListener('scroll', function () {
+          //   d.scrollTop = top
+          // })
         }
       }
     }

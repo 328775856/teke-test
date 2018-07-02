@@ -47,7 +47,7 @@
     color: #888;
     padding-right: .3rem;
   }
-  .block-more .icon-arrow-r {
+  .block-more .icon-yike {
     color: #808080;
     font-size: .24rem;
     font-weight: bold;

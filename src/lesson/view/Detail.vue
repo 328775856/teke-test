@@ -143,11 +143,20 @@
       }
     },
     created() {
+      let lessonSn = this.$route.query.sn
       this.api.get('/api/jweixin-config', {url: location.href}).then((res) => {
         res.data.jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage']
         this.wx.config(res.data)
       })
-      let lessonSn = this.$route.query.sn
+      this.api.get('/api/individual-lesson', {
+        sn: lessonSn
+      }).then((res) => {
+        this.individual = res.data
+      }).catch(() => {
+        this.individual = {
+          'status': 'fresh'
+        }
+      })
       this.api.get('/api/lesson-profile', {
         sn: lessonSn
       }).then((res) => {
@@ -165,6 +174,11 @@
       }).then((res) => {
         this.introduce = res.data
       })
+      if (this.$route.query.action) {
+        try {
+          this[this.$route.query.action]()
+        } catch (e) {}
+      }
       this.api.get('/api/lesson-relative', {
         sn: lessonSn
       }).then((res) => {
@@ -175,20 +189,6 @@
       }).then((res) => {
         this.rating = res.data
       })
-      this.api.get('/api/individual-lesson', {
-        sn: lessonSn
-      }).then((res) => {
-        this.individual = res.data
-      }).catch(() => {
-        this.individual = {
-          'status': 'fresh'
-        }
-      })
-      if (this.$route.query.action) {
-        try {
-          this[this.$route.query.action]()
-        } catch (e) {}
-      }
     },
     computed: {
       check() {
@@ -242,6 +242,15 @@
             this.completeEnroll()
           }
         }, this.api.onErrorSign)
+      },
+      taste() {
+        this.api.get('/api/individual-lesson', {
+          sn: this.$route.query.sn
+        }).then((res) => {
+          if (res.data.status === 'fresh') {
+            this.enroll()
+          }
+        })
       },
       completeEnroll() { // 订单支付完成
         this.order = null

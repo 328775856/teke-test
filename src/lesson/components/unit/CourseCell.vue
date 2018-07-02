@@ -61,7 +61,7 @@
   .cover > img {
     width: 2.4rem;
     height: 1.28rem;
-    padding-top: .1rem;
+    padding-top: .05rem;
   }
   .datum {
     justify-content: space-between;

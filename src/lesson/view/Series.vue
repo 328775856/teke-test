@@ -61,9 +61,9 @@
         <span class="font-ragular">首页</span>
       </div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'denied'">不可访问</div>
-      <div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>
+      <!--<div class="ctrl-refund ctrl-text font-medium" v-if="canRefund">退款</div>-->
       <div class="ctrl-free ctrl-text font-medium " v-if="freeTry && check === false"
-           @click="$router.push(`/lesson/detail?sn=${freeTry}&action=enroll`)">
+           @click="$router.push(`/lesson/detail?sn=${freeTry}&action=taste`)">
         免费试听
       </div>
       <div class="ctrl-locked ctrl-text font-medium" v-if="check === 'pending'">等待开课</div>
@@ -145,11 +145,18 @@
       }
     },
     created() {
+      let lessonSn = this.$route.query.sn
       this.api.get('/api/jweixin-config', {url: location.href}).then((res) => {
         res.data.jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage']
         this.wx.config(res.data)
       })
-      let lessonSn = this.$route.query.sn
+      this.api.get('/api/individual-series', {
+        sn: lessonSn
+      }).then((res) => {
+        this.individual = res.data
+      }).catch(() => {
+        this.individual = {}
+      })
       this.api.get('/api/series-profile', {
         sn: lessonSn
       }).then((res) => {
@@ -172,7 +179,6 @@
         sn: lessonSn
       }).then((res) => {
         this.relative = res.data
-        console.log(res.data)
         for (let lesson of res.data) {
           if (lesson.price === 0) {
             this.freeTry = lesson.sn
@@ -180,13 +186,6 @@
             return
           }
         }
-      })
-      this.api.get('/api/individual-series', {
-        sn: lessonSn
-      }).then((res) => {
-        this.individual = res.data
-      }).catch(() => {
-        this.individual = {}
       })
     },
     mounted() {

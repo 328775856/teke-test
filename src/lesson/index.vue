@@ -17,7 +17,8 @@
     watch: {
       // 使用watch 监听$router的变化
       $route(to, from) {
-        if (to.path === '/lesson/search') {
+        if (to.path === '/lesson/search' && from.path === '/') {
+          console.log(from)
           this.transitionName = 'slide'
         }
       }

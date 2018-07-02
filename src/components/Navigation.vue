@@ -24,7 +24,7 @@
           {
             'icon': 'my',
             'name': '我的',
-            'path': this.app.linkToStudent('/link-user')
+            'path': this.app.linkToStudent('/?v=1#/user')
           }
         ]
       }

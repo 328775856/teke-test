@@ -43,6 +43,13 @@
           imgUrl: this.app.linkToAssets('/img/logo/Original_6464@2x.png')
         })
       })
+      let mta= document.createElement("script");
+      mta.src = "https://pingjs.qq.com/h5/hotclick.js?v2.0";
+      mta.setAttribute("name", "mtah5hotclick");
+      mta.setAttribute("sid", this.app.config.mta.AppId);
+      mta.setAttribute("hid", this.app.config.mta.HidHome);
+      let s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(mta, s);
     },
     methods: {
       another() {

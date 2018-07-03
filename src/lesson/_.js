@@ -55,7 +55,7 @@ new Vue({
   let mta = document.createElement("script");
   mta.src = "https://pingjs.qq.com/h5/stats.js?v2.0.4";
   mta.setAttribute("name", "MTAH5");
-  mta.setAttribute("sid", app.config.mtaAppId);
+  mta.setAttribute("sid", app.config.mta.AppId);
   let s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(mta, s);
 })();

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="c-popup flex-col" v-show="isOpen" @click="close">
+    <div class="c-popup flex-col" v-show="isOpen">
       <div class="frm-popup flex-col" :style="{width: width}">
         <div class="popup-head flex-row">
           <slot name="head">popup head</slot>
@@ -32,6 +32,7 @@
     },
     watch: {
       isOpen: (status) => {
+        alert(status)
         if (status) {
           document.documentElement.style.overflow = 'hidden'
           document.body.style.overflow = 'hidden'

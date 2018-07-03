@@ -3,7 +3,7 @@
       <div slot="head" class="order-head flex-row font-medium">订单详情</div>
       <div class="order-body">
         <div class="title">{{_order.title}}</div>
-        <div class="list" v-if="_order.list">
+        <div class="list items" v-if="_order.list">
           <ul>
             <li v-for="(lesson, index) in _order.list" :key="index" class="flex-row">
               <div>{{lesson.title}}</div>
@@ -73,6 +73,12 @@
         })
       },
       purchaseByWeixin() {
+        if (this.app.env === 'wxa') {
+          this.wx.miniProgram.navigateTo({
+            url: `/page/pay/index?order=${this.order.sn}&callback=${location.href}&action=completeEnroll`
+          })
+          return
+        }
         this.api.post('/api/order-prepay-wxm', {
           sn: this.order.sn
         }).then((res) => {
@@ -151,7 +157,7 @@
 
   .title {
     font-size: .3rem;
-    font-weight: bold;;
+    font-weight: bold;
   }
 
   .list {

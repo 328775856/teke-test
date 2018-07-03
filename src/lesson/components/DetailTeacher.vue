@@ -1,10 +1,10 @@
 <template>
   <div class="c-detail-teacher" v-if="teacher">
     <div class="flex-row" >
-      <div class="flex-col">
+      <div class="flex-col avatar">
         <img :src="teacher.avatar"/>
       </div>
-      <div class="flex-col flex-item">
+      <div class="flex-col flex-item" v-if="1">
         <div class="name font-medium">{{teacher.name}}</div>
         <div class="about text-desc font-medium">{{teacher.about}}</div>
       </div>
@@ -53,18 +53,24 @@
   }
 
   .flex-col {
-    justify-content: flex-start;
-    align-items: flex-start;
+    /*justify-content: flex-start;*/
+    /*align-items: flex-start;*/
   }
 
   .flex-item {
     padding: 0 .21rem;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
+  .avatar {
+    width: .72rem;
+    height: .72rem;
+  }
   img {
     width: .72rem;
     height: .72rem;
-    border-radius: 1.4rem;
+    border-radius: 50%;
   }
 
   .name {

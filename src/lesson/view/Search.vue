@@ -1,13 +1,13 @@
 <template>
-  <block class="c-search" :title="title" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+  <block class="c-search" :title="title" v-infinite-scroll="scroll" infinite-scroll-disabled="isEnd" infinite-scroll-distance="500">
     <router-link slot="more" to="/lesson/home" class="home">
       <i class="icon-yike icon-home"></i>
       <span>首页</span>
     </router-link>
+    <loading :pending="api.loading"></loading>
     <course-cell :profile="item.profile" v-for="(item,index) in list" :key="index"></course-cell>
     <div class="end flex-row" v-show="isEnd">
       <span class="btn-warning">现在只有这么多课啦</span>
-      <!--<router-link to="/lesson/home">查看精品课程</router-link>-->
     </div>
   </block>
 </template>
@@ -16,50 +16,38 @@
   import CourseCell from "../components/unit/CourseCell";
   import Block from "../../components/Block";
   import infiniteScroll from 'vue-infinite-scroll'
-  import Bloading from '@/test/view/Block-loading'
+  import Loading from "@/components/Loading";
 
-  let count = 1;
   export default {
     name: 'c-lesson-search',
-    components: {Block, CourseCell, Bloading},
+    components: {Loading, Block, CourseCell},
     directives: {infiniteScroll},
     data() {
       return {
         title: this.$route.query.title,
         list: [],
-        len: [count],
-        busy: false,
         isEnd: false
       }
     },
     created() {
-      this.api.get('/api/lesson-list', {
-        tag: this.$route.query.tag,
-        limit: count * 10
-      }).then((res) => {
-        this.list = res.data
-      })
     },
     methods: {
-      loadMore: function () {
-        if (this.len[this.len.length - 1] === this.len[this.len.length - 2]) {
-          this.isEnd = true
-          this.busy = false;
-          return
+      scroll: function() {
+        let limit = 10
+        let cursor = '--'
+        if (this.list.length) {
+          cursor = this.list[this.list.length-1].cursor
         }
-        this.busy = true;
-        setTimeout(() => {
-          for (let i = 0, j = 1; i < j; i++) {
-            this.api.get('/api/lesson-list', {
-              tag: this.$route.query.tag,
-              limit: (++count) * 10
-            }).then((res) => {
-              this.list = res.data
-              this.len.push(this.list.length)
-            })
+        this.api.get('/api/lesson-list', {
+          tag: this.$route.query.tag,
+          limit: limit,
+          cursor: cursor
+        }).then((res) => {
+          this.list.push(...res.data)
+          if (res.data.length < limit) {
+            this.isEnd = true
           }
-          this.busy = false;
-        }, 100);
+        })
       }
     }
   }

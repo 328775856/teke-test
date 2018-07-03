@@ -4,7 +4,14 @@
  */
 
 const config = require('../../config')
+let env
+if (window.__wxjs_environment === 'miniprogram') {
+  env = 'wxa'
+} else if (navigator.userAgent.match(/Wechat/)) {
+  env = 'wxm'
+}
 const app = {
+  env: env,
   config: config,
   signIn: () => {
     window.location.href = '/sign-in?callbackURI=' + encodeURIComponent(window.location.href)

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="c-popup flex-col" v-show="isOpen" @touchmove.prevent>
+    <div class="c-popup flex-col" v-show="isOpen">
       <div class="btn-mask flex-item" @click="close" @touchmove.prevent></div>
       <div class="frm-popup flex-col" :style="{width: width}">
         <div class="popup-head flex-row">
@@ -18,11 +18,10 @@
 </template>
 
 <script>
-  import Modal from "./Modal";
 
   export default {
     name: 'popup',
-    components: {Modal},
+    components: {},
     props: ['isOpen'],
     methods: {
       close: function () {
@@ -42,24 +41,11 @@
           d = document.body
         }
         if (status) {
-         // let top = d.scrollTop
           d.style.overflow = 'hidden'
-          document.getElementsByClassName('items')[0].addEventListener('touchmove', (e) => {
-            e.stopPropagation()
-            e.returnValue = true
-          })
-          document.getElementsByClassName('list')[0].addEventListener('touchmove', (e) => {
-            e.stopPropagation()
-            e.returnValue = true
-          })
-          // window.addEventListener('scroll', function () {
-          //   d.scrollTop = top
-          // })
+          document.documentElement.style.overflow = 'hidden'
         } else {
           d.style.overflow = 'visible'
-          // window.removeEventListener('scroll', function () {
-          //   d.scrollTop = top
-          // })
+          document.documentElement.style.overflow = 'visible'
         }
       }
     }

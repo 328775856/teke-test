@@ -27,33 +27,47 @@
               <i class="icon-yike icon-select"></i>
               <span>{{item.head}}</span>
             </div>
-            <div class="items-desc">{{item.desc}}</div>
+            <div class="items-desc" v-html="item.desc"></div>
           </li>
         </ul>
       </div>
       <div class="btn btn-roger flex-row font-medium" slot="foot" @click="isOpen = false">知道了</div>
     </popup>
+    <photo-viewer @isPhotoShow="isPhotoShow = false" :isPhotoShow="isPhotoShow" v-show="isPhotoShow"></photo-viewer>
   </div>
 </template>
 
 <script>
   import Popup from "../../components/Popup"
+  import PhotoViewer from "../components/PhotoViewer"
 
   export default {
     name: 'lesson-detail-policy',
-    components: {Popup},
+    components: {Popup, PhotoViewer},
     data() {
       return {
         isOpen: false,
+        isPhotoShow: false,
         items: [
           {'head': '永久回放', 'desc': '已购买课程可永久回放'},
-          {'head': '开课通知', 'desc': '关注【易灵微课】公众号(yike-fm)，接收开课提醒'},
+          {
+            'head': '开课通知',
+            'desc': `关注【易灵微课】公众号<a id="qrcode" style="color: blue;cursor: pointer">(yike-fm)<a/>，接收开课提醒`
+          },
           {'head': '无条件退款', 'desc': '进入课堂1小时内，可无条件退款'},
           {'head': '未听课退款', 'desc': '课程结束7天后，未听课自动退款'},
           {'head': '授课形式', 'desc': '支持图文、语音、视频片段，建议在WiFi环境下观看'},
           {'head': '讨论交流', 'desc': '课堂设有讨论区，可实时与讲师或其他学员交流。禁止发布违法法律法规或与课程无关的内容'}
         ]
       }
+    },
+    mounted() {
+      let that = this
+      document.getElementById('qrcode').onclick = function () {
+        that.isPhotoShow = true
+      }
+    },
+    methods: {
     }
   }
 </script>

@@ -55,6 +55,20 @@
     computed: {
       _order() {
         return this.order || {}
+      },
+      isOpen() {
+        return this.order && this.app.env() !== 'wxa'
+      }
+    },
+    watch: {
+      order: function(v) {
+        if (v && this.app.env() === 'wxa') {
+          let callback = encodeURIComponent(`${location.href}&action=completeEnroll`)
+          this.wx.miniProgram.navigateTo({
+            url: `/page/pay/index?order=${this.order.sn}&callback=${callback}`
+          })
+          this.$emit('cancel')
+        }
       }
     },
     methods: {
@@ -73,12 +87,6 @@
         })
       },
       purchaseByWeixin() {
-        if (this.app.env === 'wxa') {
-          this.wx.miniProgram.navigateTo({
-            url: `/page/pay/index?order=${this.order.sn}&callback=${location.href}&action=completeEnroll`
-          })
-          return
-        }
         this.api.post('/api/order-prepay-wxm', {
           sn: this.order.sn
         }).then((res) => {

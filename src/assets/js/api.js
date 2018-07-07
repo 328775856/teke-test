@@ -6,6 +6,8 @@
 import app from './app'
 import axios from 'axios'
 
+let domLoading = document.querySelector('#loading') || {style: {}}
+
 let api = {
   loading: 0,
   request: function(method, url, data, options) {
@@ -14,10 +16,12 @@ let api = {
     options.url = url
     options.data = data
     api.loading ++;
-
+    domLoading.style.display = 'flex'
     return new Promise((resolve, reject) => {
       axios.request(options).then( (response) => {
-        api.loading --
+        if (--api.loading === 0) {
+          domLoading.style.display = 'none'
+        }
         if (response.data.error === '0') {
           resolve(response.data)
         } else {

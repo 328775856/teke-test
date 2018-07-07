@@ -84,12 +84,13 @@
         </li>
       </ul>
       <div class="flex-row" v-if="!individual.subscribed">
-        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')" style="width: 3rem; height: 3rem"/>
+        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')" style="width: 3rem; height: 3rem" @click="app.previewImageOne(app.linkToAssets('/img/qrcode/yike-fm.png'))"/>
       </div>
       <div slot="foot" class="btn btn-vice" @click="displayAfterEnroll = false" v-if="check==='access'">稍后再看</div>
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check === 'access'">开始学习</div>
       <div slot="foot" class="btn btn-primary" @click="displayAfterEnroll = false" v-else>知道了</div>
     </modal-action>
+    <loading :pending="0"></loading>
   </div>
 </template>
 
@@ -97,6 +98,7 @@
   import qs from 'qs'
   import Tabs from '@/components/Tabs'
   import Block from '@/components/Block'
+  import Loading from '@/components/Loading'
   import DetailCover from '../components/DetailCover'
   import DetailTeacher from '../components/DetailTeacher'
   import DetailPolicy from '../components/DetailPolicy'
@@ -113,6 +115,7 @@
   export default {
     name: 'lesson-detail',
     components: {
+      Loading,
       Tabs,
       Block,
       DetailCover,
@@ -157,6 +160,17 @@
       }).catch(() => {
         this.individual = {}
       })
+      this.api.get('/api/series-relative', {
+        sn: lessonSn
+      }).then((res) => {
+        this.relative = res.data
+        for (let lesson of res.data) {
+          if (lesson.price === 0) {
+            this.freeTry = lesson.sn
+            return
+          }
+        }
+      })
       this.api.get('/api/series-profile', {
         sn: lessonSn
       }).then((res) => {
@@ -175,18 +189,11 @@
         this.introduce = res.data
         this.introduce = JSON.parse(this.introduce).content
       })
-      this.api.get('/api/series-relative', {
-        sn: lessonSn
-      }).then((res) => {
-        this.relative = res.data
-        for (let lesson of res.data) {
-          if (lesson.price === 0) {
-            this.freeTry = lesson.sn
-            console.log(lesson.sn)
-            return
-          }
-        }
-      })
+      if (this.$route.query.action) {
+        try {
+          this[this.$route.query.action]()
+        } catch (e) {}
+      }
     },
     mounted() {
       tabsHeight = document.getElementById('tabs').clientHeight

@@ -24,7 +24,7 @@
           {
             'icon': 'my',
             'name': '我的',
-            'path': '/lesson/my'
+            'path': '/my/home'
           }
         ]
       }

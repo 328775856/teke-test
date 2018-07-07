@@ -41,7 +41,6 @@ Vue.prototype.wx = wx
 Vue.prototype.api = api
 Vue.prototype.wxa = wxa
 Vue.prototype.app = app
-window.api = api
 
 /* eslint-disable no-new */
 new Vue({

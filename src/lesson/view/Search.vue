@@ -4,7 +4,6 @@
       <i class="icon-yike icon-home"></i>
       <span>首页</span>
     </router-link>
-    <loading :pending="api.loading"></loading>
     <course-cell :profile="item.profile" v-for="(item,index) in list" :key="index"></course-cell>
     <div class="end flex-row" v-show="isEnd">
       <span class="btn-warning">现在只有这么多课啦</span>
@@ -16,11 +15,10 @@
   import CourseCell from "../components/unit/CourseCell";
   import Block from "../../components/Block";
   import infiniteScroll from 'vue-infinite-scroll'
-  import Loading from "@/components/Loading";
 
   export default {
     name: 'c-lesson-search',
-    components: {Loading, Block, CourseCell},
+    components: {Block, CourseCell},
     directives: {infiniteScroll},
     data() {
       return {
@@ -33,6 +31,9 @@
     },
     methods: {
       scroll: function() {
+        if (this.api.loading) {
+          return
+        }
         let limit = 10
         let cursor = '--'
         if (this.list.length) {

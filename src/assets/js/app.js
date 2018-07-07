@@ -3,7 +3,10 @@
  * Date: 2018-03-24
  */
 
+import wx from 'weixin-js-sdk'
+
 const config = require('../../config')
+
 const app = {
   env: () => {
     if (window.__wxjs_environment === 'miniprogram') {
@@ -16,7 +19,14 @@ const app = {
   },
   config: config,
   signIn: () => {
-    window.location.href = '/sign-in?callbackURI=' + encodeURIComponent(window.location.href)
+    let callback = encodeURIComponent(window.location.href)
+    if (app.env() === 'wxa') {
+      wx.miniProgram.navigateTo({
+        url: `/page/login/index?callback=${callback}`
+      })
+    } else {
+      window.location.href = '/sign-in?callbackURI=' + callback
+    }
   },
   setTitle: (title) => {
     document.title = `易灵微课-${title}`
@@ -35,6 +45,12 @@ const app = {
   enableBodyScroll: () => {
     document.body.style.overflow = 'visible'
     document.documentElement.style.overflow='visible'
+  },
+  previewImageOne: (src) => {
+    wx.previewImage({
+      current: src,
+      urls: [src]
+    })
   }
 };
 

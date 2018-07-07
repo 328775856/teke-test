@@ -5,7 +5,6 @@ const Home = r => require.ensure([], () => r(require('../view/Home')), 'lesson/h
 const Search = r => require.ensure([], () => r(require('../view/Search')), 'lesson/search')
 const Detail = r => require.ensure([], () => r(require('../view/Detail')), 'lesson/detail')
 const Series = r => require.ensure([], () => r(require('../view/Series')), 'lesson/series')
-const User = r => require.ensure([], () => r(require('../view/User')), 'lesson/my')
 
 Vue.use(Router)
 
@@ -38,11 +37,6 @@ export default new Router({
       path: '/lesson/series',
       name: 'Series',
       component: Series
-    },
-    {
-      path: '/lesson/my',
-      name: 'User',
-      component: User
     }
   ],
   scrollBehavior (to, from, savedPosition) {

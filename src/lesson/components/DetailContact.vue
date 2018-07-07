@@ -8,7 +8,7 @@
     </div>
     <div class="qrcode flex-row">
       <div class="qrcode-mp flex-col">
-        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')"/>
+        <img :src="app.linkToAssets('/img/qrcode/yike-fm.png')" @click="app.previewImageOne(app.linkToAssets('/img/qrcode/yike-fm.png'))"/>
         <span>
           <i class="icon-yike icon-wechat font-ragular"></i>
           易灵微课公众号

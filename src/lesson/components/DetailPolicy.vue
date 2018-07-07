@@ -33,7 +33,6 @@
       </div>
       <div class="btn btn-roger flex-row font-medium" slot="foot" @click="isOpen = false">知道了</div>
     </popup>
-    <photo-viewer @isPhotoShow="isPhotoShow = false" :isPhotoShow="isPhotoShow" v-show="isPhotoShow"></photo-viewer>
   </div>
 </template>
 
@@ -47,12 +46,11 @@
     data() {
       return {
         isOpen: false,
-        isPhotoShow: false,
         items: [
           {'head': '永久回放', 'desc': '已购买课程可永久回放'},
           {
             'head': '开课通知',
-            'desc': `关注【易灵微课】公众号<a id="qrcode" style="color: blue;cursor: pointer">(yike-fm)<a/>，接收开课提醒`
+            'desc': `关注【易灵微课】公众号<a id="qrcode" style="color: #2F57DA;cursor: pointer">yike-fm<a/>，接收开课提醒`
           },
           {'head': '无条件退款', 'desc': '进入课堂1小时内，可无条件退款'},
           {'head': '未听课退款', 'desc': '课程结束7天后，未听课自动退款'},
@@ -62,9 +60,8 @@
       }
     },
     mounted() {
-      let that = this
-      document.getElementById('qrcode').onclick = function () {
-        that.isPhotoShow = true
+      document.getElementById('qrcode').onclick = () => {
+        this.app.previewImageOne(this.app.linkToAssets('/img/qrcode/yike-fm.png'))
       }
     },
     methods: {

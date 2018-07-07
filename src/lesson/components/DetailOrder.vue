@@ -63,9 +63,9 @@
     watch: {
       order: function(v) {
         if (v && this.app.env() === 'wxa') {
-          let callback = encodeURIComponent(`${location.href}&action=completeEnroll`)
+          let from = encodeURIComponent(`${location.href}`)
           this.wx.miniProgram.navigateTo({
-            url: `/page/pay/index?order=${this.order.sn}&callback=${callback}`
+            url: `/page/pay/index?order=${this.order.sn}&from=${from}`
           })
           this.$emit('cancel')
         }

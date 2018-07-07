@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>易灵微课</title>
     <style>
+      #loading {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        z-index: 9999;
+        animation: animate 6s infinite ease-in-out;
+        background: rgba(0,0,0,0.5);
+        border-radius: 1em;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+        padding: 1em;
+        width: 6em;
+        margin-left: -3em;
+        display: none;
+      }
       #loader {
         display: flex;
         flex-direction: column;
@@ -32,11 +48,21 @@
     </style>
   </head>
   <body>
+  <div id="loading">
+    loading...
+  </div>
   <div id="app" style="display: flex; flex-direction: column; justify-content: center; height: 100%">
-    <div id="loader">
+    <div id="loader" onclick="location.reload()">
       <img src="https://assets.yike.fm/img/logo/Original_6464@2x.png"/>
       <span>易灵微课</span>
     </div>
+    <script>
+      setTimeout(()=>{
+        if (document.querySelector('#loader')) {
+          location.reload()
+        }
+      }, 3000)
+    </script>
   </div>
   <!-- built files will be auto injected -->
   </body>

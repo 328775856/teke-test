@@ -84,7 +84,7 @@
         </li>
       </ul>
       <div class="flex-row" v-if="!individual.subscribed">
-        <img :src="app.linkToAssets('/img/qrcode/mp.png')" style="width: 3rem; height: 3rem"/>
+        <img :src="app.linkToAssets('/img/qrcode/mp.png')" style="width: 3rem; height: 3rem" @click="app.previewImageOne(app.linkToAssets('/img/qrcode/yike-fm.png'))"/>
       </div>
       <div slot="foot" class="btn btn-vice" @click="displayAfterEnroll = false" v-if="check==='access'">稍后再看</div>
       <div slot="foot" class="btn btn-primary" @click="study" v-if="check==='access'">开始学习</div>
@@ -174,11 +174,6 @@
       }).then((res) => {
         this.introduce = res.data
       })
-      if (this.$route.query.action) {
-        try {
-          this[this.$route.query.action]()
-        } catch (e) {}
-      }
       this.api.get('/api/lesson-relative', {
         sn: lessonSn
       }).then((res) => {
@@ -189,6 +184,11 @@
       }).then((res) => {
         this.rating = res.data
       })
+      if (this.$route.query.action) {
+        try {
+          this[this.$route.query.action]()
+        } catch (e) {}
+      }
     },
     computed: {
       check() {
@@ -443,6 +443,14 @@
   }
 
   .ctrl-refund {
+    flex-grow: 0;
+    color: #2F57DA;
+    background: #fff;
+    cursor: pointer;
+    padding: 0 .68rem;
+  }
+
+  .ctrl-refund_ {
     flex-grow: 0;
     color: #fff;
     padding: 0 .68rem;
